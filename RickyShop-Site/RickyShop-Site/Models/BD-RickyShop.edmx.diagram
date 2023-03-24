@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e73807694833439f8996a674b74f7827" Name="Diagram1">
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Admin" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Carrinho" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Categoria" Width="1.5" PointX="1.5" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Descontos" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.EstadoDoPedido" Width="1.5" PointX="3.75" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.EstadoUtilizadores" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Pedidos" Width="1.5" PointX="6" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Produto" Width="1.5" PointX="3.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.ProdutosFavoritos" Width="1.5" PointX="6" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Utilizadores" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.PedidosDetalhes" Width="1.5" PointX="8.25" PointY="7.625" IsExpanded="true" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_Carrinho_Produto" ManuallyRouted="false" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_Carrinho_Utilizadores" ManuallyRouted="false" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_Produto_Categoria" ManuallyRouted="false" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_Descontos_Utilizadores" ManuallyRouted="false" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_Pedidos_EstadoDoPedido" ManuallyRouted="false" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_EstadoUtilizadores_Utilizadores" ManuallyRouted="false" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_Pedidos_Utilizadores" ManuallyRouted="false" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_PedidosDetalhes_Pedidos" ManuallyRouted="false" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_PedidosDetalhes_Produto" ManuallyRouted="false" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_ProdutosFavoritos_Produto" ManuallyRouted="false" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_ProdutosFavoritos_Utilizadores" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
