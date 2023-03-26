@@ -1,0 +1,46 @@
+﻿@model RickyShop_Site.Models.Produto
+    
+<link href="~/Content/Shop.css" rel="stylesheet" />
+
+<div class="row">
+    <p class="alert-success text-center" style="font-size:40px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; border-radius:15px; margin-top:3%">
+        <b>BEM-VINDO AO RICKYSHOP!</b>
+    </p>
+</div>
+
+<div class="form-group">
+    <div class="slider" style=" border-radius: 15px;">
+        <div class="slides">
+            <input type="radio" name="radio-btn" id="radio1">
+            <input type="radio" name="radio-btn" id="radio2">
+            <input type="radio" name="radio-btn" id="radio3">
+
+            <div class="slide first">
+                <img src="~/Imagens/McKenzie-Fato-de-Treino.jpg" />
+            </div>
+            <div class="slide second">
+                <img src="~/Imagens/AirForce1.jpg" />
+            </div>
+            <div class="slide third">
+                <img src="~/Imagens/Lacoste-Sweatshirt-Tape.jpg" />
+            </div>
+
+
+
+            <div class="navigation-auto">
+                <div class="auto-btn1"></div>
+                <div class="auto-btn2"></div>
+                <div class="auto-btn3"></div>
+            </div>
+        </div>
+
+        <div class="manual-navigation">
+            <label for="radio1" class="manual-btn"></label>
+            <label for="radio2" class="manual-btn"></label>
+            <label for="radio3" class="manual-btn"></label>
+        </div>
+
+    </div>
+</div>
+
+<script src="~/Scripts/carouselAuto.js"></script>

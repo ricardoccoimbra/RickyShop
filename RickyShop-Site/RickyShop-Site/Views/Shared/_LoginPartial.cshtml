@@ -1,0 +1,17 @@
+﻿
+
+<ul class="nav navbar-nav navbar-right">
+    @if (Session["UserID"] != null)
+    {
+        <li> <a href="~/Home/Inicio" style="display:flex"><i class="glyphicon glyphicon-heart"></i></a> </li>
+        <li> <a href="~/Home/Inicio" style="display:flex"><i class="glyphicon glyphicon-shopping-cart"></i></a> </li>
+        <li> @Html.ActionLink("Terminar Sessão", "LogOff", null, new { onclick = "return confirm('Tem a certeza que quer sair?');" }) </li>
+    }
+
+    @if (Session["UserID"] == null)
+    {
+        <li>
+            @Html.ActionLink("Iniciar Sessão", "Login", "Home", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        </li>
+            }
+    </ul>

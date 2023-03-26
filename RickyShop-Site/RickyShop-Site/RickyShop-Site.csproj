@@ -197,6 +197,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Shop.css" />
     <Content Include="Content\StyleLogin.css" />
     <Content Include="Content\StyleRegistar.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -244,9 +245,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Imagens\AirForce1.jpg" />
     <Content Include="Imagens\fundo-imagem.jpg" />
     <Content Include="Imagens\imageTeste.jpg" />
+    <Content Include="Imagens\Lacoste-Sweatshirt-Tape.jpg" />
     <Content Include="Imagens\login-image.jpg" />
+    <Content Include="Imagens\McKenzie-Fato-de-Treino.jpg" />
     <Content Include="Imagens\ResetPassword-image.png" />
     <Content Include="Models\BD-RickyShop.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -268,6 +272,7 @@
       <DependentUpon>BD-RickyShop.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\carouselAuto.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -298,6 +303,8 @@
     <Content Include="Views\Home\ResetPassword.cshtml" />
     <Content Include="Views\Home\Registar.cshtml" />
     <Content Include="Views\Home\Suporte.cshtml" />
+    <Content Include="Views\Home\Inicio.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

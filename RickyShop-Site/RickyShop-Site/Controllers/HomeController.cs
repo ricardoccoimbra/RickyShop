@@ -1,6 +1,7 @@
 ﻿using RickyShop_Site.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -93,6 +94,75 @@ namespace RickyShop_Site.Controllers
                 return View();
             }
             return View();
+        }
+
+
+        [HandleError]
+        [HttpPost]
+        public ActionResult Login(Utilizadores u)
+        {
+            try
+            {
+
+                var user = db.Utilizadores.FirstOrDefault(us => us.Email == u.Email && us.PassWord == u.PassWord);
+
+                if (user != null)
+                {
+                    Session["UserID"] = user.ID_Utilizador;
+                    Session["UserNome"] = user.PrimeiroNome;
+                    return RedirectToAction("About", "Home");
+                }
+                else
+                {
+                    Response.Write("<script>alert('Wrong Information');</script>");
+                    return View();
+                }
+            }
+            catch (SqlException ex)
+            {
+                Response.Write($"<script>alert('Data error: {ex.Message}');</script>");
+                return View();
+            }
+            catch (FormatException ex)
+            {
+                Response.Write($"<script>alert('Wrong Format: {ex.Message}');</script>");
+                return View();
+            }
+            catch (Exception ex)
+            {
+                Response.Write($"<script>alert({ex.Message});</script>");
+                return View();
+            }
+        }
+
+        public ActionResult Inicio()
+        {
+            return View();
+        }
+
+        public ActionResult LogOff()
+        {
+            try
+            {
+                Session.Remove("UserID");
+
+                return RedirectToAction("Inicio");
+            }
+            catch (SqlException ex)
+            {
+                Response.Write($"<script>alert('Data error: {ex.Message}');</script>");
+                return View();
+            }
+            catch (FormatException ex)
+            {
+                Response.Write($"<script>alert('Wrong Format: {ex.Message}');</script>");
+                return View();
+            }
+            catch (Exception ex)
+            {
+                Response.Write($"<script>alert({ex.Message});</script>");
+                return View();
+            }
         }
     }
 }
