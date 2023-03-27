@@ -29,6 +29,7 @@ namespace RickyShop_Site.Models
         public decimal PreçoTotal { get; set; }
         public int ID_Estado { get; set; }
         public double Desconto { get; set; }
+        public string Marca { get; set; }
     
         public virtual EstadoDoPedido EstadoDoPedido { get; set; }
         public virtual Utilizadores Utilizadores { get; set; }

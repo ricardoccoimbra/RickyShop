@@ -137,7 +137,9 @@ namespace RickyShop_Site.Controllers
 
         public ActionResult Inicio()
         {
-            return View();
+            var prodProm = db.Produto.ToList();
+           
+            return View(prodProm);
         }
 
         public ActionResult LogOff()

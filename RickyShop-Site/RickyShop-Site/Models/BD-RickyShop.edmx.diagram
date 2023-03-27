@@ -15,7 +15,7 @@
         <EntityTypeShape EntityType="GestãoRickyShopModel.Produto" Width="1.5" PointX="3.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="GestãoRickyShopModel.ProdutosFavoritos" Width="1.5" PointX="6" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="GestãoRickyShopModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.Utilizadores" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Utilizadores" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GestãoRickyShopModel.PedidosDetalhes" Width="1.5" PointX="8.25" PointY="7.625" IsExpanded="true" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_Carrinho_Produto" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_Carrinho_Utilizadores" ManuallyRouted="false" />
@@ -28,6 +28,8 @@
         <AssociationConnector Association="GestãoRickyShopModel.FK_PedidosDetalhes_Produto" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_ProdutosFavoritos_Produto" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_ProdutosFavoritos_Utilizadores" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.MarcaProduto" Width="1.5" PointX="8.375" PointY="3.875" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_Produto_MarcaProduto" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

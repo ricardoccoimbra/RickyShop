@@ -71,6 +71,7 @@
     <NavigationProperty Name="EstadoDoPedido" Relationship="Self.FK_Pedidos_EstadoDoPedido" FromRole="Pedidos" ToRole="EstadoDoPedido" />
     <NavigationProperty Name="Utilizadores" Relationship="Self.FK_Pedidos_Utilizadores" FromRole="Pedidos" ToRole="Utilizadores" />
     <NavigationProperty Name="PedidosDetalhes" Relationship="Self.FK_PedidosDetalhes_Pedidos" FromRole="Pedidos" ToRole="PedidosDetalhes" />
+    <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Produto">
     <Key>
@@ -87,6 +88,10 @@
     <NavigationProperty Name="Categoria" Relationship="Self.FK_Produto_Categoria" FromRole="Produto" ToRole="Categoria" />
     <NavigationProperty Name="PedidosDetalhes" Relationship="Self.FK_PedidosDetalhes_Produto" FromRole="Produto" ToRole="PedidosDetalhes" />
     <NavigationProperty Name="ProdutosFavoritos" Relationship="Self.FK_ProdutosFavoritos_Produto" FromRole="Produto" ToRole="ProdutosFavoritos" />
+    <Property Name="Desconto" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ID_Marca" Type="Int32" />
+    <NavigationProperty Name="MarcaProduto" Relationship="GestãoRickyShopModel.FK_Produto_MarcaProduto" FromRole="Produto" ToRole="MarcaProduto" />
   </EntityType>
   <EntityType Name="ProdutosFavoritos">
     <Key>
@@ -360,6 +365,11 @@
       <Parameter Name="new_diagramname" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_upgraddiagrams" />
+    <EntitySet Name="MarcaProduto" EntityType="GestãoRickyShopModel.MarcaProduto" />
+    <AssociationSet Name="FK_Produto_MarcaProduto" Association="GestãoRickyShopModel.FK_Produto_MarcaProduto">
+      <End Role="MarcaProduto" EntitySet="MarcaProduto" />
+      <End Role="Produto" EntitySet="Produto" />
+    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -372,4 +382,24 @@
     <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
     <Property Type="Int32" Name="OwnerID" Nullable="false" />
   </ComplexType>
+  <EntityType Name="MarcaProduto">
+    <Key>
+      <PropertyRef Name="ID_Marca" />
+    </Key>
+    <Property Name="ID_Marca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Marca" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Produto" Relationship="GestãoRickyShopModel.FK_Produto_MarcaProduto" FromRole="MarcaProduto" ToRole="Produto" />
+  </EntityType>
+  <Association Name="FK_Produto_MarcaProduto">
+    <End Type="GestãoRickyShopModel.MarcaProduto" Role="MarcaProduto" Multiplicity="0..1" />
+    <End Type="GestãoRickyShopModel.Produto" Role="Produto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MarcaProduto">
+        <PropertyRef Name="ID_Marca" />
+      </Principal>
+      <Dependent Role="Produto">
+        <PropertyRef Name="ID_Marca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

@@ -29,6 +29,9 @@ namespace RickyShop_Site.Models
         public int QuantidadeStock { get; set; }
         public string ImagemPath { get; set; }
         public string Descrição { get; set; }
+        public Nullable<decimal> Desconto { get; set; }
+        public string Nome { get; set; }
+        public Nullable<int> ID_Marca { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Carrinho> Carrinho { get; set; }
@@ -37,5 +40,6 @@ namespace RickyShop_Site.Models
         public virtual ICollection<PedidosDetalhes> PedidosDetalhes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProdutosFavoritos> ProdutosFavoritos { get; set; }
+        public virtual MarcaProduto MarcaProduto { get; set; }
     }
 }

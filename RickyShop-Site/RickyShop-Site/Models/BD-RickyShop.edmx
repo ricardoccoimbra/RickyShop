@@ -54,6 +54,13 @@
           <Property Name="LogOn" Type="datetime" Nullable="false" />
           <Property Name="LogOff" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="MarcaProduto">
+          <Key>
+            <PropertyRef Name="ID_Marca" />
+          </Key>
+          <Property Name="ID_Marca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Marca" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Pedidos">
           <Key>
             <PropertyRef Name="ID_Pedido" />
@@ -67,6 +74,7 @@
           <Property Name="PreçoTotal" Type="money" Nullable="false" />
           <Property Name="ID_Estado" Type="int" Nullable="false" />
           <Property Name="Desconto" Type="float" Nullable="false" />
+          <Property Name="Marca" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -87,12 +95,15 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
             <PropertyRef Name="ID_Produto" />
           </Key>
           <Property Name="ID_Produto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="50" />
           <Property Name="PreçoPorQuantidade" Type="money" Nullable="false" />
           <Property Name="ID_Categoria" Type="int" Nullable="false" />
           <Property Name="ID_Fornecedor" Type="int" Nullable="false" />
           <Property Name="QuantidadeStock" Type="int" Nullable="false" />
           <Property Name="ImagemPath" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="Descrição" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Desconto" Type="money" />
+          <Property Name="ID_Marca" Type="int" />
         </EntityType>
         <EntityType Name="ProdutosFavoritos">
           <Key>
@@ -234,6 +245,18 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Produto_MarcaProduto">
+          <End Role="MarcaProduto" Type="Self.MarcaProduto" Multiplicity="0..1" />
+          <End Role="Produto" Type="Self.Produto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MarcaProduto">
+              <PropertyRef Name="ID_Marca" />
+            </Principal>
+            <Dependent Role="Produto">
+              <PropertyRef Name="ID_Marca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProdutosFavoritos_Produto">
           <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
           <End Role="ProdutosFavoritos" Type="Self.ProdutosFavoritos" Multiplicity="*" />
@@ -296,6 +319,7 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
           <EntitySet Name="Descontos" EntityType="Self.Descontos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EstadoDoPedido" EntityType="Self.EstadoDoPedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EstadoUtilizadores" EntityType="Self.EstadoUtilizadores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MarcaProduto" EntityType="Self.MarcaProduto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Produto" EntityType="Self.Produto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProdutosFavoritos" EntityType="Self.ProdutosFavoritos" Schema="dbo" store:Type="Tables" />
@@ -343,6 +367,10 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
           </AssociationSet>
           <AssociationSet Name="FK_Produto_Categoria" Association="Self.FK_Produto_Categoria">
             <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Produto" EntitySet="Produto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Produto_MarcaProduto" Association="Self.FK_Produto_MarcaProduto">
+            <End Role="MarcaProduto" EntitySet="MarcaProduto" />
             <End Role="Produto" EntitySet="Produto" />
           </AssociationSet>
           <AssociationSet Name="FK_ProdutosFavoritos_Produto" Association="Self.FK_ProdutosFavoritos_Produto">
@@ -429,6 +457,7 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
           <NavigationProperty Name="EstadoDoPedido" Relationship="Self.FK_Pedidos_EstadoDoPedido" FromRole="Pedidos" ToRole="EstadoDoPedido" />
           <NavigationProperty Name="Utilizadores" Relationship="Self.FK_Pedidos_Utilizadores" FromRole="Pedidos" ToRole="Utilizadores" />
           <NavigationProperty Name="PedidosDetalhes" Relationship="Self.FK_PedidosDetalhes_Pedidos" FromRole="Pedidos" ToRole="PedidosDetalhes" />
+          <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Produto">
           <Key>
@@ -445,6 +474,10 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
           <NavigationProperty Name="Categoria" Relationship="Self.FK_Produto_Categoria" FromRole="Produto" ToRole="Categoria" />
           <NavigationProperty Name="PedidosDetalhes" Relationship="Self.FK_PedidosDetalhes_Produto" FromRole="Produto" ToRole="PedidosDetalhes" />
           <NavigationProperty Name="ProdutosFavoritos" Relationship="Self.FK_ProdutosFavoritos_Produto" FromRole="Produto" ToRole="ProdutosFavoritos" />
+          <Property Name="Desconto" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Marca" Type="Int32" />
+          <NavigationProperty Name="MarcaProduto" Relationship="GestãoRickyShopModel.FK_Produto_MarcaProduto" FromRole="Produto" ToRole="MarcaProduto" />
         </EntityType>
         <EntityType Name="ProdutosFavoritos">
           <Key>
@@ -718,6 +751,11 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="MarcaProduto" EntityType="GestãoRickyShopModel.MarcaProduto" />
+          <AssociationSet Name="FK_Produto_MarcaProduto" Association="GestãoRickyShopModel.FK_Produto_MarcaProduto">
+            <End Role="MarcaProduto" EntitySet="MarcaProduto" />
+            <End Role="Produto" EntitySet="Produto" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -730,6 +768,26 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="MarcaProduto">
+          <Key>
+            <PropertyRef Name="ID_Marca" />
+          </Key>
+          <Property Name="ID_Marca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Marca" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Produto" Relationship="GestãoRickyShopModel.FK_Produto_MarcaProduto" FromRole="MarcaProduto" ToRole="Produto" />
+        </EntityType>
+        <Association Name="FK_Produto_MarcaProduto">
+          <End Type="GestãoRickyShopModel.MarcaProduto" Role="MarcaProduto" Multiplicity="0..1" />
+          <End Type="GestãoRickyShopModel.Produto" Role="Produto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MarcaProduto">
+              <PropertyRef Name="ID_Marca" />
+            </Principal>
+            <Dependent Role="Produto">
+              <PropertyRef Name="ID_Marca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -794,6 +852,7 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
           <EntitySetMapping Name="Pedidos">
             <EntityTypeMapping TypeName="GestãoRickyShopModel.Pedidos">
               <MappingFragment StoreEntitySet="Pedidos">
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
                 <ScalarProperty Name="ID_Pedido" ColumnName="ID_Pedido" />
                 <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
                 <ScalarProperty Name="DataDoPedido" ColumnName="DataDoPedido" />
@@ -809,6 +868,9 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
           <EntitySetMapping Name="Produto">
             <EntityTypeMapping TypeName="GestãoRickyShopModel.Produto">
               <MappingFragment StoreEntitySet="Produto">
+                <ScalarProperty Name="ID_Marca" ColumnName="ID_Marca" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Desconto" ColumnName="Desconto" />
                 <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
                 <ScalarProperty Name="PreçoPorQuantidade" ColumnName="PreçoPorQuantidade" />
                 <ScalarProperty Name="ID_Categoria" ColumnName="ID_Categoria" />
@@ -888,6 +950,14 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="GestãoRickyShopModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="GestãoRickyShopModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="MarcaProduto">
+            <EntityTypeMapping TypeName="GestãoRickyShopModel.MarcaProduto">
+              <MappingFragment StoreEntitySet="MarcaProduto">
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="ID_Marca" ColumnName="ID_Marca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

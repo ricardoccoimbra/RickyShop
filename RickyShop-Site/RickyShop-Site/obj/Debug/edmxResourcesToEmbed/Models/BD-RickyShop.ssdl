@@ -49,6 +49,13 @@
     <Property Name="LogOn" Type="datetime" Nullable="false" />
     <Property Name="LogOff" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="MarcaProduto">
+    <Key>
+      <PropertyRef Name="ID_Marca" />
+    </Key>
+    <Property Name="ID_Marca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Marca" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <EntityType Name="Pedidos">
     <Key>
       <PropertyRef Name="ID_Pedido" />
@@ -62,6 +69,7 @@
     <Property Name="PreçoTotal" Type="money" Nullable="false" />
     <Property Name="ID_Estado" Type="int" Nullable="false" />
     <Property Name="Desconto" Type="float" Nullable="false" />
+    <Property Name="Marca" Type="varchar" MaxLength="50" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -82,12 +90,15 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
       <PropertyRef Name="ID_Produto" />
     </Key>
     <Property Name="ID_Produto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nome" Type="varchar" MaxLength="50" />
     <Property Name="PreçoPorQuantidade" Type="money" Nullable="false" />
     <Property Name="ID_Categoria" Type="int" Nullable="false" />
     <Property Name="ID_Fornecedor" Type="int" Nullable="false" />
     <Property Name="QuantidadeStock" Type="int" Nullable="false" />
     <Property Name="ImagemPath" Type="varchar" MaxLength="250" Nullable="false" />
     <Property Name="Descrição" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Desconto" Type="money" />
+    <Property Name="ID_Marca" Type="int" />
   </EntityType>
   <EntityType Name="ProdutosFavoritos">
     <Key>
@@ -229,6 +240,18 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Produto_MarcaProduto">
+    <End Role="MarcaProduto" Type="Self.MarcaProduto" Multiplicity="0..1" />
+    <End Role="Produto" Type="Self.Produto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MarcaProduto">
+        <PropertyRef Name="ID_Marca" />
+      </Principal>
+      <Dependent Role="Produto">
+        <PropertyRef Name="ID_Marca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProdutosFavoritos_Produto">
     <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
     <End Role="ProdutosFavoritos" Type="Self.ProdutosFavoritos" Multiplicity="*" />
@@ -291,6 +314,7 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
     <EntitySet Name="Descontos" EntityType="Self.Descontos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EstadoDoPedido" EntityType="Self.EstadoDoPedido" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EstadoUtilizadores" EntityType="Self.EstadoUtilizadores" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MarcaProduto" EntityType="Self.MarcaProduto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Produto" EntityType="Self.Produto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProdutosFavoritos" EntityType="Self.ProdutosFavoritos" Schema="dbo" store:Type="Tables" />
@@ -338,6 +362,10 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
     </AssociationSet>
     <AssociationSet Name="FK_Produto_Categoria" Association="Self.FK_Produto_Categoria">
       <End Role="Categoria" EntitySet="Categoria" />
+      <End Role="Produto" EntitySet="Produto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Produto_MarcaProduto" Association="Self.FK_Produto_MarcaProduto">
+      <End Role="MarcaProduto" EntitySet="MarcaProduto" />
       <End Role="Produto" EntitySet="Produto" />
     </AssociationSet>
     <AssociationSet Name="FK_ProdutosFavoritos_Produto" Association="Self.FK_ProdutosFavoritos_Produto">

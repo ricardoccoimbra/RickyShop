@@ -166,6 +166,9 @@
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Generic.cs" />
+    <Compile Include="Models\MarcaProduto.cs">
+      <DependentUpon>BD-RickyShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Pedidos.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
@@ -248,6 +251,7 @@
     <Content Include="Imagens\AirForce1.jpg" />
     <Content Include="Imagens\fundo-imagem.jpg" />
     <Content Include="Imagens\imageTeste.jpg" />
+    <Content Include="Imagens\jorda.jpg" />
     <Content Include="Imagens\Lacoste-Sweatshirt-Tape.jpg" />
     <Content Include="Imagens\login-image.jpg" />
     <Content Include="Imagens\McKenzie-Fato-de-Treino.jpg" />
