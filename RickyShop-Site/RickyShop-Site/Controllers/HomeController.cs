@@ -3,7 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace RickyShop_Site.Controllers
@@ -11,6 +15,8 @@ namespace RickyShop_Site.Controllers
     public class HomeController : Controller
     {
         GestãoRickyShopEntities db = new GestãoRickyShopEntities();
+        private SmtpClient SmtpClient;
+        private MailMessage MailMessage;
 
         public ActionResult Index()
         {
@@ -45,6 +51,69 @@ namespace RickyShop_Site.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult ResetPassword(Utilizadores u)
+        {
+            Random random = new Random();
+
+            var num = random.Next();
+
+            string subject = "Redefinição de senha da RickyShop";
+            string body = "Olá, a sua password passou a ser: " + num.ToString() +
+                "\r De seguida altere a sua password no site. \n Cumprimentos, ";
+
+            MailMessage objEmail = new MailMessage();
+            //rementente do email
+            objEmail.From = new MailAddress("i200059@inete.net");
+
+            //email para resposta(quando o destinatário receber e clicar em responder, vai para:)
+            //objEmail.ReplyTo = new MailAddress("email@seusite.com.br");
+
+            //destinatário(s) do email(s). Obs. pode ser mais de um, pra isso basta repetir a linha
+            //abaixo com outro endereço
+            objEmail.To.Add("cruzcoimbra08@gmail.com");
+
+            //se quiser enviar uma cópia oculta pra alguém, utilize a linha abaixo:
+            // objEmail.Bcc.Add("oculto@provedor.com.br");
+
+            //prioridade do email
+            objEmail.Priority = MailPriority.High;
+
+            //utilize true pra ativar html no conteúdo do email, ou false, para somente texto
+            objEmail.IsBodyHtml = true;
+
+            //Assunto do email
+            objEmail.Subject = subject;
+
+            //corpo do email a ser enviado
+            //objEmail.Body = "Conteúdo do email. Se ativar html, pode utilizar cores, fontes, etc.";
+            objEmail.Body = subject + "\r\r\r" + body;
+            //codificação do assunto do email para que os caracteres acentuados serem reconhecidos.
+            objEmail.SubjectEncoding = Encoding.GetEncoding("ISO-8859-1");
+
+            //codificação do corpo do emailpara que os caracteres acentuados serem reconhecidos.
+            objEmail.BodyEncoding = Encoding.GetEncoding("ISO-8859-1");
+
+            //cria o objeto responsável pelo envio do email
+            SmtpClient objSmtp = new SmtpClient();
+
+            //endereço do servidor SMTP(para mais detalhes leia abaixo do código)
+            objSmtp.Host = "SMTP.office365.com";
+            objSmtp.Port = 587;
+
+            //para envio de email autenticado, coloque login e senha de seu servidor de email
+            //para detalhes leia abaixo do código
+            objSmtp.Credentials = new NetworkCredential("i200059@inete.net", "Pitolini08");
+
+            objSmtp.EnableSsl = true;
+
+            //envia o email
+            objSmtp.Send(objEmail);
+
+            return View();
+        }
+
 
         [HandleError]
         [HttpPost]
