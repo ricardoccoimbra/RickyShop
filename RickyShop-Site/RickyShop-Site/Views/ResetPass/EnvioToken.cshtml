@@ -4,19 +4,14 @@
     Layout = null;
 }
 
-@if(ViewBag.msg != null)
-{
-    <div class="alert alert-success">@ViewBag.msg</div>
-}
 
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/StyleLogin.css" rel="stylesheet" />
 <div class="fundo-externo">
     <div id="fundo">
-        <img src="~/Imagens/imageTeste.jpg" style="margin-top: -17%" ; />
+        <img src="~/Imagens/imageTeste.jpg" style="margin-top: -17%" />
     </div>
 </div>
-
 
 
 @using (Html.BeginForm())
@@ -33,12 +28,12 @@
                             <div class="text-center" >
                                 <h3><i class="fa fa-lock fa-4x"></i></h3>
                                 <h3 class="text-center">Esqueceste da Password?</h3>
-                                <p>Tu podes dar reset aqui.</p>
+                                <p>Será enviando token de recuperação para o seu email.</p>
                                 <div class="panel-body">
                                     <form class="form">
                                         <fieldset>
                                             <div class="form-group">
-                                                <img src="~/Imagens/ResetPassword-image.png" style="margin-bottom:20px" />
+                                                <img src="~/Imagens/EmailPassword.png"  style="margin-bottom:20px" />
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
                                                     @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control input-lg", placeholder = "Email", autofocus = true } })
@@ -49,7 +44,7 @@
                                                 <input class="btn btn-lg btn-primary btn-success" value="Enviar Email" type="submit">
                                             </div>
                                             <div class="form-group" style="margin-right:100%">
-                                                @Html.ActionLink("Voltar", "Login")
+                                                @Html.ActionLink("Voltar", "Login", "Home")
                                             </div>
                                         </fieldset>
                                     </form>

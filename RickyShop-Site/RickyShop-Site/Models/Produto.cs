@@ -18,28 +18,32 @@ namespace RickyShop_Site.Models
         public Produto()
         {
             this.Carrinho = new HashSet<Carrinho>();
+            this.Descontos = new HashSet<Descontos>();
             this.PedidosDetalhes = new HashSet<PedidosDetalhes>();
             this.ProdutosFavoritos = new HashSet<ProdutosFavoritos>();
         }
     
         public int ID_Produto { get; set; }
+        public string Nome { get; set; }
         public decimal PreçoPorQuantidade { get; set; }
         public int ID_Categoria { get; set; }
-        public int ID_Fornecedor { get; set; }
         public int QuantidadeStock { get; set; }
         public string ImagemPath { get; set; }
         public string Descrição { get; set; }
-        public Nullable<decimal> Desconto { get; set; }
-        public string Nome { get; set; }
-        public Nullable<int> ID_Marca { get; set; }
+        public Nullable<int> Desconto { get; set; }
+        public int ID_Marca { get; set; }
+        public string Genero { get; set; }
+        public int Descontinuado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Carrinho> Carrinho { get; set; }
         public virtual Categoria Categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Descontos> Descontos { get; set; }
+        public virtual MarcaProduto MarcaProduto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PedidosDetalhes> PedidosDetalhes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProdutosFavoritos> ProdutosFavoritos { get; set; }
-        public virtual MarcaProduto MarcaProduto { get; set; }
     }
 }

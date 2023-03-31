@@ -30,9 +30,8 @@
       <PropertyRef Name="ID_Cupao" />
     </Key>
     <Property Name="ID_Cupao" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ID_Utilizador" Type="int" Nullable="false" />
+    <Property Name="ID_Produto" Type="int" Nullable="false" />
     <Property Name="Desconto" Type="int" Nullable="false" />
-    <Property Name="EstadoCupao" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="EstadoDoPedido">
     <Key>
@@ -90,15 +89,16 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
       <PropertyRef Name="ID_Produto" />
     </Key>
     <Property Name="ID_Produto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Nome" Type="varchar" MaxLength="50" />
+    <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="PreçoPorQuantidade" Type="money" Nullable="false" />
     <Property Name="ID_Categoria" Type="int" Nullable="false" />
-    <Property Name="ID_Fornecedor" Type="int" Nullable="false" />
     <Property Name="QuantidadeStock" Type="int" Nullable="false" />
     <Property Name="ImagemPath" Type="varchar" MaxLength="250" Nullable="false" />
-    <Property Name="Descrição" Type="varchar" MaxLength="500" Nullable="false" />
-    <Property Name="Desconto" Type="money" />
-    <Property Name="ID_Marca" Type="int" />
+    <Property Name="Descrição" Type="varchar" MaxLength="1000" Nullable="false" />
+    <Property Name="Desconto" Type="int" />
+    <Property Name="ID_Marca" Type="int" Nullable="false" />
+    <Property Name="Genero" Type="varchar" MaxLength="9" Nullable="false" />
+    <Property Name="Descontinuado" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ProdutosFavoritos">
     <Key>
@@ -117,6 +117,15 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
     <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Token">
+    <Key>
+      <PropertyRef Name="ID_Token" />
+    </Key>
+    <Property Name="ID_Token" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Utilizador" Type="int" Nullable="false" />
+    <Property Name="TokenAleatorio" Type="varchar" MaxLength="7" Nullable="false" />
+    <Property Name="Estado" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Utilizadores">
     <Key>
@@ -156,15 +165,15 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Descontos_Utilizadores">
-    <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+  <Association Name="FK_Descontos_Produto">
+    <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
     <End Role="Descontos" Type="Self.Descontos" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Utilizadores">
-        <PropertyRef Name="ID_Utilizador" />
+      <Principal Role="Produto">
+        <PropertyRef Name="ID_Produto" />
       </Principal>
       <Dependent Role="Descontos">
-        <PropertyRef Name="ID_Utilizador" />
+        <PropertyRef Name="ID_Produto" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -241,7 +250,7 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Produto_MarcaProduto">
-    <End Role="MarcaProduto" Type="Self.MarcaProduto" Multiplicity="0..1" />
+    <End Role="MarcaProduto" Type="Self.MarcaProduto" Multiplicity="1" />
     <End Role="Produto" Type="Self.Produto" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="MarcaProduto">
@@ -272,6 +281,18 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
         <PropertyRef Name="ID_Utilizador" />
       </Principal>
       <Dependent Role="ProdutosFavoritos">
+        <PropertyRef Name="ID_Utilizador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Token_Utilizadores">
+    <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+    <End Role="Token" Type="Self.Token" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizadores">
+        <PropertyRef Name="ID_Utilizador" />
+      </Principal>
+      <Dependent Role="Token">
         <PropertyRef Name="ID_Utilizador" />
       </Dependent>
     </ReferentialConstraint>
@@ -319,6 +340,7 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
     <EntitySet Name="Produto" EntityType="Self.Produto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProdutosFavoritos" EntityType="Self.ProdutosFavoritos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Utilizadores" EntityType="Self.Utilizadores" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PedidosDetalhes" EntityType="Self.PedidosDetalhes" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -336,8 +358,8 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
       <End Role="Utilizadores" EntitySet="Utilizadores" />
       <End Role="Carrinho" EntitySet="Carrinho" />
     </AssociationSet>
-    <AssociationSet Name="FK_Descontos_Utilizadores" Association="Self.FK_Descontos_Utilizadores">
-      <End Role="Utilizadores" EntitySet="Utilizadores" />
+    <AssociationSet Name="FK_Descontos_Produto" Association="Self.FK_Descontos_Produto">
+      <End Role="Produto" EntitySet="Produto" />
       <End Role="Descontos" EntitySet="Descontos" />
     </AssociationSet>
     <AssociationSet Name="FK_EstadoUtilizadores_Utilizadores" Association="Self.FK_EstadoUtilizadores_Utilizadores">
@@ -375,6 +397,10 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
     <AssociationSet Name="FK_ProdutosFavoritos_Utilizadores" Association="Self.FK_ProdutosFavoritos_Utilizadores">
       <End Role="Utilizadores" EntitySet="Utilizadores" />
       <End Role="ProdutosFavoritos" EntitySet="ProdutosFavoritos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Token_Utilizadores" Association="Self.FK_Token_Utilizadores">
+      <End Role="Utilizadores" EntitySet="Utilizadores" />
+      <End Role="Token" EntitySet="Token" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

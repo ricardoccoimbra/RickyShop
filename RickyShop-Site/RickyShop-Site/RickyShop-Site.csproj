@@ -129,6 +129,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ResetPassController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -190,6 +191,9 @@
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Token.cs">
+      <DependentUpon>BD-RickyShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Utilizadores.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
@@ -249,6 +253,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Imagens\AirForce1.jpg" />
+    <Content Include="Imagens\EmailPassword.png" />
     <Content Include="Imagens\fundo-imagem.jpg" />
     <Content Include="Imagens\imageTeste.jpg" />
     <Content Include="Imagens\jorda.jpg" />
@@ -258,8 +263,8 @@
     <Content Include="Imagens\ResetPassword-image.png" />
     <Content Include="Models\BD-RickyShop.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>BD-RickyShop.Context.cs</LastGenOutput>
       <DependentUpon>BD-RickyShop.edmx</DependentUpon>
+      <LastGenOutput>BD-RickyShop.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\BD-RickyShop.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -304,11 +309,13 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Home\ResetPassword.cshtml" />
+    <Content Include="Views\ResetPass\EnvioToken.cshtml" />
     <Content Include="Views\Home\Registar.cshtml" />
     <Content Include="Views\Home\Suporte.cshtml" />
     <Content Include="Views\Home\Inicio.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\ResetPass\ValidacaoToken.cshtml" />
+    <Content Include="Views\ResetPass\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

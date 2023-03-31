@@ -33,9 +33,8 @@
       <EntityTypeMapping TypeName="GestãoRickyShopModel.Descontos">
         <MappingFragment StoreEntitySet="Descontos">
           <ScalarProperty Name="ID_Cupao" ColumnName="ID_Cupao" />
-          <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
+          <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
           <ScalarProperty Name="Desconto" ColumnName="Desconto" />
-          <ScalarProperty Name="EstadoCupao" ColumnName="EstadoCupao" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -56,10 +55,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="MarcaProduto">
+      <EntityTypeMapping TypeName="GestãoRickyShopModel.MarcaProduto">
+        <MappingFragment StoreEntitySet="MarcaProduto">
+          <ScalarProperty Name="ID_Marca" ColumnName="ID_Marca" />
+          <ScalarProperty Name="Marca" ColumnName="Marca" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Pedidos">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.Pedidos">
         <MappingFragment StoreEntitySet="Pedidos">
-          <ScalarProperty Name="Marca" ColumnName="Marca" />
           <ScalarProperty Name="ID_Pedido" ColumnName="ID_Pedido" />
           <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
           <ScalarProperty Name="DataDoPedido" ColumnName="DataDoPedido" />
@@ -69,22 +75,24 @@
           <ScalarProperty Name="PreçoTotal" ColumnName="PreçoTotal" />
           <ScalarProperty Name="ID_Estado" ColumnName="ID_Estado" />
           <ScalarProperty Name="Desconto" ColumnName="Desconto" />
+          <ScalarProperty Name="Marca" ColumnName="Marca" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Produto">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.Produto">
         <MappingFragment StoreEntitySet="Produto">
-          <ScalarProperty Name="ID_Marca" ColumnName="ID_Marca" />
-          <ScalarProperty Name="Nome" ColumnName="Nome" />
-          <ScalarProperty Name="Desconto" ColumnName="Desconto" />
           <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
           <ScalarProperty Name="PreçoPorQuantidade" ColumnName="PreçoPorQuantidade" />
           <ScalarProperty Name="ID_Categoria" ColumnName="ID_Categoria" />
-          <ScalarProperty Name="ID_Fornecedor" ColumnName="ID_Fornecedor" />
           <ScalarProperty Name="QuantidadeStock" ColumnName="QuantidadeStock" />
           <ScalarProperty Name="ImagemPath" ColumnName="ImagemPath" />
           <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+          <ScalarProperty Name="Desconto" ColumnName="Desconto" />
+          <ScalarProperty Name="ID_Marca" ColumnName="ID_Marca" />
+          <ScalarProperty Name="Genero" ColumnName="Genero" />
+          <ScalarProperty Name="Descontinuado" ColumnName="Descontinuado" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -108,10 +116,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Token">
+      <EntityTypeMapping TypeName="GestãoRickyShopModel.Token">
+        <MappingFragment StoreEntitySet="Token">
+          <ScalarProperty Name="ID_Token" ColumnName="ID_Token" />
+          <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
+          <ScalarProperty Name="TokenAleatorio" ColumnName="TokenAleatorio" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Utilizadores">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.Utilizadores">
         <MappingFragment StoreEntitySet="Utilizadores">
-          <ScalarProperty Name="Contacto" ColumnName="Contacto" />
           <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
           <ScalarProperty Name="PrimeiroNome" ColumnName="PrimeiroNome" />
           <ScalarProperty Name="SegundoNome" ColumnName="SegundoNome" />
@@ -119,6 +136,7 @@
           <ScalarProperty Name="NIF" ColumnName="NIF" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+          <ScalarProperty Name="Contacto" ColumnName="Contacto" />
           <ScalarProperty Name="DataDeAdesao" ColumnName="DataDeAdesao" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -157,13 +175,5 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="GestãoRickyShopModel.Store.sp_renamediagram" />
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="GestãoRickyShopModel.Store.sp_upgraddiagrams" />
-    <EntitySetMapping Name="MarcaProduto">
-      <EntityTypeMapping TypeName="GestãoRickyShopModel.MarcaProduto">
-        <MappingFragment StoreEntitySet="MarcaProduto">
-          <ScalarProperty Name="Marca" ColumnName="Marca" />
-          <ScalarProperty Name="ID_Marca" ColumnName="ID_Marca" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -15,10 +15,9 @@ namespace RickyShop_Site.Models
     public partial class Descontos
     {
         public int ID_Cupao { get; set; }
-        public int ID_Utilizador { get; set; }
+        public int ID_Produto { get; set; }
         public int Desconto { get; set; }
-        public int EstadoCupao { get; set; }
     
-        public virtual Utilizadores Utilizadores { get; set; }
+        public virtual Produto Produto { get; set; }
     }
 }
