@@ -40,6 +40,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -89,6 +90,7 @@
     <Compile Include="FormUtilizadores.Designer.cs">
       <DependentUpon>FormUtilizadores.cs</DependentUpon>
     </Compile>
+    <Compile Include="Graficos.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormDashbord.resx">
@@ -117,6 +119,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -131,6 +134,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icons\dashbord.png" />
+    <Content Include="Icons\IcoHome.png" />
+    <Content Include="Icons\logs.png" />
+    <Content Include="Icons\pedidos.png" />
+    <Content Include="Icons\produtos.png" />
+    <Content Include="Icons\utilizador.png" />
+    <None Include="Resources\LogoRickyShop1.png" />
+    <None Include="Resources\LogoRickyShop.png" />
+    <None Include="Resources\IcoHome.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

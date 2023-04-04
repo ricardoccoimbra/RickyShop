@@ -31,17 +31,21 @@ namespace Admin_RickyShop
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPrincipal));
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.panelHome = new System.Windows.Forms.Panel();
+            this.panelForm = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.iconButton1 = new FontAwesome.Sharp.IconButton();
             this.iBtnLogs = new FontAwesome.Sharp.IconButton();
             this.iBtnProdutos = new FontAwesome.Sharp.IconButton();
             this.iBtnUtilizadores = new FontAwesome.Sharp.IconButton();
             this.iBtnPedidos = new FontAwesome.Sharp.IconButton();
             this.iBtnDashbord = new FontAwesome.Sharp.IconButton();
-            this.panelHome = new System.Windows.Forms.Panel();
-            this.panelForm = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblHome = new System.Windows.Forms.Label();
             this.panelMenu.SuspendLayout();
+            this.panelHome.SuspendLayout();
             this.panelForm.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelMenu
@@ -56,6 +60,33 @@ namespace Admin_RickyShop
             this.panelMenu.Controls.Add(this.panelHome);
             resources.ApplyResources(this.panelMenu, "panelMenu");
             this.panelMenu.Name = "panelMenu";
+            // 
+            // panelHome
+            // 
+            this.panelHome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(159)))), ((int)(((byte)(9)))));
+            this.panelHome.Controls.Add(this.lblHome);
+            resources.ApplyResources(this.panelHome, "panelHome");
+            this.panelHome.Name = "panelHome";
+            // 
+            // panelForm
+            // 
+            this.panelForm.Controls.Add(this.panel1);
+            resources.ApplyResources(this.panelForm, "panelForm");
+            this.panelForm.ForeColor = System.Drawing.Color.Black;
+            this.panelForm.Name = "panelForm";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(162)))), ((int)(((byte)(219)))), ((int)(((byte)(59)))));
+            this.panel1.Controls.Add(this.label1);
+            resources.ApplyResources(this.panel1, "panel1");
+            this.panel1.Name = "panel1";
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Image = global::Admin_RickyShop.Properties.Resources.IcoHome;
+            this.label1.Name = "label1";
             // 
             // iconButton1
             // 
@@ -140,23 +171,10 @@ namespace Admin_RickyShop
             this.iBtnDashbord.UseVisualStyleBackColor = true;
             this.iBtnDashbord.Click += new System.EventHandler(this.iBtnDashbord_Click);
             // 
-            // panelHome
+            // lblHome
             // 
-            this.panelHome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(159)))), ((int)(((byte)(9)))));
-            resources.ApplyResources(this.panelHome, "panelHome");
-            this.panelHome.Name = "panelHome";
-            // 
-            // panelForm
-            // 
-            this.panelForm.Controls.Add(this.label1);
-            resources.ApplyResources(this.panelForm, "panelForm");
-            this.panelForm.ForeColor = System.Drawing.Color.Black;
-            this.panelForm.Name = "panelForm";
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
+            resources.ApplyResources(this.lblHome, "lblHome");
+            this.lblHome.Name = "lblHome";
             // 
             // FormPrincipal
             // 
@@ -170,7 +188,9 @@ namespace Admin_RickyShop
             this.MinimizeBox = false;
             this.Name = "FormPrincipal";
             this.panelMenu.ResumeLayout(false);
+            this.panelHome.ResumeLayout(false);
             this.panelForm.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -187,6 +207,8 @@ namespace Admin_RickyShop
         private System.Windows.Forms.Panel panelForm;
         private FontAwesome.Sharp.IconButton iconButton1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lblHome;
     }
 }
 

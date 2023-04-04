@@ -15,3 +15,4 @@ C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\Admin-RickyShop\obj\Deb
 C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\Admin-RickyShop\obj\Debug\Admin_RickyShop.FormLogs.resources
 C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\Admin-RickyShop\obj\Debug\Admin_RickyShop.FormPedidos.resources
 C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\Admin-RickyShop\obj\Debug\Admin_RickyShop.FormUtilizadores.resources
+C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\Admin-RickyShop\obj\Debug\Admin-RickyShop.csproj.SuggestedBindingRedirects.cache
