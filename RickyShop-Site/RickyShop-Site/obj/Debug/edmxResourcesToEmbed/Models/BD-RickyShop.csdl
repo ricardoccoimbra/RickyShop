@@ -1,0 +1,434 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GestãoRickyShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="ID_Admin" />
+    </Key>
+    <Property Name="ID_Admin" Type="Int32" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Carrinho">
+    <Key>
+      <PropertyRef Name="ID_Carrinho" />
+    </Key>
+    <Property Name="ID_Carrinho" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Utilizador" Type="Int32" Nullable="false" />
+    <Property Name="PrecoProduto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="ID_Produto" Type="Int32" Nullable="false" />
+    <Property Name="Quantidade" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Produto" Relationship="Self.FK_Carrinho_Produto" FromRole="Carrinho" ToRole="Produto" />
+    <NavigationProperty Name="Utilizadores" Relationship="Self.FK_Carrinho_Utilizadores" FromRole="Carrinho" ToRole="Utilizadores" />
+  </EntityType>
+  <EntityType Name="Categoria">
+    <Key>
+      <PropertyRef Name="ID_Categoria" />
+    </Key>
+    <Property Name="ID_Categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NomeCategoria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Produto" Relationship="Self.FK_Produto_Categoria" FromRole="Categoria" ToRole="Produto" />
+  </EntityType>
+  <EntityType Name="Descontos">
+    <Key>
+      <PropertyRef Name="ID_Cupao" />
+    </Key>
+    <Property Name="ID_Cupao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Produto" Type="Int32" Nullable="false" />
+    <Property Name="Desconto" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Produto" Relationship="Self.FK_Descontos_Produto" FromRole="Descontos" ToRole="Produto" />
+  </EntityType>
+  <EntityType Name="EstadoDoPedido">
+    <Key>
+      <PropertyRef Name="ID_Estado" />
+    </Key>
+    <Property Name="ID_Estado" Type="Int32" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Pedidos" Relationship="Self.FK_Pedidos_EstadoDoPedido" FromRole="EstadoDoPedido" ToRole="Pedidos" />
+  </EntityType>
+  <EntityType Name="EstadoUtilizadores">
+    <Key>
+      <PropertyRef Name="ID_Utilizadores" />
+    </Key>
+    <Property Name="ID_Utilizadores" Type="Int32" Nullable="false" />
+    <Property Name="LogOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LogOff" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Utilizadores" Relationship="Self.FK_EstadoUtilizadores_Utilizadores" FromRole="EstadoUtilizadores" ToRole="Utilizadores" />
+  </EntityType>
+  <EntityType Name="MarcaProduto">
+    <Key>
+      <PropertyRef Name="ID_Marca" />
+    </Key>
+    <Property Name="ID_Marca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Produto" Relationship="Self.FK_Produto_MarcaProduto" FromRole="MarcaProduto" ToRole="Produto" />
+  </EntityType>
+  <EntityType Name="Pedidos">
+    <Key>
+      <PropertyRef Name="ID_Pedido" />
+    </Key>
+    <Property Name="ID_Pedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Utilizador" Type="Int32" Nullable="false" />
+    <Property Name="DataDoPedido" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DataDeEntrega" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LocalDeEntrega" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CodigoPostal" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PreçoTotal" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="ID_Estado" Type="Int32" Nullable="false" />
+    <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="EstadoDoPedido" Relationship="Self.FK_Pedidos_EstadoDoPedido" FromRole="Pedidos" ToRole="EstadoDoPedido" />
+    <NavigationProperty Name="Utilizadores" Relationship="Self.FK_Pedidos_Utilizadores" FromRole="Pedidos" ToRole="Utilizadores" />
+    <NavigationProperty Name="PedidosDetalhes" Relationship="Self.FK_PedidosDetalhes_Pedidos" FromRole="Pedidos" ToRole="PedidosDetalhes" />
+  </EntityType>
+  <EntityType Name="Produto">
+    <Key>
+      <PropertyRef Name="ID_Produto" />
+    </Key>
+    <Property Name="ID_Produto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PreçoPorQuantidade" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="ID_Categoria" Type="Int32" Nullable="false" />
+    <Property Name="QuantidadeStock" Type="Int32" Nullable="false" />
+    <Property Name="ImagemPath" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descrição" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Desconto" Type="Int32" />
+    <Property Name="ID_Marca" Type="Int32" Nullable="false" />
+    <Property Name="Genero" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descontinuado" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Carrinho" Relationship="Self.FK_Carrinho_Produto" FromRole="Produto" ToRole="Carrinho" />
+    <NavigationProperty Name="Categoria" Relationship="Self.FK_Produto_Categoria" FromRole="Produto" ToRole="Categoria" />
+    <NavigationProperty Name="Descontos" Relationship="Self.FK_Descontos_Produto" FromRole="Produto" ToRole="Descontos" />
+    <NavigationProperty Name="MarcaProduto" Relationship="Self.FK_Produto_MarcaProduto" FromRole="Produto" ToRole="MarcaProduto" />
+    <NavigationProperty Name="PedidosDetalhes" Relationship="Self.FK_PedidosDetalhes_Produto" FromRole="Produto" ToRole="PedidosDetalhes" />
+    <NavigationProperty Name="ProdutosFavoritos" Relationship="Self.FK_ProdutosFavoritos_Produto" FromRole="Produto" ToRole="ProdutosFavoritos" />
+    <Property Name="Destaque" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProdutosFavoritos">
+    <Key>
+      <PropertyRef Name="ID_Favoritos" />
+    </Key>
+    <Property Name="ID_Favoritos" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Produto" Type="Int32" Nullable="false" />
+    <Property Name="ID_Utilizador" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Produto" Relationship="Self.FK_ProdutosFavoritos_Produto" FromRole="ProdutosFavoritos" ToRole="Produto" />
+    <NavigationProperty Name="Utilizadores" Relationship="Self.FK_ProdutosFavoritos_Utilizadores" FromRole="ProdutosFavoritos" ToRole="Utilizadores" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Token">
+    <Key>
+      <PropertyRef Name="ID_Token" />
+    </Key>
+    <Property Name="ID_Token" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Utilizador" Type="Int32" Nullable="false" />
+    <Property Name="TokenAleatorio" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Utilizadores" Relationship="Self.FK_Token_Utilizadores" FromRole="Token" ToRole="Utilizadores" />
+  </EntityType>
+  <EntityType Name="Utilizadores">
+    <Key>
+      <PropertyRef Name="ID_Utilizador" />
+    </Key>
+    <Property Name="ID_Utilizador" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PrimeiroNome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SegundoNome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DataDeNascimento" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="NIF" Type="Int32" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PassWord" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Contacto" Type="Int32" Nullable="false" />
+    <Property Name="DataDeAdesao" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Desconto" Type="Double" />
+    <NavigationProperty Name="Carrinho" Relationship="Self.FK_Carrinho_Utilizadores" FromRole="Utilizadores" ToRole="Carrinho" />
+    <NavigationProperty Name="EstadoUtilizadores" Relationship="Self.FK_EstadoUtilizadores_Utilizadores" FromRole="Utilizadores" ToRole="EstadoUtilizadores" />
+    <NavigationProperty Name="Pedidos" Relationship="Self.FK_Pedidos_Utilizadores" FromRole="Utilizadores" ToRole="Pedidos" />
+    <NavigationProperty Name="ProdutosFavoritos" Relationship="Self.FK_ProdutosFavoritos_Utilizadores" FromRole="Utilizadores" ToRole="ProdutosFavoritos" />
+    <NavigationProperty Name="Token" Relationship="Self.FK_Token_Utilizadores" FromRole="Utilizadores" ToRole="Token" />
+  </EntityType>
+  <EntityType Name="PedidosDetalhes">
+    <Key>
+      <PropertyRef Name="ID_Pedido" />
+      <PropertyRef Name="ID_Produto" />
+      <PropertyRef Name="Quantidade" />
+      <PropertyRef Name="Preco" />
+    </Key>
+    <Property Name="ID_Pedido" Type="Int32" Nullable="false" />
+    <Property Name="ID_Produto" Type="Int32" Nullable="false" />
+    <Property Name="Quantidade" Type="Int32" Nullable="false" />
+    <Property Name="Preco" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="Pedidos" Relationship="Self.FK_PedidosDetalhes_Pedidos" FromRole="PedidosDetalhes" ToRole="Pedidos" />
+    <NavigationProperty Name="Produto" Relationship="Self.FK_PedidosDetalhes_Produto" FromRole="PedidosDetalhes" ToRole="Produto" />
+  </EntityType>
+  <Association Name="FK_Carrinho_Produto">
+    <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
+    <End Role="Carrinho" Type="Self.Carrinho" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Produto">
+        <PropertyRef Name="ID_Produto" />
+      </Principal>
+      <Dependent Role="Carrinho">
+        <PropertyRef Name="ID_Produto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Carrinho_Utilizadores">
+    <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+    <End Role="Carrinho" Type="Self.Carrinho" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizadores">
+        <PropertyRef Name="ID_Utilizador" />
+      </Principal>
+      <Dependent Role="Carrinho">
+        <PropertyRef Name="ID_Utilizador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Produto_Categoria">
+    <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+    <End Role="Produto" Type="Self.Produto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categoria">
+        <PropertyRef Name="ID_Categoria" />
+      </Principal>
+      <Dependent Role="Produto">
+        <PropertyRef Name="ID_Categoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Descontos_Produto">
+    <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
+    <End Role="Descontos" Type="Self.Descontos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Produto">
+        <PropertyRef Name="ID_Produto" />
+      </Principal>
+      <Dependent Role="Descontos">
+        <PropertyRef Name="ID_Produto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pedidos_EstadoDoPedido">
+    <End Role="EstadoDoPedido" Type="Self.EstadoDoPedido" Multiplicity="1" />
+    <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EstadoDoPedido">
+        <PropertyRef Name="ID_Estado" />
+      </Principal>
+      <Dependent Role="Pedidos">
+        <PropertyRef Name="ID_Estado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EstadoUtilizadores_Utilizadores">
+    <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+    <End Role="EstadoUtilizadores" Type="Self.EstadoUtilizadores" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizadores">
+        <PropertyRef Name="ID_Utilizador" />
+      </Principal>
+      <Dependent Role="EstadoUtilizadores">
+        <PropertyRef Name="ID_Utilizadores" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Produto_MarcaProduto">
+    <End Role="MarcaProduto" Type="Self.MarcaProduto" Multiplicity="1" />
+    <End Role="Produto" Type="Self.Produto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MarcaProduto">
+        <PropertyRef Name="ID_Marca" />
+      </Principal>
+      <Dependent Role="Produto">
+        <PropertyRef Name="ID_Marca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pedidos_Utilizadores">
+    <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+    <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizadores">
+        <PropertyRef Name="ID_Utilizador" />
+      </Principal>
+      <Dependent Role="Pedidos">
+        <PropertyRef Name="ID_Utilizador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PedidosDetalhes_Pedidos">
+    <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="1" />
+    <End Role="PedidosDetalhes" Type="Self.PedidosDetalhes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pedidos">
+        <PropertyRef Name="ID_Pedido" />
+      </Principal>
+      <Dependent Role="PedidosDetalhes">
+        <PropertyRef Name="ID_Pedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PedidosDetalhes_Produto">
+    <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
+    <End Role="PedidosDetalhes" Type="Self.PedidosDetalhes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Produto">
+        <PropertyRef Name="ID_Produto" />
+      </Principal>
+      <Dependent Role="PedidosDetalhes">
+        <PropertyRef Name="ID_Produto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProdutosFavoritos_Produto">
+    <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
+    <End Role="ProdutosFavoritos" Type="Self.ProdutosFavoritos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Produto">
+        <PropertyRef Name="ID_Produto" />
+      </Principal>
+      <Dependent Role="ProdutosFavoritos">
+        <PropertyRef Name="ID_Produto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProdutosFavoritos_Utilizadores">
+    <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+    <End Role="ProdutosFavoritos" Type="Self.ProdutosFavoritos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizadores">
+        <PropertyRef Name="ID_Utilizador" />
+      </Principal>
+      <Dependent Role="ProdutosFavoritos">
+        <PropertyRef Name="ID_Utilizador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Token_Utilizadores">
+    <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+    <End Role="Token" Type="Self.Token" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizadores">
+        <PropertyRef Name="ID_Utilizador" />
+      </Principal>
+      <Dependent Role="Token">
+        <PropertyRef Name="ID_Utilizador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="GestãoRickyShopEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Admin" EntityType="Self.Admin" />
+    <EntitySet Name="Carrinho" EntityType="Self.Carrinho" />
+    <EntitySet Name="Categoria" EntityType="Self.Categoria" />
+    <EntitySet Name="Descontos" EntityType="Self.Descontos" />
+    <EntitySet Name="EstadoDoPedido" EntityType="Self.EstadoDoPedido" />
+    <EntitySet Name="EstadoUtilizadores" EntityType="Self.EstadoUtilizadores" />
+    <EntitySet Name="MarcaProduto" EntityType="Self.MarcaProduto" />
+    <EntitySet Name="Pedidos" EntityType="Self.Pedidos" />
+    <EntitySet Name="Produto" EntityType="Self.Produto" />
+    <EntitySet Name="ProdutosFavoritos" EntityType="Self.ProdutosFavoritos" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Token" EntityType="Self.Token" />
+    <EntitySet Name="Utilizadores" EntityType="Self.Utilizadores" />
+    <EntitySet Name="PedidosDetalhes" EntityType="Self.PedidosDetalhes" />
+    <AssociationSet Name="FK_Carrinho_Produto" Association="Self.FK_Carrinho_Produto">
+      <End Role="Produto" EntitySet="Produto" />
+      <End Role="Carrinho" EntitySet="Carrinho" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Carrinho_Utilizadores" Association="Self.FK_Carrinho_Utilizadores">
+      <End Role="Utilizadores" EntitySet="Utilizadores" />
+      <End Role="Carrinho" EntitySet="Carrinho" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Produto_Categoria" Association="Self.FK_Produto_Categoria">
+      <End Role="Categoria" EntitySet="Categoria" />
+      <End Role="Produto" EntitySet="Produto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Descontos_Produto" Association="Self.FK_Descontos_Produto">
+      <End Role="Produto" EntitySet="Produto" />
+      <End Role="Descontos" EntitySet="Descontos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pedidos_EstadoDoPedido" Association="Self.FK_Pedidos_EstadoDoPedido">
+      <End Role="EstadoDoPedido" EntitySet="EstadoDoPedido" />
+      <End Role="Pedidos" EntitySet="Pedidos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EstadoUtilizadores_Utilizadores" Association="Self.FK_EstadoUtilizadores_Utilizadores">
+      <End Role="Utilizadores" EntitySet="Utilizadores" />
+      <End Role="EstadoUtilizadores" EntitySet="EstadoUtilizadores" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Produto_MarcaProduto" Association="Self.FK_Produto_MarcaProduto">
+      <End Role="MarcaProduto" EntitySet="MarcaProduto" />
+      <End Role="Produto" EntitySet="Produto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pedidos_Utilizadores" Association="Self.FK_Pedidos_Utilizadores">
+      <End Role="Utilizadores" EntitySet="Utilizadores" />
+      <End Role="Pedidos" EntitySet="Pedidos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PedidosDetalhes_Pedidos" Association="Self.FK_PedidosDetalhes_Pedidos">
+      <End Role="Pedidos" EntitySet="Pedidos" />
+      <End Role="PedidosDetalhes" EntitySet="PedidosDetalhes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PedidosDetalhes_Produto" Association="Self.FK_PedidosDetalhes_Produto">
+      <End Role="Produto" EntitySet="Produto" />
+      <End Role="PedidosDetalhes" EntitySet="PedidosDetalhes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProdutosFavoritos_Produto" Association="Self.FK_ProdutosFavoritos_Produto">
+      <End Role="Produto" EntitySet="Produto" />
+      <End Role="ProdutosFavoritos" EntitySet="ProdutosFavoritos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProdutosFavoritos_Utilizadores" Association="Self.FK_ProdutosFavoritos_Utilizadores">
+      <End Role="Utilizadores" EntitySet="Utilizadores" />
+      <End Role="ProdutosFavoritos" EntitySet="ProdutosFavoritos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Token_Utilizadores" Association="Self.FK_Token_Utilizadores">
+      <End Role="Utilizadores" EntitySet="Utilizadores" />
+      <End Role="Token" EntitySet="Token" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(GestãoRickyShopModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(GestãoRickyShopModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>
