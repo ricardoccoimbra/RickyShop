@@ -80,28 +80,36 @@
     <div class="row">
         @foreach (var item in Model)
         {
-
-            if (item.Destaque == 1)
+            if (cnt != 3)
             {
-                <div class="col-sm-6 col-md-4">
-                    <div class="thumbnail">
-                        <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" />
+                if (item.Destaque == 1)
+                {
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" />
 
 
-                        <div class="caption">
-                            <h3>@Html.DisplayFor(modelItem => item.Nome) - @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)€</h3>
-                            <p>@Html.DisplayFor(modelItem => item.Descrição)</p>
-                            @if (Session["UserID"] != null)
-                            {
-                                <p>
+                            <div class="caption">
+                                <h3>@Html.DisplayFor(modelItem => item.Nome) - @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)€</h3>
+                                <p>@Html.DisplayFor(modelItem => item.Descrição)</p>
+                                @if (Session["UserID"] != null)
+                                {
+                                    <p>
                                     <input type="submit" value="Adicionar" class="btn btn-success" onclick="location.href = '@Url.Action("btn_AceitarPedido", "Voluntario", new { @id = item.ID_Produto })'">
                                     <input type="submit" value="Favorito" class="btn btn-danger" onclick="location.href = '@Url.Action("btn_AceitarPedido", "Voluntario", new { @id = item.ID_Produto })'">
-                                </p>
-                            }
+                                    </p>
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
+                    cnt++;
+                }
             }
+            else
+            {
+                break;
+            }
+
         }
     </div>
 </div>

@@ -33,6 +33,11 @@ namespace RickyShop_Site.Controllers
             return View();
         }
 
+        public ActionResult TemplateEmail()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult ValidacaoToken(Token token)
         {
@@ -85,29 +90,14 @@ namespace RickyShop_Site.Controllers
             } while (valid != true);
 
 
-
-
             string subject = "Redefinição de senha da RickyShop";
 
 
             //string body = "Olá, a seu token de recuperação é: " + tokenAleatorio +
             //    "\r De seguida altere a sua password no site. \n Cumprimentos, ";
 
-            string body =
-            #region Corpo do Email
-                "< !DOCTYPE html >" +
-                "< html >" +
-                    "< body style = \"background: #ffffff;\" >" +
-                        "< h1 style = \"background:#a2db3b; text-align:center; font-size:50px; color:white\" > RickyShop </ h1 > " +
-                        "< h3 style = \"border -collapse:collapse;padding:0 0 10px; font:21px/24px Arial,Helvetica,sans-serif;color:#333; text-align:center \" > Definir uma nova palavra - passe </ h3 >" +
-                        "< label > Olá " + u.PrimeiroNome + " " + u.SegundoNome +",  </ label > " +
-                        "< p > < label > Recebemos um pedido para alteração de Password da sua Conta RickyShop através do seu endereço de email.O seu código de validação de alteração de Password é: </ label > </ p >" +
-                        "< strong style = \"text -align:center;font-size:24px;font-weight:bold \" > " + tokenAleatorio + " </ strong >" +
-                        "< p > < label > Se não tiver solicitado este código, é possível que alguém esteja a tentar aceder à Conta RickyShop" + u.Email +  " < b > Não encaminhe nem forneça este código a ninguém. </ b > </ label > </ p >" +
-                        "< p > < label > Com os melhores cumprimentos, Equipa de Suporte RickyShop</ label > </ p >" +
-                  " </ body > " +
-                "</ html > ";
-            #endregion
+            string template = Server.MapPath("~/Home/ResetPass/TemplateEmail");
+            string body = System.IO.File.ReadAllText(template);
 
             MailMessage objEmail = new MailMessage();
 

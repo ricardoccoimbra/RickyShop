@@ -129,6 +129,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProdutosController.cs" />
     <Compile Include="Controllers\ResetPassController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -221,6 +222,7 @@
     <Content Include="Content\StyleContacto.css" />
     <Content Include="Content\StyleLogin.css" />
     <Content Include="Content\StyleRegistar.css" />
+    <Content Include="Content\StyleTeste.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -362,6 +364,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\ResetPass\ValidacaoToken.cshtml" />
     <Content Include="Views\ResetPass\ResetPassword.cshtml" />
+    <Content Include="Views\Produtos\Teste.cshtml" />
+    <Content Include="Views\ResetPass\TemplateEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
