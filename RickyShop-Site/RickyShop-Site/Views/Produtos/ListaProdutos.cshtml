@@ -1,0 +1,92 @@
+﻿@using PagedList.Mvc;
+@model  PagedList.IPagedList<RickyShop_Site.Models.Produto>
+@{
+    RickyShop_Site.Models.GestãoRickyShopEntities db = new RickyShop_Site.Models.GestãoRickyShopEntities();
+    int cntAux = 0;
+}
+
+<link href="~/Content/Shop.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Content/StyleListaProdutos.css" rel="stylesheet" />
+
+@foreach (var item in Model)
+{
+    if (cntAux == 0)
+    {
+        <div class="col-md-3">
+            <section class="panel">
+                <div class="panel-body">
+                    <input type="text" placeholder="Keyword Search" class="form-control" />
+                </div>
+            </section>
+            <section class="panel">
+                <header class="panel-heading">
+                    Filtros
+                </header>
+                <div class="panel-body">
+                    <form role="form product-form">
+                        <div class="form-group">
+                            <label>Marca</label>
+                            @Html.DropDownListFor(model => item.MarcaProduto, new SelectList(db.MarcaProduto, "ID_Marca", "Marca"), "Marca", new { id = "marca_produto" })
+                        </div>
+
+                        <div style="display:flex; width: 10px">
+
+                            <input type="number" style="width: 110px; margin-right: 5px" placeholder="Preço Min" />
+                            <input type="number" style="width: 110px" placeholder="Preço Max" />
+                        </div>
+
+                        <br />
+
+                        <input type="checkbox" /> <label style="font-size: 15px; color: #195712;"> Promoções </label>
+
+                        <br />
+                        <button class="btn btn-success" type="submit">Filtrar</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+        cntAux++;
+    }
+    <div class="col-md-9">
+        <div class="row product-list">
+            @foreach (var i in Model)
+            {
+                <div class="col-md-4">
+                    <section class="panel">
+                        <div class="pro-img-box">
+                            <img src="@Html.DisplayFor(modelItem => i.ImagemPath)" />
+                        </div>
+
+                        <div class="panel-body text-center">
+                            <h4>
+                                <a class="pro-title">
+                                    @Html.DisplayFor(modelItem => i.Nome)
+                                </a>
+                            </h4>
+                            <p class="price">@Html.DisplayFor(modelItem => i.PreçoPorQuantidade)€</p>
+
+                            <p style="margin-left:5px">
+                                <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Ver Produto">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                                <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Adicionar ao Carrinho" style="background-color: #195712; color: white">
+                                    <i class="glyphicon glyphicon-shopping-cart"></i>
+                                </button>
+                                <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Adicionar aos Favoritos" style="background-color:#ce2e2e; color:white">
+                                    <i class="glyphicon glyphicon-heart"></i>
+                                </button>
+                            </p>
+                        </div>
+                    </section>
+                </div>
+            }
+        </div>
+    </div>
+    break;
+}
+
+        Página @Model.PageNumber de @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("ListaProdutos", new { pagina = page }))
+

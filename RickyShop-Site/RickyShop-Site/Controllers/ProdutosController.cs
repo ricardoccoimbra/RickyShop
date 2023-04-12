@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace RickyShop_Site.Controllers
 {
@@ -12,11 +13,23 @@ namespace RickyShop_Site.Controllers
         GestãoRickyShopEntities db = new GestãoRickyShopEntities();
 
         // GET: Produtos
-        public ActionResult Produtos(int id)
+        public ActionResult ProdutoDetalhado(int id)
         {
             var a = db.Produto.Where(p => p.ID_Produto == id).ToList();
 
             return View(a);
+        }
+
+        public ActionResult ListaProdutos(int? pagina)
+        {
+            int tamanhoPagina = 6;
+            
+            // valor não pode ser nulo, caso seja ele fica a 1, como se fosse um if
+            int numeroPagina = pagina ?? 1;
+
+            //Para fazer do mais caro => barato com orderby
+            var prodPage = db.Produto.OrderBy(a => a.Nome).ToPagedList(numeroPagina, tamanhoPagina);
+            return View(prodPage);
         }
     }
 }

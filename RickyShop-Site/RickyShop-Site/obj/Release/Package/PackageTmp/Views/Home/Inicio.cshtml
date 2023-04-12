@@ -1,0 +1,131 @@
+﻿@model List<RickyShop_Site.Models.Produto>
+@{ int auxCarrosel = 0;
+    int cnt = 0;
+}
+<link href="~/Content/Shop.css" rel="stylesheet" />
+
+<div class="row">
+    <p class="alert-success text-center" style="font-size:40px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; border-radius:15px; margin-top:3%">
+        <b>PROMOÇÕES SÓ NA RICKYSHOP!</b>
+    </p>
+</div>
+
+<div class="form-group">
+    <div class="slider" style=" border-radius: 15px;">
+        <div class="slides">
+            <input type="radio" name="radio-btn" id="radio1">
+            <input type="radio" name="radio-btn" id="radio2">
+            <input type="radio" name="radio-btn" id="radio3">
+
+
+            @foreach (var item in Model)
+            {
+                {
+
+                    if (item.Desconto != null)
+                    {
+                        if (auxCarrosel == 0)
+                        {
+                            <div class="slide first">
+                                @*<a href="~/Home/About" style="display:flex"> <img src="~/Imagens/McKenzie-Fato-de-Treino.jpg"/></a>*@
+                                <a href="~/Home/Contact"> <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" /> </a>
+                            </div>
+
+                        }
+                        if (auxCarrosel == 1)
+                        {
+                            <div class="slide second">
+                                <a href="~/Home/Contact"> <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" /> </a>
+                            </div>
+                        }
+                        if (auxCarrosel == 2)
+                        {
+                            <div class="slide third">
+                                <a href="~/Home/Contact"> <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" /> </a>
+                            </div>
+                        }
+
+                        auxCarrosel++;
+                    }
+
+                }
+
+
+
+
+            }
+
+            <div class="navigation-auto">
+                <div class="auto-btn1"></div>
+                <div class="auto-btn2"></div>
+                <div class="auto-btn3"></div>
+            </div>
+        </div>
+
+        <div class="manual-navigation">
+            <label for="radio1" class="manual-btn"></label>
+            <label for="radio2" class="manual-btn"></label>
+            <label for="radio3" class="manual-btn"></label>
+        </div>
+    </div>
+
+
+    <br />
+    <br />
+    <br />
+
+    <p class="alert-success text-center" style="font-size:40px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; border-radius:15px; margin-top:3%">
+        <b>Destaque</b>
+    </p>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            if (cnt != 3)
+            {
+                if (item.Destaque == 1)
+                {
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" />
+
+
+                            <div class="caption">
+                                <h3>@Html.DisplayFor(modelItem => item.Nome) - @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)€</h3>
+                                <p>@Html.DisplayFor(modelItem => item.Descrição)</p>
+                                <div style="display:flex">
+
+
+                                    <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Ver Produto" onclick="location.href = '@Url.Action("Produtos", "Produtos", new { @id = item.ID_Produto })'">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>
+
+
+
+                                    @if (Session["UserID"] != null)
+                                    {
+                                        <p style="margin-left:5px">
+                                            <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Adicionar ao Carrinho" style="background-color: #195712; color: white">
+                                                <i class="glyphicon glyphicon-shopping-cart"></i>
+                                            </button>
+                                            <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Adicionar aos Favoritos" style="background-color:#ce2e2e; color:white">
+                                                <i class="glyphicon glyphicon-heart"></i>
+                                            </button>
+                                        </p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    cnt++;
+                }
+            }
+            else
+            {
+                break;
+            }
+
+        }
+    </div>
+</div>
+
+<script src="~/Scripts/carouselAuto.js"></script>

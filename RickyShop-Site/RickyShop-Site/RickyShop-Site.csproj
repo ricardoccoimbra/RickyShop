@@ -52,6 +52,12 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -161,6 +167,7 @@
     <Compile Include="Models\Descontos.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities.cs" />
     <Compile Include="Models\EstadoDoPedido.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
@@ -217,12 +224,14 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\Shop.css" />
     <Content Include="Content\StyleAbout.css" />
     <Content Include="Content\StyleContacto.css" />
+    <Content Include="Content\StyleListaProdutos.css" />
     <Content Include="Content\StyleLogin.css" />
     <Content Include="Content\StyleRegistar.css" />
-    <Content Include="Content\StyleTeste.css" />
+    <Content Include="Content\StyleProdutosDetalhados.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -359,17 +368,18 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\ResetPass\EnvioToken.cshtml" />
     <Content Include="Views\Home\Registar.cshtml" />
-    <Content Include="Views\Home\Suporte.cshtml" />
     <Content Include="Views\Home\Inicio.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\ResetPass\ValidacaoToken.cshtml" />
     <Content Include="Views\ResetPass\ResetPassword.cshtml" />
-    <Content Include="Views\Produtos\Produtos.cshtml" />
+    <Content Include="Views\Produtos\ProdutoDetalhado.cshtml" />
     <Content Include="Views\ResetPass\TemplateEmail.cshtml" />
-    <Content Include="Views\Produtos\Suporte.cshtml" />
+    <Content Include="Views\Produtos\ListaProdutos.cshtml" />
+    <Content Include="Views\Produtos\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -390,6 +400,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

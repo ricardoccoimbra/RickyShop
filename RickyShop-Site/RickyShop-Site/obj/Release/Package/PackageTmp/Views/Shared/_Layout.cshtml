@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<link href="~/Content/StyleAbout.css" rel="stylesheet" />
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title RickyShop</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background: #195712;">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("RickyShop", "Inicio", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse" style="color:red">
+                <ul style="color:red" class="nav navbar-nav">
+                    <li>@Html.ActionLink("Sobre Nós", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorias <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Roupa</a></li>
+                            <li><a href="#">Ténis</a></li>
+                            <li><a href="#">Desporto</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#" id="d">Promoções</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+
+    <div class="footer-section">
+        <div class="footer" style="background: #a2db3b">
+            <div class="container">
+                <div class="col-md-4 footer-one">
+                    <h5>Informação </h5>
+                    <ul>
+                        <li><a href="maintenance.html">Home</a></li>
+                        <li><a href="contact.html">Contacto</a></li>
+                        <li><a href="about.html">Sobre Nós</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 footer-two">
+                    <h5>Categorias </h5>
+                    <ul>
+                        <li><a href="maintenance.html">Roupa</a></li>
+                        <li><a href="contact.html">Ténis</a></li>
+                        <li><a href="about.html">Promoções</a></li>
+                        <li><a href="about.html">Desportivo</a></li>
+                        <li><a href="about.html">Parceiros</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 footer-four">
+                    <h5>Redes Socias </h5>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/"><i id="social-fb" class="fa fa-facebook-square fa-3x social"></i></a>
+                        <a href="https://twitter.com/"><i id="social-tw" class="fa fa-twitter-square fa-3x social"></i></a>
+                        <a href="https://plus.google.com/"><i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
+                        <a href="mailto:bootsnipp@gmail.com"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - RickyShop</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
