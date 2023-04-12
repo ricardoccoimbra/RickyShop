@@ -1,0 +1,114 @@
+﻿
+
+@{
+    ViewBag.Title = "Suporte";
+}
+
+<h2>Suporte</h2>
+
+<div>
+    <h4>Produto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_Produto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_Produto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+           
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PreçoPorQuantidade)
+        </dt>
+
+        <dd>
+            
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_Categoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_Categoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuantidadeStock)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuantidadeStock)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImagemPath)
+        </dt>
+
+        <dd>
+            
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descrição)
+        </dt>
+
+        <dd>
+            
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Desconto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Desconto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ID_Marca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID_Marca)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Genero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Genero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descontinuado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descontinuado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Destaque)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Destaque)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

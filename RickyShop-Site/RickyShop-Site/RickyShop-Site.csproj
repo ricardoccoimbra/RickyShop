@@ -364,8 +364,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\ResetPass\ValidacaoToken.cshtml" />
     <Content Include="Views\ResetPass\ResetPassword.cshtml" />
-    <Content Include="Views\Produtos\Teste.cshtml" />
+    <Content Include="Views\Produtos\Produtos.cshtml" />
     <Content Include="Views\ResetPass\TemplateEmail.cshtml" />
+    <Content Include="Views\Produtos\Suporte.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
