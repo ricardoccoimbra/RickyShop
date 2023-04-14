@@ -181,4 +181,3 @@ C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\obj\Debu
 C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\obj\Debug\RickyShop-Site.csproj.CopyComplete
 C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\obj\Debug\RickyShop-Site.dll
 C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\obj\Debug\RickyShop-Site.pdb
-C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\obj\Debug\RickyShop-Site.csproj.AssemblyReference.cache

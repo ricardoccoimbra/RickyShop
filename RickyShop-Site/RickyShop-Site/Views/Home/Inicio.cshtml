@@ -27,7 +27,6 @@
                         if (auxCarrosel == 0)
                         {
                             <div class="slide first">
-                                @*<a href="~/Home/About" style="display:flex"> <img src="~/Imagens/McKenzie-Fato-de-Treino.jpg"/></a>*@
                                 <a href="~/Home/Contact"> <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" /> </a>
                             </div>
 
@@ -90,28 +89,23 @@
 
 
                             <div class="caption">
-                                <h3>@Html.DisplayFor(modelItem => item.Nome) - @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)€</h3>
+                                <div style="font-size:20px">@Html.DisplayFor(modelItem => item.Nome)<div style="color:#195712"> @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)€ </div> </div>
                                 <p>@Html.DisplayFor(modelItem => item.Descrição)</p>
                                 <div style="display:flex">
-
-
-                                    <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Ver Produto" onclick="location.href = '@Url.Action("ProdutoDetalhado", "Produtos", new { @id = item.ID_Produto })'">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </button>
-
-
-
-                                    @if (Session["UserID"] != null)
-                                    {
-                                        <p style="margin-left:5px">
+                                    <p style="margin-left:5px">
+                                        <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Ver Produto" onclick="location.href = '@Url.Action("ProdutoDetalhado", "Produtos", new { @id = item.ID_Produto })'">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                        @if (Session["UserID"] != null)
+                                        {
                                             <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Adicionar ao Carrinho" style="background-color: #195712; color: white">
                                                 <i class="glyphicon glyphicon-shopping-cart"></i>
                                             </button>
                                             <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Adicionar aos Favoritos" style="background-color:#ce2e2e; color:white">
                                                 <i class="glyphicon glyphicon-heart"></i>
                                             </button>
-                                        </p>
-                                    }
+                                        }
+                                    </p>
                                 </div>
                             </div>
                         </div>

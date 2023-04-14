@@ -20,16 +20,44 @@ namespace RickyShop_Site.Controllers
             return View(a);
         }
 
+ 
         public ActionResult ListaProdutos(int? pagina)
         {
+                int tamanhoPagina = 6;
+                 
+                // valor não pode ser nulo, caso seja ele fica a 1, como se fosse um if
+                int numeroPagina = pagina ?? 1;
+
+                //Para fazer do mais caro => barato com orderby
+                var prodPage = db.Produto.OrderBy(a => a.ID_Produto).ToPagedList(numeroPagina, tamanhoPagina);
+                return View(prodPage);
+        }
+
+        [HttpPost]
+        public ActionResult ListaProdutos(int? pagina, Produto P)
+        {
             int tamanhoPagina = 6;
-            
+
             // valor não pode ser nulo, caso seja ele fica a 1, como se fosse um if
             int numeroPagina = pagina ?? 1;
 
             //Para fazer do mais caro => barato com orderby
-            var prodPage = db.Produto.OrderBy(a => a.Nome).ToPagedList(numeroPagina, tamanhoPagina);
+            var prodPage = db.Produto.OrderBy(a => a.ID_Produto).ToPagedList(numeroPagina, tamanhoPagina);
             return View(prodPage);
         }
+
+        public ActionResult FiltrarProdutos(int? pagina, int id)
+        {
+            int tamanhoPagina = 6;
+
+            // valor não pode ser nulo, caso seja ele fica a 1, como se fosse um if
+            int numeroPagina = pagina ?? 1;
+
+            //Para fazer do mais caro => barato com orderby
+            var prodPage = db.Produto.Where(a => a.ID_Marca == id).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+            return View("ListaProdutos", prodPage);
+        }
+
+
     }
 }
