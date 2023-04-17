@@ -61,5 +61,17 @@ namespace RickyShop_Site.Models
             return sb.ToString();
         }
 
+        public static void MarcaID()
+        {
+            
+            List<string> ls = new List<string>();
+
+            foreach (var item in db.MarcaProduto)
+            {
+                ls.Add(item.Marca);
+            }
+        }
+
     }
 }
+

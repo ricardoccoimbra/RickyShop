@@ -177,6 +177,7 @@ C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\bin\pt-b
 C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\bin\pt-br\System.Web.WebPages.resources.dll
 C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\bin\pt-br\System.Web.WebPages.Deployment.resources.dll
 C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\bin\pt-br\System.Web.WebPages.Razor.resources.dll
+C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\obj\Debug\RickyShop-Site.csproj.AssemblyReference.cache
 C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\obj\Debug\RickyShop-Site.csproj.CoreCompileInputs.cache
 C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\obj\Debug\RickyShop-Site.csproj.CopyComplete
 C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\obj\Debug\RickyShop-Site.dll

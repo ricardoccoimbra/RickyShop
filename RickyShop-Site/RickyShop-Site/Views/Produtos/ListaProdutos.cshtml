@@ -1,5 +1,5 @@
 ﻿@using PagedList.Mvc;
-@model  PagedList.IPagedList<RickyShop_Site.Models.Produto>
+@model  PagedList.PagedList<RickyShop_Site.Models.Produto>
 @{
     RickyShop_Site.Models.GestãoRickyShopEntities db = new RickyShop_Site.Models.GestãoRickyShopEntities();
     int cntAux = 0;
@@ -8,90 +8,105 @@
 <link href="~/Content/Shop.css" rel="stylesheet" />
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
 <link href="~/Content/StyleListaProdutos.css" rel="stylesheet" />
-@using (Html.BeginForm())
+
+
+@if (cntAux == 0)
 {
-    @Html.AntiForgeryToken()
+    <div class="col-md-3">
+        <form role="form">
+            <section class="panel">
+                <div class="panel-body">
+                    @Html.TextBox("SearchString")
+                    <input type="submit" value="Procurar" />
+                </div>
+            </section>
+        </form>
 
 
-        if (cntAux == 0)
-        {
-            <div class="col-md-3">
-                <section class="panel">
-                    <div class="panel-body">
-                        <input type="text" placeholder="Keyword Search" class="form-control" />
-                    </div>
-                </section>
-                <section class="panel">
-                    <header class="panel-heading">
-                        Filtros
-                    </header>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label>Marca</label>
-                            @Html.DropDownListFor(model => model.ToList().FirstOrDefault().MarcaProduto, new SelectList(db.MarcaProduto, "ID_Marca", "Marca"), "Marca", new { id = "marca_produto" })
-                        </div>
+        <section class="panel">
+            <header class="panel-heading">
+                Filtros
+            </header>
+            <div class="panel-body">
 
-                        <div style="display:flex; width: 10px">
-
-                            <input type="number" style="width: 110px; margin-right: 5px" placeholder="Preço Min" name="valMin" />
-                            <input type="number" style="width: 110px" placeholder="Preço Max" name="valMax" />
-                        </div>
-
-                        <br />
-                        <input type="checkbox" name="CheckBoxValue" value="true" /> <label style="font-size: 15px; color: #195712;"> Promoções </label>
-
-                        <br />
-                        <input type="submit" value="Filtrar" class="btn btn-success">
-
-                    </div>
-                </section>
-            </div>
-            cntAux++;
-
-        <div class="col-md-9">
-            <div class="row product-list">
-                @foreach (var i in Model)
+                @using (Html.BeginForm())
                 {
-                    <div class="col-md-4">
-                        <section class="panel">
-                            <div class="pro-img-box">
-                                <img src="@Html.DisplayFor(modelItem => i.ImagemPath)" />
-                            </div>
-
-                            <div class="panel-body text-center">
-                                <h4>
-                                    <a class="pro-title">
-                                        @Html.DisplayFor(modelItem => i.Nome)
-                                    </a>
-                                </h4>
-                                <p class="price" style="color:#195712">@Html.DisplayFor(modelItem => i.PreçoPorQuantidade)€</p>
-
-                                <p style="margin-left:5px">
-                                    <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Ver Produto" onclick="location.href = '@Url.Action("ProdutoDetalhado", "Produtos", new { @id = i.ID_Produto })'">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </button>
-                                    @if (Session["UserID"] != null)
-                                    {
-                                        <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Adicionar ao Carrinho" style="background-color: #195712; color: white">
-                                            <i class="glyphicon glyphicon-shopping-cart"></i>
-                                        </button>
-                                        <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Adicionar aos Favoritos" style="background-color:#ce2e2e; color:white">
-                                            <i class="glyphicon glyphicon-heart"></i>
-                                        </button>
-                                    }
-                                </p>
-                            </div>
-                        </section>
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label>Marca</label>
+                        @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto, "ID_Marca", "Marca"), "Marca", new { id = "cat_pedido" })
+                        @* @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto, "ID_Marca", "Marca"), "Marca", new { id = "cat_pedido" })*@
                     </div>
-                }
-            </div>
 
-        </div>
-    }
+                    <div style="display:flex; width: 10px">
+                        <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Preços Creceste" style="background-color: gray; color: white" value="">
+                            <i class="glyphicon glyphicon-arrow-up"></i>
+                        </button>
+
+                        <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Preços Decrecentes" style="background-color:gray; color:white; margin-left:5px" onclick="location.href = '@Url.Action("ListaProdutos", "Produtos", new { @id = "PrecoCres" })'">
+                            <i class="glyphicon glyphicon-arrow-down"></i>
+                        </button>
+                    </div>
+
+                    <br />
+                    <input type="checkbox" name="CheckBoxValue" value="true" /> <label style="font-size: 15px; color: #195712;"> Promoções </label>
+
+                    <br />
+                    <input type="submit" value="Filtrar" class="btn btn-success"> @Html.ActionLink("Limpar Filtro", "LimparFiltro", "Produtos")
+                }
+
+
+            </div>
+        </section>
+
+    </div>
+    cntAux++;
 }
+<div class="col-md-9">
+    <div class="row product-list">
+
+        @foreach (var item in Model)
+        {
+
+            <div class="col-md-4">
+                <section class="panel">
+                    <div class="pro-img-box">
+                        <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" />
+                    </div>
+
+                    <div class="panel-body text-center">
+                        <h4>
+                            <a class="pro-title">
+                                @Html.DisplayFor(modelItem => item.Nome)
+                            </a>
+                        </h4>
+                        <p class="price" style="color:#195712">@Html.DisplayFor(modelItem => item.PreçoPorQuantidade)€</p>
+
+                        <p style="margin-left:5px">
+                            <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Ver Produto" onclick="location.href = '@Url.Action("ProdutoDetalhado", "Produtos", new { @id = item.ID_Produto })'">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                            @if (Session["UserID"] != null)
+                            {
+                                <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Adicionar ao Carrinho" style="background-color: #195712; color: white">
+                                    <i class="glyphicon glyphicon-shopping-cart"></i>
+                                </button>
+                                <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Adicionar aos Favoritos" style="background-color:#ce2e2e; color:white">
+                                    <i class="glyphicon glyphicon-heart"></i>
+                                </button>
+                            }
+                        </p>
+                    </div>
+                </section>
+            </div>
+        }
+    </div>
+</div>
+
+
 
 Página @Model.PageNumber de @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("ListaProdutos", new { pagina = page }))
 
-@Html.PagedListPager(Model, page => Url.Action("FiltrarProdutos", new { pagina = page }))
 
 
