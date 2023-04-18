@@ -227,6 +227,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Shop.css" />
     <Content Include="Content\StyleAbout.css" />
+    <Content Include="Content\StyleButtonToTop.css" />
     <Content Include="Content\StyleContacto.css" />
     <Content Include="Content\StyleListaProdutos.css" />
     <Content Include="Content\StyleLogin.css" />

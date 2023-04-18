@@ -37,10 +37,10 @@
                                     <label style=" flex-wrap: nowrap; color:#195712">
                                         @{
                                             double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * item.Desconto) / 100;
-                                            double preco = Convert.ToDouble(item.PreçoPorQuantidade) - valDesconto;
-
+                                            string preco = (Convert.ToDouble(item.PreçoPorQuantidade) - valDesconto).ToString("N2") + "€";
+                                            
                                             @Html.DisplayFor(model => preco);
-                                        }
+                                        } 
 
                                         </label> <p><small class="text-success">(-@Html.DisplayFor(model => item.Desconto)%)</small> </p>
                                 </div>
