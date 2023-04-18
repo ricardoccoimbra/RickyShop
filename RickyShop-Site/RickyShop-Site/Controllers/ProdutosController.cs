@@ -19,7 +19,7 @@ namespace RickyShop_Site.Controllers
 
             return View(a);
         }
-        public ActionResult ListaProdutos(int? pagina, string searchString)
+        public ActionResult ListaProdutos(int? pagina, string searchString, string id)
         {
             int tamanhoPagina = 6;
             // valor não pode ser nulo, caso seja ele fica a 1, como se fosse um if
