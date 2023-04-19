@@ -160,7 +160,7 @@ namespace RickyShop_Site.Controllers
         {
             int UserID = Convert.ToInt32(Session["UserID"]);
             var user = db.Utilizadores.FirstOrDefault(s => s.ID_Utilizador == UserID);
-            if (u.ConfirmarPassword == u.PassWord)
+            if (u.ConfirmarPassWord == u.PassWord)
             {
                 user.PassWord = u.PassWord;
                 db.SaveChangesAsync();

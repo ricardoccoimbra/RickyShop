@@ -48,6 +48,17 @@
     <Property Name="LogOn" Type="datetime" Nullable="false" />
     <Property Name="LogOff" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="Logs">
+    <Key>
+      <PropertyRef Name="ID_Log" />
+    </Key>
+    <Property Name="ID_Log" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Utilizador" Type="int" Nullable="false" />
+    <Property Name="Erro_Login" Type="datetime" />
+    <Property Name="Login" Type="datetime" />
+    <Property Name="LogOff" Type="datetime" />
+    <Property Name="IP_TentativaLogin" Type="varchar" MaxLength="15" />
+  </EntityType>
   <EntityType Name="MarcaProduto">
     <Key>
       <PropertyRef Name="ID_Marca" />
@@ -88,7 +99,7 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
       <PropertyRef Name="ID_Produto" />
     </Key>
     <Property Name="ID_Produto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Nome" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="PreçoPorQuantidade" Type="money" Nullable="false" />
     <Property Name="ID_Categoria" Type="int" Nullable="false" />
     <Property Name="QuantidadeStock" Type="int" Nullable="false" />
@@ -131,7 +142,7 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
     <Key>
       <PropertyRef Name="ID_Utilizador" />
     </Key>
-    <Property Name="ID_Utilizador" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Utilizador" Type="int" Nullable="false" />
     <Property Name="PrimeiroNome" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="SegundoNome" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="DataDeNascimento" Type="date" Nullable="false" />
@@ -187,6 +198,18 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
       </Principal>
       <Dependent Role="EstadoUtilizadores">
         <PropertyRef Name="ID_Utilizadores" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Logs_Utilizadores">
+    <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+    <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizadores">
+        <PropertyRef Name="ID_Utilizador" />
+      </Principal>
+      <Dependent Role="Logs">
+        <PropertyRef Name="ID_Utilizador" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -336,6 +359,7 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
     <EntitySet Name="Descontos" EntityType="Self.Descontos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EstadoDoPedido" EntityType="Self.EstadoDoPedido" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EstadoUtilizadores" EntityType="Self.EstadoUtilizadores" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MarcaProduto" EntityType="Self.MarcaProduto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Produto" EntityType="Self.Produto" Schema="dbo" store:Type="Tables" />
@@ -366,6 +390,10 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
     <AssociationSet Name="FK_EstadoUtilizadores_Utilizadores" Association="Self.FK_EstadoUtilizadores_Utilizadores">
       <End Role="Utilizadores" EntitySet="Utilizadores" />
       <End Role="EstadoUtilizadores" EntitySet="EstadoUtilizadores" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Logs_Utilizadores" Association="Self.FK_Logs_Utilizadores">
+      <End Role="Utilizadores" EntitySet="Utilizadores" />
+      <End Role="Logs" EntitySet="Logs" />
     </AssociationSet>
     <AssociationSet Name="FK_Pedidos_EstadoDoPedido" Association="Self.FK_Pedidos_EstadoDoPedido">
       <End Role="EstadoDoPedido" EntitySet="EstadoDoPedido" />

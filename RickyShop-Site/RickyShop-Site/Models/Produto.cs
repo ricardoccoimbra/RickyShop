@@ -35,7 +35,8 @@ namespace RickyShop_Site.Models
         public string Genero { get; set; }
         public int Descontinuado { get; set; }
         public int Destaque { get; set; }
-    
+        public bool EstadoProm { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Carrinho> Carrinho { get; set; }
         public virtual Categoria Categoria { get; set; }

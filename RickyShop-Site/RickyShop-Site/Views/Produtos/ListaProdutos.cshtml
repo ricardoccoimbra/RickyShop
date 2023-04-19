@@ -3,6 +3,7 @@
 @{
     RickyShop_Site.Models.GestãoRickyShopEntities db = new RickyShop_Site.Models.GestãoRickyShopEntities();
     int cntAux = 0;
+    int x = Model.FirstOrDefault().ID_Categoria;
 }
 
 <link href="~/Content/Shop.css" rel="stylesheet" />
@@ -36,11 +37,14 @@
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-group">
-                        @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto, "ID_Marca", "Marca"), "Marca", new { id = "cat_pedido" })
-                        @* @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto, "ID_Marca", "Marca"), "Marca", new { id = "cat_pedido" })*@
+                        @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto.Where(s => s.Produto.Count(c => c.ID_Categoria == x) != 0), "ID_Marca", "Marca"), "Marca", new { id = "cat_pedido" })
                     </div>
 
-                    <input type="submit" value="Filtrar" class="btn btn-success"> @Html.ActionLink("Limpar Filtro", "LimparFiltro", "Produtos")
+                    <br />
+                    @Html.CheckBoxFor(model => model.FirstOrDefault().EstadoProm) <label style="font-size: 15px; color: #195712;"> Promoções </label>
+                    <br />
+
+                    <input type="submit" value="Filtrar" class="btn btn-success"> @Html.ActionLink("Limpar Filtro", "LimparFiltro", "Produtos", new { id = Model.FirstOrDefault().ID_Categoria }, new { })
                 }
 
 
@@ -50,23 +54,20 @@
 
         <section class="panel">
             <header class="panel-heading">
-                Preços
+                Ordem
             </header>
             <div class="panel-body">
                 <div style="display:flex; width: 10px">
-                    <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Preços Creceste" style="background-color: gray; color: white" onclick="location.href = '@Url.Action("OrdemPrecos", "Produtos", new { tipo = "PrecoCres" })'">
+                    <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Mais Baixo para Mais Alto" style="background-color: gray; color: white" onclick="location.href = '@Url.Action("OrdemPrecos", "Produtos", new { tipo = "PrecoCres", id = Model.FirstOrDefault().ID_Categoria })'">
                         <i class="glyphicon glyphicon-arrow-up"></i>
                     </button>
 
-                    <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Preços Decrecentes" style="background-color:gray; color:white; margin-left:5px" onclick="location.href = '@Url.Action("OrdemPrecos", "Produtos", new { tipo = "PrecoDesc" })'">
+                    <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Mais Alto para Mais Baixo" style="background-color:gray; color:white; margin-left:5px" onclick="location.href = '@Url.Action("OrdemPrecos", "Produtos", new { tipo = "PrecoDesc" , id = Model.FirstOrDefault().ID_Categoria })'">
                         <i class="glyphicon glyphicon-arrow-down"></i>
                     </button>
                 </div>
 
                 <br />
-
-                <input type="checkbox" name="CheckBoxValue" value="true" /> <label style="font-size: 15px; color: #195712;"> Promoções </label>
-
             </div>
         </section>
     </div>

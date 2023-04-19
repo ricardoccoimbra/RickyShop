@@ -18,6 +18,7 @@ namespace RickyShop_Site.Models
         public Utilizadores()
         {
             this.Carrinho = new HashSet<Carrinho>();
+            this.Logs = new HashSet<Logs>();
             this.Pedidos = new HashSet<Pedidos>();
             this.ProdutosFavoritos = new HashSet<ProdutosFavoritos>();
             this.Token = new HashSet<Token>();
@@ -30,14 +31,16 @@ namespace RickyShop_Site.Models
         public int NIF { get; set; }
         public string Email { get; set; }
         public string PassWord { get; set; }
-        public string ConfirmarPassword { get; set; }
         public int Contacto { get; set; }
+        public string ConfirmarPassWord { get; set; }
         public System.DateTime DataDeAdesao { get; set; }
         public Nullable<double> Desconto { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Carrinho> Carrinho { get; set; }
         public virtual EstadoUtilizadores EstadoUtilizadores { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Logs> Logs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pedidos> Pedidos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

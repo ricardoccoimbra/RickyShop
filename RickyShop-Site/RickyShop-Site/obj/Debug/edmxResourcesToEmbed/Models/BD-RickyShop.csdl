@@ -54,6 +54,18 @@
     <Property Name="LogOff" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="Utilizadores" Relationship="Self.FK_EstadoUtilizadores_Utilizadores" FromRole="EstadoUtilizadores" ToRole="Utilizadores" />
   </EntityType>
+  <EntityType Name="Logs">
+    <Key>
+      <PropertyRef Name="ID_Log" />
+    </Key>
+    <Property Name="ID_Log" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Utilizador" Type="Int32" Nullable="false" />
+    <Property Name="Erro_Login" Type="DateTime" Precision="3" />
+    <Property Name="Login" Type="DateTime" Precision="3" />
+    <Property Name="LogOff" Type="DateTime" Precision="3" />
+    <Property Name="IP_TentativaLogin" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Utilizadores" Relationship="Self.FK_Logs_Utilizadores" FromRole="Logs" ToRole="Utilizadores" />
+  </EntityType>
   <EntityType Name="MarcaProduto">
     <Key>
       <PropertyRef Name="ID_Marca" />
@@ -84,7 +96,7 @@
       <PropertyRef Name="ID_Produto" />
     </Key>
     <Property Name="ID_Produto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nome" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="PreçoPorQuantidade" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="ID_Categoria" Type="Int32" Nullable="false" />
     <Property Name="QuantidadeStock" Type="Int32" Nullable="false" />
@@ -94,13 +106,13 @@
     <Property Name="ID_Marca" Type="Int32" Nullable="false" />
     <Property Name="Genero" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Descontinuado" Type="Int32" Nullable="false" />
+    <Property Name="Destaque" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Carrinho" Relationship="Self.FK_Carrinho_Produto" FromRole="Produto" ToRole="Carrinho" />
     <NavigationProperty Name="Categoria" Relationship="Self.FK_Produto_Categoria" FromRole="Produto" ToRole="Categoria" />
     <NavigationProperty Name="Descontos" Relationship="Self.FK_Descontos_Produto" FromRole="Produto" ToRole="Descontos" />
     <NavigationProperty Name="MarcaProduto" Relationship="Self.FK_Produto_MarcaProduto" FromRole="Produto" ToRole="MarcaProduto" />
     <NavigationProperty Name="PedidosDetalhes" Relationship="Self.FK_PedidosDetalhes_Produto" FromRole="Produto" ToRole="PedidosDetalhes" />
     <NavigationProperty Name="ProdutosFavoritos" Relationship="Self.FK_ProdutosFavoritos_Produto" FromRole="Produto" ToRole="ProdutosFavoritos" />
-    <Property Name="Destaque" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="ProdutosFavoritos">
     <Key>
@@ -136,7 +148,7 @@
     <Key>
       <PropertyRef Name="ID_Utilizador" />
     </Key>
-    <Property Name="ID_Utilizador" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Utilizador" Type="Int32" Nullable="false" />
     <Property Name="PrimeiroNome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="SegundoNome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DataDeNascimento" Type="DateTime" Nullable="false" Precision="0" />
@@ -148,6 +160,7 @@
     <Property Name="Desconto" Type="Double" />
     <NavigationProperty Name="Carrinho" Relationship="Self.FK_Carrinho_Utilizadores" FromRole="Utilizadores" ToRole="Carrinho" />
     <NavigationProperty Name="EstadoUtilizadores" Relationship="Self.FK_EstadoUtilizadores_Utilizadores" FromRole="Utilizadores" ToRole="EstadoUtilizadores" />
+    <NavigationProperty Name="Logs" Relationship="Self.FK_Logs_Utilizadores" FromRole="Utilizadores" ToRole="Logs" />
     <NavigationProperty Name="Pedidos" Relationship="Self.FK_Pedidos_Utilizadores" FromRole="Utilizadores" ToRole="Pedidos" />
     <NavigationProperty Name="ProdutosFavoritos" Relationship="Self.FK_ProdutosFavoritos_Utilizadores" FromRole="Utilizadores" ToRole="ProdutosFavoritos" />
     <NavigationProperty Name="Token" Relationship="Self.FK_Token_Utilizadores" FromRole="Utilizadores" ToRole="Token" />
@@ -235,6 +248,18 @@
       </Principal>
       <Dependent Role="EstadoUtilizadores">
         <PropertyRef Name="ID_Utilizadores" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Logs_Utilizadores">
+    <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+    <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizadores">
+        <PropertyRef Name="ID_Utilizador" />
+      </Principal>
+      <Dependent Role="Logs">
+        <PropertyRef Name="ID_Utilizador" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -329,6 +354,7 @@
     <EntitySet Name="Descontos" EntityType="Self.Descontos" />
     <EntitySet Name="EstadoDoPedido" EntityType="Self.EstadoDoPedido" />
     <EntitySet Name="EstadoUtilizadores" EntityType="Self.EstadoUtilizadores" />
+    <EntitySet Name="Logs" EntityType="Self.Logs" />
     <EntitySet Name="MarcaProduto" EntityType="Self.MarcaProduto" />
     <EntitySet Name="Pedidos" EntityType="Self.Pedidos" />
     <EntitySet Name="Produto" EntityType="Self.Produto" />
@@ -360,6 +386,10 @@
     <AssociationSet Name="FK_EstadoUtilizadores_Utilizadores" Association="Self.FK_EstadoUtilizadores_Utilizadores">
       <End Role="Utilizadores" EntitySet="Utilizadores" />
       <End Role="EstadoUtilizadores" EntitySet="EstadoUtilizadores" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Logs_Utilizadores" Association="Self.FK_Logs_Utilizadores">
+      <End Role="Utilizadores" EntitySet="Utilizadores" />
+      <End Role="Logs" EntitySet="Logs" />
     </AssociationSet>
     <AssociationSet Name="FK_Produto_MarcaProduto" Association="Self.FK_Produto_MarcaProduto">
       <End Role="MarcaProduto" EntitySet="MarcaProduto" />

@@ -175,6 +175,9 @@
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Generic.cs" />
+    <Compile Include="Models\Logs.cs">
+      <DependentUpon>BD-RickyShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MarcaProduto.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>

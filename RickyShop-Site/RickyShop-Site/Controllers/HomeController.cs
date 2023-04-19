@@ -112,6 +112,13 @@ namespace RickyShop_Site.Controllers
                 }
                 else
                 {
+                    var d = Dns.GetHostAddresses(Dns.GetHostName());
+                    Logs logs = new Logs();
+                    logs.IP_TentativaLogin = d[1].ToString();
+                    logs.ID_Utilizador = u.ID_Utilizador;  
+                    logs.Erro_Login = DateTime.Now;
+                    db.Logs.Add(logs);
+                    db.SaveChangesAsync();
                     Response.Write("<script>alert('Wrong Information');</script>");
                     return View();
                 }

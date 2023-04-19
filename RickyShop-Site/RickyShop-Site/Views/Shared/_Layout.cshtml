@@ -22,23 +22,26 @@
             </div>
             <div class="navbar-collapse collapse" style="color:red">
                 <ul style="color:red" class="nav navbar-nav">
-                    <li>@Html.ActionLink("Sobre Nós", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
-
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categorias <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="~/Produtos/ListaProdutos">Roupa</a></li>
-                            <li> @Html.ActionLink("Teste", "ListaProdutos", "Produtos", new { id = "roupa" }, new { htmlAttributes = new { } }) </li>
-                            <li><a href="#">Ténis</a></li>
-                            <li><a href="#">Desporto</a></li>
+                            <li> @Html.ActionLink("Roupa", "ListaProdutos", "Produtos", new { id = 1 }, new { htmlAttributes = new { } }) </li>
+                            <li> @Html.ActionLink("Tênis", "ListaProdutos", "Produtos", new { id = 2 }, new { htmlAttributes = new { } }) </li>
+                            <li> @Html.ActionLink("Desporto", "ListaProdutos", "Produtos", new { id = 3 }, new { htmlAttributes = new { } }) </li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#" id="d">Promoções</a></li>
+                            <li>
+                            <li> @Html.ActionLink("Promoções", "ListaProdutos", "Produtos", new { id = 0 }, new { htmlAttributes = new { } })</li>
                         </ul>
                     </li>
 
                 </ul>
                 @Html.Partial("_LoginPartial")
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Sobre Nós", "About", "Home")</li>
+                </ul>
+
+
             </div>
         </div>
     </div>
@@ -62,10 +65,11 @@
                 <div class="col-md-4 footer-two">
                     <h5>Categorias </h5>
                     <ul>
-                        <li><a href="maintenance.html">Roupa</a></li>
-                        <li><a href="contact.html">Ténis</a></li>
+                        <li>@Html.ActionLink("Roupa", "ListaProdutos", "Produtos", new { id = 1 }, new { htmlAttributes = new { } }) </li>
+                        <li>@Html.ActionLink("Tênis", "ListaProdutos", "Produtos", new { id = 2 }, new { htmlAttributes = new { } }) </li>
+                        <li>@Html.ActionLink("Desporto", "ListaProdutos", "Produtos", new { id = 3 }, new { htmlAttributes = new { } }) </li>
+
                         <li><a href="about.html">Promoções</a></li>
-                        <li><a href="about.html">Desportivo</a></li>
                         <li><a href="about.html">Parceiros</a></li>
                     </ul>
                 </div>
