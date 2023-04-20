@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Helpers;
@@ -25,6 +26,11 @@ namespace RickyShop_Site.Controllers
 
         public ActionResult ValidacaoToken()
         {
+            if (TempData["MensagemAviso"] != null)
+            {
+                Response.Write($"<script>alert('Tem um token ativo. Consulte o email.')</script>");
+                TempData.Remove("MensageAviso");
+            }
             return View();
         }
 
@@ -77,7 +83,8 @@ namespace RickyShop_Site.Controllers
 
                     if (db.Token.Count(t => t.ID_Utilizador == token.ID_Utilizador && t.Estado == 1) != 0)
                     {
-                        Response.Write($"<script>alert('Tem um token ativo. Consulte o email.')</script>");
+                        
+                        TempData["MensagemAviso"] = "true";
                         return RedirectToAction("ValidacaoToken");
                     }
                     else
@@ -96,8 +103,8 @@ namespace RickyShop_Site.Controllers
             //string body = "Olá, a seu token de recuperação é: " + tokenAleatorio +
             //    "\r De seguida altere a sua password no site. \n Cumprimentos, ";
 
-            string template = Server.MapPath("~/Home/ResetPass/TemplateEmail");
-            string body = System.IO.File.ReadAllText(template);
+            string template = Server.MapPath("~/ResetPass/TemplateEmail");
+            string body = System.IO.File.ReadAllText(template, Encoding.GetEncoding("ISO-8859-1"));
 
             MailMessage objEmail = new MailMessage();
 
@@ -106,7 +113,8 @@ namespace RickyShop_Site.Controllers
             objEmail.AlternateViews.Add(htmlView);
 
             //rementente do email
-            objEmail.From = new MailAddress("suporterickyshop@hotmail.com");
+            objEmail.From = new MailAddress("i200059@inete.net");
+            //objEmail.From = new MailAddress("suporterickyshop@hotmail.com");
 
             //email para resposta(quando o destinatário receber e clicar em responder, vai para:)
             //objEmail.ReplyTo = new MailAddress("email@seusite.com.br");
@@ -145,7 +153,8 @@ namespace RickyShop_Site.Controllers
 
             //para envio de email autenticado, coloque login e senha de seu servidor de email
             //para detalhes leia abaixo do código
-            objSmtp.Credentials = new NetworkCredential("suporterickyshop@hotmail.com", "RickyShop123");
+            //objSmtp.Credentials = new NetworkCredential("suporterickyshop@hotmail.com", "papRickyShop");
+            objSmtp.Credentials = new NetworkCredential("i200059@inete.net", "Pitolini2005");
 
             objSmtp.EnableSsl = true;
 
@@ -162,6 +171,17 @@ namespace RickyShop_Site.Controllers
             var user = db.Utilizadores.FirstOrDefault(s => s.ID_Utilizador == UserID);
             if (u.ConfirmarPassWord == u.PassWord)
             {
+
+                SHA256 sha256Hash = SHA256.Create();
+
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(u.PassWord));
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                u.PassWord = builder.ToString();
+
                 user.PassWord = u.PassWord;
                 db.SaveChangesAsync();
                 Response.Write($"<script>alert('Password Atualizada.')</script>");

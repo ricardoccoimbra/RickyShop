@@ -164,14 +164,8 @@
     <Compile Include="Models\Categoria.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Descontos.cs">
-      <DependentUpon>BD-RickyShop.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Entities.cs" />
     <Compile Include="Models\EstadoDoPedido.cs">
-      <DependentUpon>BD-RickyShop.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EstadoUtilizadores.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Generic.cs" />

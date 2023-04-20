@@ -10,7 +10,7 @@ namespace RickyShop_Site.Models
     {
         public static GestãoRickyShopEntities db = new GestãoRickyShopEntities();
 
-        public static string VerifRegisto(int _NIF, int _Contacto, string _Email)
+        public static string VerifRegisto(string _NIF, string _Contacto, string _Email, DateTime _date)
         {
             string i = "certo";
 

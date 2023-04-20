@@ -29,29 +29,11 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Descontos">
-      <EntityTypeMapping TypeName="GestãoRickyShopModel.Descontos">
-        <MappingFragment StoreEntitySet="Descontos">
-          <ScalarProperty Name="ID_Cupao" ColumnName="ID_Cupao" />
-          <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
-          <ScalarProperty Name="Desconto" ColumnName="Desconto" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="EstadoDoPedido">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.EstadoDoPedido">
         <MappingFragment StoreEntitySet="EstadoDoPedido">
           <ScalarProperty Name="ID_Estado" ColumnName="ID_Estado" />
           <ScalarProperty Name="Estado" ColumnName="Estado" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="EstadoUtilizadores">
-      <EntityTypeMapping TypeName="GestãoRickyShopModel.EstadoUtilizadores">
-        <MappingFragment StoreEntitySet="EstadoUtilizadores">
-          <ScalarProperty Name="ID_Utilizadores" ColumnName="ID_Utilizadores" />
-          <ScalarProperty Name="LogOn" ColumnName="LogOn" />
-          <ScalarProperty Name="LogOff" ColumnName="LogOff" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

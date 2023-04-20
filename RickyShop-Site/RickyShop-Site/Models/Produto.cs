@@ -18,7 +18,6 @@ namespace RickyShop_Site.Models
         public Produto()
         {
             this.Carrinho = new HashSet<Carrinho>();
-            this.Descontos = new HashSet<Descontos>();
             this.PedidosDetalhes = new HashSet<PedidosDetalhes>();
             this.ProdutosFavoritos = new HashSet<ProdutosFavoritos>();
         }
@@ -40,8 +39,6 @@ namespace RickyShop_Site.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Carrinho> Carrinho { get; set; }
         public virtual Categoria Categoria { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Descontos> Descontos { get; set; }
         public virtual MarcaProduto MarcaProduto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PedidosDetalhes> PedidosDetalhes { get; set; }

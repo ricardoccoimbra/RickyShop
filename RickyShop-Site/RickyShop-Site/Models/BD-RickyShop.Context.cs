@@ -30,9 +30,7 @@ namespace RickyShop_Site.Models
         public virtual DbSet<Admin> Admin { get; set; }
         public virtual DbSet<Carrinho> Carrinho { get; set; }
         public virtual DbSet<Categoria> Categoria { get; set; }
-        public virtual DbSet<Descontos> Descontos { get; set; }
         public virtual DbSet<EstadoDoPedido> EstadoDoPedido { get; set; }
-        public virtual DbSet<EstadoUtilizadores> EstadoUtilizadores { get; set; }
         public virtual DbSet<Logs> Logs { get; set; }
         public virtual DbSet<MarcaProduto> MarcaProduto { get; set; }
         public virtual DbSet<Pedidos> Pedidos { get; set; }
