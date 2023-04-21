@@ -44,6 +44,11 @@ namespace RickyShop_Site.Controllers
                 TempData.Remove("MensageAviso");
             }
 
+            if (TempData["MensagemResetPass"] != null)
+            {
+                Response.Write($"<script>alert('PassWord alterada com sucesso!')</script>");
+                TempData.Remove("MensagemResetPass");
+            }
             return View();
         }
 

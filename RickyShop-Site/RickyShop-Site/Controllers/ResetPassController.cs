@@ -1,16 +1,19 @@
 ﻿using RickyShop_Site.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Text;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace RickyShop_Site.Controllers
 {
@@ -28,8 +31,16 @@ namespace RickyShop_Site.Controllers
         {
             if (TempData["MensagemAviso"] != null)
             {
-                Response.Write($"<script>alert('Tem um token ativo. Consulte o email.')</script>");
-                TempData.Remove("MensageAviso");
+                if (TempData["MensagemAviso"].ToString() == "true")
+                {
+                    Response.Write($"<script>alert('Token enviado. Consulte o email!')</script>");
+                    TempData.Remove("MensageAviso");
+                }
+                else
+                {
+                    Response.Write($"<script>alert('Tem um token ativo. Consulte o email.')</script>");
+                    TempData.Remove("MensageAviso");
+                }
             }
             return View();
         }
@@ -48,9 +59,8 @@ namespace RickyShop_Site.Controllers
         public ActionResult ValidacaoToken(Token token)
         {
             int UserID = Convert.ToInt32(Session["UserID"]);
-            if (db.Token.Count(t => t.ID_Utilizador == UserID && t.TokenAleatorio == token.TokenAleatorio) != 0)
+            if (db.Token.Count(t => t.ID_Utilizador == UserID && t.TokenAleatorio == token.TokenAleatorio && t.Estado == 1) != 0)
             {
-                Response.Write($"<script>alert('Token correto. Altere a sua PassWord.')</script>");
                 var t = db.Token.FirstOrDefault(s => s.ID_Utilizador == UserID && s.Estado == 1);
                 t.Estado = 0;
                 db.SaveChangesAsync();
@@ -69,6 +79,7 @@ namespace RickyShop_Site.Controllers
         {
             bool valid = false;
             string tokenAleatorio;
+            Utilizadores user = db.Utilizadores.Where(s => s.Email == u.Email).FirstOrDefault();
             do
             {
                 tokenAleatorio = Generic.TokenAleatorio();
@@ -90,7 +101,6 @@ namespace RickyShop_Site.Controllers
                     else
                     {
                         db.Token.Add(token);
-                        db.SaveChangesAsync();
                         valid = true;
                     }
                 }
@@ -103,8 +113,18 @@ namespace RickyShop_Site.Controllers
             //string body = "Olá, a seu token de recuperação é: " + tokenAleatorio +
             //    "\r De seguida altere a sua password no site. \n Cumprimentos, ";
 
-            string template = Server.MapPath("~/ResetPass/TemplateEmail");
-            string body = System.IO.File.ReadAllText(template, Encoding.GetEncoding("ISO-8859-1"));
+            string path = Server.MapPath(@"~\Views\ResetPass\TemplateEmail.cshtml");
+
+            var conteudo = System.IO.File.ReadAllText(path);
+
+            conteudo = conteudo.Replace("[NomeCliente]", user.PrimeiroNome + " " + user.SegundoNome);
+            conteudo = conteudo.Replace("[TokenCliente]", tokenAleatorio);
+            conteudo = conteudo.Replace("[EmailCliente]", user.Email);
+
+            string body = conteudo;
+
+            //string body = "Olá, a seu token de recuperação é: " + tokenAleatorio +
+            //   "\r De seguida altere a sua password no site. \n Cumprimentos, ";
 
             MailMessage objEmail = new MailMessage();
 
@@ -113,8 +133,8 @@ namespace RickyShop_Site.Controllers
             objEmail.AlternateViews.Add(htmlView);
 
             //rementente do email
-            objEmail.From = new MailAddress("i200059@inete.net");
-            //objEmail.From = new MailAddress("suporterickyshop@hotmail.com");
+            //objEmail.From = new MailAddress("i200059@inete.net");
+            objEmail.From = new MailAddress("suporterickyshop@hotmail.com");
 
             //email para resposta(quando o destinatário receber e clicar em responder, vai para:)
             //objEmail.ReplyTo = new MailAddress("email@seusite.com.br");
@@ -153,14 +173,25 @@ namespace RickyShop_Site.Controllers
 
             //para envio de email autenticado, coloque login e senha de seu servidor de email
             //para detalhes leia abaixo do código
-            //objSmtp.Credentials = new NetworkCredential("suporterickyshop@hotmail.com", "papRickyShop");
-            objSmtp.Credentials = new NetworkCredential("i200059@inete.net", "Pitolini2005");
+            objSmtp.Credentials = new NetworkCredential("suporterickyshop@hotmail.com", "papRickyShop");
+            //objSmtp.Credentials = new NetworkCredential("i200059@inete.net", "Pitolini2005");
 
             objSmtp.EnableSsl = true;
 
             //envia o email
             objSmtp.Send(objEmail);
-            Response.Write($"<script>alert('Email enviado!')</script>");
+
+            //WebMail.EnableSsl = true;
+            //WebMail.SmtpServer = "smtp.mail.yahoo.com";
+            //WebMail.SmtpPort = 465;
+            //WebMail.UserName = "Ricardo Coimbra";
+            //WebMail.Password = "Pitolni08";
+            //WebMail.From = "cruzcoimbra08@yahoo.com";
+
+            db.SaveChangesAsync();
+
+
+            TempData["MensagemAviso"] = "true";
             return RedirectToAction("ValidacaoToken");
         }
 
@@ -184,12 +215,12 @@ namespace RickyShop_Site.Controllers
 
                 user.PassWord = u.PassWord;
                 db.SaveChangesAsync();
-                Response.Write($"<script>alert('Password Atualizada.')</script>");
+                TempData["MensagemResetPass"] = "true";
                 return RedirectToAction("Login", "Home");
             }
             else
             {
-                Response.Write($"<script>alert('Password identicas.')</script>");
+                Response.Write($"<script>alert('Estas passwords não correspondem.')</script>");
                 return View();
             }
         }

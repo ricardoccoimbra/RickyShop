@@ -164,6 +164,9 @@
     <Compile Include="Models\Categoria.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DadosUserToken_Result.cs">
+      <DependentUpon>BD-RickyShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities.cs" />
     <Compile Include="Models\EstadoDoPedido.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
@@ -225,6 +228,7 @@
     <Content Include="Content\Shop.css" />
     <Content Include="Content\StyleAbout.css" />
     <Content Include="Content\StyleButtonToTop.css" />
+    <Content Include="Content\StyleCarrinhoProdutos.css" />
     <Content Include="Content\StyleContacto.css" />
     <Content Include="Content\StyleListaProdutos.css" />
     <Content Include="Content\StyleLogin.css" />
@@ -326,8 +330,6 @@
     <Content Include="Sapatos\7.jpg" />
     <Content Include="Sapatos\8.jpg" />
     <Content Include="Sapatos\9.jpg" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\BD-RickyShop.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BD-RickyShop.Designer.cs</LastGenOutput>
@@ -335,7 +337,17 @@
     <Content Include="Models\BD-RickyShop.edmx.diagram">
       <DependentUpon>BD-RickyShop.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\carouselAuto.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -374,20 +386,13 @@
     <Content Include="Views\ResetPass\TemplateEmail.cshtml" />
     <Content Include="Views\Produtos\ListaProdutos.cshtml" />
     <Content Include="Views\Produtos\View.cshtml" />
+    <Content Include="Views\Produtos\CarrinhoProdutos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
