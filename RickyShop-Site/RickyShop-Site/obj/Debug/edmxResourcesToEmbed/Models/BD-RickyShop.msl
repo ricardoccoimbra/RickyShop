@@ -13,6 +13,7 @@
     <EntitySetMapping Name="Carrinho">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.Carrinho">
         <MappingFragment StoreEntitySet="Carrinho">
+          <ScalarProperty Name="Tamanho" ColumnName="Tamanho" />
           <ScalarProperty Name="ID_Carrinho" ColumnName="ID_Carrinho" />
           <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
           <ScalarProperty Name="PrecoProduto" ColumnName="PrecoProduto" />
@@ -170,5 +171,17 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="GestãoRickyShopModel.Store.sp_renamediagram" />
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="GestãoRickyShopModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="DadosCarrinhoProduto" FunctionName="GestãoRickyShopModel.Store.DadosCarrinhoProduto">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GestãoRickyShopModel.DadosCarrinhoProduto_Result">
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="ImagemPath" ColumnName="ImagemPath" />
+          <ScalarProperty Name="PreçoPorQuantidade" ColumnName="PreçoPorQuantidade" />
+          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+          <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
+          <ScalarProperty Name="Tamanho" ColumnName="Tamanho" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

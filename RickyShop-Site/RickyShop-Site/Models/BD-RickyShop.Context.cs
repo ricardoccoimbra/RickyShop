@@ -152,5 +152,14 @@ namespace RickyShop_Site.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DadosUserToken_Result>("DadosUserToken", iDParameter);
         }
+    
+        public virtual ObjectResult<DadosCarrinhoProduto_Result> DadosCarrinhoProduto(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DadosCarrinhoProduto_Result>("DadosCarrinhoProduto", iDParameter);
+        }
     }
 }

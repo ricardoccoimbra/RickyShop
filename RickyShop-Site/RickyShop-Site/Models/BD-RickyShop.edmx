@@ -22,6 +22,7 @@
           <Property Name="PrecoProduto" Type="money" Nullable="false" />
           <Property Name="ID_Produto" Type="int" Nullable="false" />
           <Property Name="Quantidade" Type="int" Nullable="false" />
+          <Property Name="Tamanho" Type="varchar" MaxLength="5" Nullable="false" />
         </EntityType>
         <EntityType Name="Categoria">
           <Key>
@@ -286,6 +287,9 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DadosCarrinhoProduto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -410,6 +414,7 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
           <Property Name="Quantidade" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Produto" Relationship="Self.FK_Carrinho_Produto" FromRole="Carrinho" ToRole="Produto" />
           <NavigationProperty Name="Utilizadores" Relationship="Self.FK_Carrinho_Utilizadores" FromRole="Carrinho" ToRole="Utilizadores" />
+          <Property Name="Tamanho" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Categoria">
           <Key>
@@ -789,6 +794,9 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
           <FunctionImport Name="DadosUserToken" ReturnType="Collection(GestãoRickyShopModel.DadosUserToken_Result)">
             <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="DadosCarrinhoProduto" ReturnType="Collection(GestãoRickyShopModel.DadosCarrinhoProduto_Result)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -806,6 +814,14 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
           <Property Type="String" Name="SegundoNome" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="TokenAleatorio" Nullable="false" MaxLength="7" />
+        </ComplexType>
+        <ComplexType Name="DadosCarrinhoProduto_Result">
+          <Property Type="String" Name="Nome" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="ImagemPath" Nullable="false" MaxLength="250" />
+          <Property Type="Decimal" Name="PreçoPorQuantidade" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Descrição" Nullable="false" MaxLength="1000" />
+          <Property Type="Int32" Name="Quantidade" Nullable="false" />
+          <Property Type="String" Name="Tamanho" Nullable="false" MaxLength="5" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -825,6 +841,7 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
           <EntitySetMapping Name="Carrinho">
             <EntityTypeMapping TypeName="GestãoRickyShopModel.Carrinho">
               <MappingFragment StoreEntitySet="Carrinho">
+                <ScalarProperty Name="Tamanho" ColumnName="Tamanho" />
                 <ScalarProperty Name="ID_Carrinho" ColumnName="ID_Carrinho" />
                 <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
                 <ScalarProperty Name="PrecoProduto" ColumnName="PrecoProduto" />
@@ -982,6 +999,18 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="GestãoRickyShopModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="GestãoRickyShopModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="DadosCarrinhoProduto" FunctionName="GestãoRickyShopModel.Store.DadosCarrinhoProduto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GestãoRickyShopModel.DadosCarrinhoProduto_Result">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="ImagemPath" ColumnName="ImagemPath" />
+                <ScalarProperty Name="PreçoPorQuantidade" ColumnName="PreçoPorQuantidade" />
+                <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+                <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
+                <ScalarProperty Name="Tamanho" ColumnName="Tamanho" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

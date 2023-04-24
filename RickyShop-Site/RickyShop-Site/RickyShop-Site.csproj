@@ -164,6 +164,9 @@
     <Compile Include="Models\Categoria.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DadosCarrinhoProduto_Result.cs">
+      <DependentUpon>BD-RickyShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DadosUserToken_Result.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
@@ -387,6 +390,7 @@
     <Content Include="Views\Produtos\ListaProdutos.cshtml" />
     <Content Include="Views\Produtos\View.cshtml" />
     <Content Include="Views\Produtos\CarrinhoProdutos.cshtml" />
+    <Content Include="Views\Produtos\CarrinhoProdutosTeste.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

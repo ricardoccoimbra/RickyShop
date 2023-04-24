@@ -19,6 +19,7 @@
     <Property Name="Quantidade" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Produto" Relationship="Self.FK_Carrinho_Produto" FromRole="Carrinho" ToRole="Produto" />
     <NavigationProperty Name="Utilizadores" Relationship="Self.FK_Carrinho_Utilizadores" FromRole="Carrinho" ToRole="Utilizadores" />
+    <Property Name="Tamanho" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Categoria">
     <Key>
@@ -398,6 +399,9 @@
     <FunctionImport Name="DadosUserToken" ReturnType="Collection(GestãoRickyShopModel.DadosUserToken_Result)">
       <Parameter Name="ID" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="DadosCarrinhoProduto" ReturnType="Collection(GestãoRickyShopModel.DadosCarrinhoProduto_Result)">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -415,5 +419,13 @@
     <Property Type="String" Name="SegundoNome" Nullable="false" MaxLength="50" />
     <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
     <Property Type="String" Name="TokenAleatorio" Nullable="false" MaxLength="7" />
+  </ComplexType>
+  <ComplexType Name="DadosCarrinhoProduto_Result">
+    <Property Type="String" Name="Nome" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="ImagemPath" Nullable="false" MaxLength="250" />
+    <Property Type="Decimal" Name="PreçoPorQuantidade" Nullable="false" Precision="19" />
+    <Property Type="String" Name="Descrição" Nullable="false" MaxLength="1000" />
+    <Property Type="Int32" Name="Quantidade" Nullable="false" />
+    <Property Type="String" Name="Tamanho" Nullable="false" MaxLength="5" />
   </ComplexType>
 </Schema>

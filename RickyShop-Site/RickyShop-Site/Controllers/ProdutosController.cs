@@ -181,13 +181,19 @@ namespace RickyShop_Site.Controllers
             return RedirectToAction("ListaProdutos", new { id });
         }
 
-        //public ActionResult CarrinhoProdutos(Carrinho c, int id)
+        public ActionResult CarrinhoProdutos(DadosCarrinhoProduto_Result c, int id)
+        {
+            var prod = db.DadosCarrinhoProduto(id).ToList();
+
+            return View(prod);
+        }
+
+        //public ActionResult CarrinhoProdutos()
         //{
-        //    var prod = db.Carrinho.Where(s => s.ID_Utilizador == id).ToList();
-        //    return View(prod);
+        //    return View();
         //}
 
-        public ActionResult CarrinhoProdutos()
+        public ActionResult CarrinhoProdutosTeste()
         {
             return View();
         }

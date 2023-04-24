@@ -14,7 +14,7 @@
                         <div class="white-box text-center">  <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" class="img-responsive" />  </div>
                     </div>
                     <div class="col-lg-7 col-md-7 col-sm-6">
-                        <h3 class = "card-title; alert-success text-center", style = "font-size:40px"> @Html.DisplayFor(model => item.Nome) </h3>
+                        <h3 class="card-title; alert-success text-center" , style="font-size:40px"> @Html.DisplayFor(model => item.Nome) </h3>
 
 
                         <br />
@@ -38,11 +38,11 @@
                                         @{
                                             double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * item.Desconto) / 100;
                                             string preco = (Convert.ToDouble(item.PreçoPorQuantidade) - valDesconto).ToString("N2") + "€";
-                                            
-                                            @Html.DisplayFor(model => preco);
-                                        } 
 
-                                        </label> <p><small class="text-success">(-@Html.DisplayFor(model => item.Desconto)%)</small> </p>
+                                            @Html.DisplayFor(model => preco);
+                                        }
+
+                                    </label> <p><small class="text-success">(-@Html.DisplayFor(model => item.Desconto)%)</small> </p>
                                 </div>
                             }
 

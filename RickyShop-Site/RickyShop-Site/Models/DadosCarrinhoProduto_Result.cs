@@ -10,18 +10,14 @@
 namespace RickyShop_Site.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Carrinho
+    public partial class DadosCarrinhoProduto_Result
     {
-        public int ID_Carrinho { get; set; }
-        public int ID_Utilizador { get; set; }
-        public decimal PrecoProduto { get; set; }
-        public int ID_Produto { get; set; }
+        public string Nome { get; set; }
+        public string ImagemPath { get; set; }
+        public decimal PreçoPorQuantidade { get; set; }
+        public string Descrição { get; set; }
         public int Quantidade { get; set; }
         public string Tamanho { get; set; }
-    
-        public virtual Produto Produto { get; set; }
-        public virtual Utilizadores Utilizadores { get; set; }
     }
 }

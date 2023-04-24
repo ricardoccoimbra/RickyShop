@@ -17,6 +17,7 @@
     <Property Name="PrecoProduto" Type="money" Nullable="false" />
     <Property Name="ID_Produto" Type="int" Nullable="false" />
     <Property Name="Quantidade" Type="int" Nullable="false" />
+    <Property Name="Tamanho" Type="varchar" MaxLength="5" Nullable="false" />
   </EntityType>
   <EntityType Name="Categoria">
     <Key>
@@ -281,6 +282,9 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="DadosCarrinhoProduto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="int" Mode="In" />
+  </Function>
   <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
   <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
