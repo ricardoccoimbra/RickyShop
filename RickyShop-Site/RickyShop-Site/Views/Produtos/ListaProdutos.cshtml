@@ -108,7 +108,6 @@
                                         @Html.DisplayFor(model => preco);
                                         <small class="text-success">(-@Html.DisplayFor(model => item.Desconto)%)</small>
                                     }
-
                             </div>
                         }
 
@@ -119,10 +118,10 @@
                             </button>
                             @if (Session["UserID"] != null)
                             {
-                                <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Adicionar ao Carrinho" style="background-color: #195712; color: white">
+                                <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Adicionar ao Carrinho" style="background-color: #195712; color: white" onclick="location.href = '@Url.Action("ProdCarrinho", "Produtos", new { idC = item.ID_Categoria, idP = item.ID_Produto })'">
                                     <i class="glyphicon glyphicon-shopping-cart"></i>
                                 </button>
-                                <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Adicionar aos Favoritos" style="background-color:#ce2e2e; color:white">
+                                <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Adicionar aos Favoritos" style="background-color:#ce2e2e; color:white" onclick="location.href = '@Url.Action("ProdFavoritos", "Produtos", new { idC = item.ID_Categoria, idP = item.ID_Produto })'">
                                     <i class="glyphicon glyphicon-heart"></i>
                                 </button>
                             }

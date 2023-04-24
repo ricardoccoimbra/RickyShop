@@ -180,22 +180,78 @@ namespace RickyShop_Site.Controllers
             }
             return RedirectToAction("ListaProdutos", new { id });
         }
-
-        public ActionResult CarrinhoProdutos(DadosCarrinhoProduto_Result c, int id)
+        public ActionResult CarrinhoProdutos(int id)
         {
             var prod = db.DadosCarrinhoProduto(id).ToList();
 
             return View(prod);
         }
 
-        //public ActionResult CarrinhoProdutos()
-        //{
-        //    return View();
-        //}
-
-        public ActionResult CarrinhoProdutosTeste()
+        public ActionResult ProdCarrinho(Carrinho c, int idP, int idC)
         {
-            return View();
+            int userID = Convert.ToInt32(Session["UserID"]);
+            if(db.Carrinho.Count(s => s.ID_Produto == idP && s.ID_Utilizador == userID) == 0)
+            {
+                var p = db.Produto.Where(s => s.ID_Produto == idP).FirstOrDefault();
+                
+                c.ID_Produto = idP;
+                c.PrecoProduto = p.PreçoPorQuantidade;
+                c.ID_Utilizador = userID;
+                c.Quantidade = 1;
+                c.Tamanho = "M";
+                db.Carrinho.Add(c);
+                db.SaveChangesAsync();
+            }
+            return RedirectToAction("ListaProdutos", new {id = idC});
         }
+
+        public ActionResult EliminarProdCarrinho(Carrinho c, int idP, int idC)
+        {
+            int userID = Convert.ToInt32(Session["UserID"]);
+            if (db.Carrinho.Count(s => s.ID_Produto == idP && s.ID_Utilizador == userID) == 0)
+            {
+                var p = db.Produto.Where(s => s.ID_Produto == idP).FirstOrDefault();
+
+                c.ID_Produto = idP;
+                c.PrecoProduto = p.PreçoPorQuantidade;
+                c.ID_Utilizador = userID;
+                c.Quantidade = 1;
+                c.Tamanho = "M";
+                db.Carrinho.Add(c);
+                db.SaveChangesAsync();
+            }
+            return RedirectToAction("ListaProdutos", new { id = idC });
+        }
+
+        public ActionResult ProdFavorito(Carrinho c, int idP, int idC)
+        {
+            int userID = Convert.ToInt32(Session["UserID"]);
+            if (db.Carrinho.Count(s => s.ID_Produto == idP && s.ID_Utilizador == userID) == 0)
+            {
+                var p = db.Produto.Where(s => s.ID_Produto == idP).FirstOrDefault();
+
+                c.ID_Produto = idP;
+                c.PrecoProduto = p.PreçoPorQuantidade;
+                c.ID_Utilizador = userID;
+                c.Quantidade = 1;
+                c.Tamanho = "M";
+                db.Carrinho.Add(c);
+                db.SaveChangesAsync();
+            }
+            return RedirectToAction("ListaProdutos", new { id = idC });
+        }
+
+        [HttpPost]
+        public ActionResult UpdateQuantity(int ProdID, int quantidade)
+        {
+            int userID = Convert.ToInt32(Session["UserID"]);
+            // Atualize a quantidade do item no carrinho de compras na base de dados
+            db.Carrinho.Where(s => s.ID_Produto == ProdID && s.ID_Utilizador == userID).FirstOrDefault().Quantidade = quantidade;
+            db.SaveChangesAsync();
+
+            // Retorna uma resposta JSON para o cliente
+            return Json(new { success = true });
+        }
+
     }
 }
