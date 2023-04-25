@@ -7,12 +7,12 @@
         total += Convert.ToDouble(item.PrecoProduto * item.Quantidade);
     }
 }
-
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 <link href="~/Content/StyleCarrinhoProdutos.css" rel="stylesheet" />
+
 
 <div class="container">
     <div class="row">
@@ -46,18 +46,22 @@
                                 <div class="col-xs-6 text-right ">
                                     <label style="font-size:20px">
                                         <strong class="cart-product-price">
-                                            @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)
+                                            @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)€
                                         </strong>
-                                        <span class="text-muted">x</span>
                                     </label>
                                 </div>
-                                <div class="col-xs-3">
-                                    <input type="number" class="form-control input-sm product-qtd-input" value="@item.Quantidade">
-                                </div>
-                                <div class="col-xs-2">
-                                    <button type="button" class="btn btn-link btn-xs remove-products">
-                                        <span class="glyphicon glyphicon-trash "> </span>
-                                    </button>
+                                <div style="display: flex;">
+                                    <input type="text" class="form-control input-sm product-qtd-input" value="@item.Quantidade" style="width: 40px; border-radius: 1px; text-align: center;" readonly="readonly">
+                                        <button type="button" style="width: 30px; border-radius: 1px; font-size:15px" class="estiloButtons">
+                                            +
+                                        </button>
+                                        <button type="button" style="width: 30px; border-radius: 1px;" >
+                                            -
+                                        </button>
+
+                                        <button type="button" class="btn btn-link btn-xs remove-products">
+                                            <span class="glyphicon glyphicon-trash "> </span>
+                                        </button>
                                 </div>
                             </div>
                         </div>
@@ -83,39 +87,39 @@
 
 
 
-<script>
-        let total = 0
-        let itemId = 1
+@*<script>
+    let total = 0
+    let itemId = 1
 
-        const cartProducts = document.getElementsByClassName("cart-product")
-        for (var i = 0; i < cartProducts.length; i++) {
-            //console.log(cartProducts[i])
-
-
-            const ProductPrice = cartProducts[i].getElementsByClassName("cart-product-price")[0].innerText.replace(",", ".")
-            const ProductQuantity = cartProducts[i].getElementsByClassName("product-qtd-input")[0].value
-
-            fetch(`/Produtos/UpdateQuantity?ProdID=${ProductPrice}&quantidade=${ProductQuantity}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
+    const cartProducts = document.getElementsByClassName("cart-product")
+    for (var i = 0; i < cartProducts.length; i++) {
+        //console.log(cartProducts[i])
 
 
-            total += ProductPrice * ProductQuantity
-            console
-        }
+        const ProductPrice = cartProducts[i].getElementsByClassName("cart-product-price")[0].innerText.replace(",", ".")
+        const ProductQuantity = cartProducts[i].getElementsByClassName("product-qtd-input")[0].value
+
+        fetch(`/Produtos/UpdateQuantity?ProdID=${ProductPrice}&quantidade=${ProductQuantity}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+
+        total += ProductPrice * ProductQuantity
+        console
+    }
 
 
     document.querySelector(".col-xs-9 strong").innerText = total.toFixed(2).replace(".", ",") + "€"
-    reload();
+    //reload();
 
 
-    function reload() {
-        location.replace('https://localhost:44372/Produtos/CarrinhoProdutos/2')
-    }
-    
+    //function reload() {
+    //    location.replace('https://localhost:44372/Produtos/CarrinhoProdutos/2')
+    //}
 
 
-</script>
+
+</script>*@
