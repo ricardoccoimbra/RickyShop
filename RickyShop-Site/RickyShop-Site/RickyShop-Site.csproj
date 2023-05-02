@@ -235,6 +235,7 @@
     <Content Include="Content\StyleContacto.css" />
     <Content Include="Content\StyleListaProdutos.css" />
     <Content Include="Content\StyleLogin.css" />
+    <Content Include="Content\StylePopUp.css" />
     <Content Include="Content\StyleRegistar.css" />
     <Content Include="Content\StyleProdutosDetalhados.css" />
     <Content Include="Content\themes\base\accordion.css" />

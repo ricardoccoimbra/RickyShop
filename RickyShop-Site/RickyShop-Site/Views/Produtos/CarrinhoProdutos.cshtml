@@ -12,6 +12,8 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 <link href="~/Content/StyleCarrinhoProdutos.css" rel="stylesheet" />
+<link href="~/Content/StylePopUp.css" rel="stylesheet" />
+
 
 
 <div class="container">
@@ -52,16 +54,16 @@
                                 </div>
                                 <div style="display: flex;">
                                     <input type="text" class="form-control input-sm product-qtd-input" value="@item.Quantidade" style="width: 40px; border-radius: 1px; text-align: center;" readonly="readonly">
-                                        <button type="button" style="width: 30px; border-radius: 1px; font-size:15px" class="estiloButtons">
-                                            +
-                                        </button>
-                                        <button type="button" style="width: 30px; border-radius: 1px;" >
-                                            -
-                                        </button>
+                                    <button type="button" style="width: 30px; border-radius: 1px; font-size:15px" class="estiloButtons">
+                                        +
+                                    </button>
+                                    <button type="button" style="width: 30px; border-radius: 1px;">
+                                        -
+                                    </button>
 
-                                        <button type="button" class="btn btn-link btn-xs remove-products">
-                                            <span class="glyphicon glyphicon-trash "> </span>
-                                        </button>
+                                    <button type="button" class="btn btn-link btn-xs remove-products">
+                                        <span class="glyphicon glyphicon-trash "> </span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +76,7 @@
                             <h4 class="text-right price-total">Total <strong>@total€</strong></h4>
                         </div>
                         <div class="col-xs-3">
-                            <button type="button" class="btn btn-success btn-block">
+                            <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#teste">
                                 Checkout
                             </button>
                         </div>
@@ -85,41 +87,75 @@
     </div>
 </div>
 
+<div class="col-sm-6 col-md-6">
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true" id="teste">
+            ×
+        </button>
+        <span class="glyphicon glyphicon-ok"></span> <strong>Success Message</strong>
+        <hr class="message-inner-separator">
+        <p>
+            You successfully read this important alert message.
+        </p>
+    </div>
+</div>
 
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modalLabel">Modal Title</h4>
+            </div>
+            <div class="modal-body">
+                Modal content...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @*<script>
-    let total = 0
-    let itemId = 1
+        let total = 0
+        let itemId = 1
 
-    const cartProducts = document.getElementsByClassName("cart-product")
-    for (var i = 0; i < cartProducts.length; i++) {
-        //console.log(cartProducts[i])
-
-
-        const ProductPrice = cartProducts[i].getElementsByClassName("cart-product-price")[0].innerText.replace(",", ".")
-        const ProductQuantity = cartProducts[i].getElementsByClassName("product-qtd-input")[0].value
-
-        fetch(`/Produtos/UpdateQuantity?ProdID=${ProductPrice}&quantidade=${ProductQuantity}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
+        const cartProducts = document.getElementsByClassName("cart-product")
+        for (var i = 0; i < cartProducts.length; i++) {
+            //console.log(cartProducts[i])
 
 
-        total += ProductPrice * ProductQuantity
-        console
-    }
+            const ProductPrice = cartProducts[i].getElementsByClassName("cart-product-price")[0].innerText.replace(",", ".")
+            const ProductQuantity = cartProducts[i].getElementsByClassName("product-qtd-input")[0].value
+
+            fetch(`/Produtos/UpdateQuantity?ProdID=${ProductPrice}&quantidade=${ProductQuantity}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
 
 
-    document.querySelector(".col-xs-9 strong").innerText = total.toFixed(2).replace(".", ",") + "€"
-    //reload();
+            total += ProductPrice * ProductQuantity
+            console
+        }
 
 
-    //function reload() {
-    //    location.replace('https://localhost:44372/Produtos/CarrinhoProdutos/2')
-    //}
+        document.querySelector(".col-xs-9 strong").innerText = total.toFixed(2).replace(".", ",") + "€"
+        //reload();
+
+
+        //function reload() {
+        //    location.replace('https://localhost:44372/Produtos/CarrinhoProdutos/2')
+        //}
 
 
 
-</script>*@
+    </script>*@
