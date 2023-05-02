@@ -135,7 +135,7 @@ namespace RickyShop_Site.Controllers
                 prodPage = db.Produto.Where(s => s.ID_Marca == p.ID_Marca && s.ID_Categoria == id && s.Desconto != null).ToList().ToPagedList(numeroPagina, tamanhoPagina);
             }
             else
-                prodPage = db.Produto.Where(s => s.ID_Marca == p.ID_Marca && s.ID_Categoria == id && s.Desconto == null).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                prodPage = db.Produto.Where(s => s.ID_Marca == p.ID_Marca && s.ID_Categoria == id).ToList().ToPagedList(numeroPagina, tamanhoPagina);
 
             return View(prodPage);
         }
@@ -186,7 +186,6 @@ namespace RickyShop_Site.Controllers
 
             return View(prod);
         }
-
         public ActionResult ProdCarrinho(Carrinho c, int idP, int idC)
         {
             int userID = Convert.ToInt32(Session["UserID"]);
@@ -204,7 +203,6 @@ namespace RickyShop_Site.Controllers
             }
             return RedirectToAction("ListaProdutos", new {id = idC});
         }
-
         public ActionResult EliminarProdCarrinho(Carrinho c, int idP, int idC)
         {
             int userID = Convert.ToInt32(Session["UserID"]);
@@ -222,7 +220,6 @@ namespace RickyShop_Site.Controllers
             }
             return RedirectToAction("ListaProdutos", new { id = idC });
         }
-
         public ActionResult ProdFavorito(Carrinho c, int idP, int idC)
         {
             int userID = Convert.ToInt32(Session["UserID"]);
@@ -251,6 +248,15 @@ namespace RickyShop_Site.Controllers
 
             // Retorna uma resposta JSON para o cliente
             return Json(new { success = true });
+        }
+        public ActionResult SomaProd(int id)
+        {
+            int UserID = Convert.ToInt32(Session["UserID"]);
+            var p = db.Carrinho.Where(s => s.ID_Produto == id && s.ID_Utilizador == UserID).FirstOrDefault();
+            p.Quantidade++;
+            db.SaveChangesAsync();
+
+            return RedirectToAction("CarrinhoProdutos", new { id = UserID });
         }
 
     }

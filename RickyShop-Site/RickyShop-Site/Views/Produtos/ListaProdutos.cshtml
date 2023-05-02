@@ -82,7 +82,7 @@
             <div class="col-md-4">
                 <section class="panel">
                     <div class="pro-img-box">
-                        <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" />
+                        <img src="@Html.DisplayFor(modelItem => item.ImagemPath)"  style="height:280px;"/>
                     </div>
 
                     <div class="panel-body text-center">
@@ -98,7 +98,7 @@
                         else
                         {
 
-                            <div style="display: flex" class="text-center">
+                            <div style="display: flex; margin-bottom: 9px;" class="text-center">
                                 <div style="text-decoration: line-through; margin-left: 50px; margin-right: 5px;"> @Html.DisplayFor(model => item.PreçoPorQuantidade)€</div>
                                 <p class="price" style="color:#195712; ">
                                     @{

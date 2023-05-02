@@ -54,11 +54,12 @@
                                 </div>
                                 <div style="display: flex;">
                                     <input type="text" class="form-control input-sm product-qtd-input" value="@item.Quantidade" style="width: 40px; border-radius: 1px; text-align: center;" readonly="readonly">
-                                    <button type="button" style="width: 30px; border-radius: 1px; font-size:15px" class="estiloButtons">
-                                        +
+                                    <button type="button" style="width: 30px; border-radius: 1px; font-size:15px" class="estiloButtons" onclick="location.href = '@Url.Action("SomaProd", "Produtos", new { @id = 9})'"> 
+                                        @*Mudar a SP e adicionar ID do produto*@
+                                        <i class="glyphicon  glyphicon-plus"></i>
                                     </button>
                                     <button type="button" style="width: 30px; border-radius: 1px;">
-                                        -
+                                        <i class="glyphicon  glyphicon-minus"></i>
                                     </button>
 
                                     <button type="button" class="btn btn-link btn-xs remove-products">
@@ -73,10 +74,10 @@
                 <div class="panel-footer">
                     <div class="row text-center">
                         <div class="col-xs-9">
-                            <h4 class="text-right price-total">Total <strong>@total€</strong></h4>
+                            <h4 class="text-right ">Total: <b>@total€</b></h4>
                         </div>
                         <div class="col-xs-3">
-                            <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#teste">
+                            <button type="button" class="ui green button" data-toggle="modal" data-target="#flipFlop">
                                 Checkout
                             </button>
                         </div>
@@ -87,7 +88,7 @@
     </div>
 </div>
 
-<div class="col-sm-6 col-md-6">
+@*<div class="col-sm-6 col-md-6">
     <div class="alert alert-success">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true" id="teste">
             ×
@@ -98,7 +99,7 @@
             You successfully read this important alert message.
         </p>
     </div>
-</div>
+</div>*@
 
 
 
