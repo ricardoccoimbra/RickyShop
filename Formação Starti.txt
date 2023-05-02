@@ -1,0 +1,19 @@
+Formação Starti:
+
+Só suporta Linux
+
+Erro no DHCP - > Se der erro configurar manualmente. 
+
+Nome da maquina: Centrality
+Dominio: Localhost
+
+senha de root: deve ser uma senha segura para que não seja trocada. 
+
+meter ip da maquina para aceder ao startisecurity
+
+criar usuario na linha de codigo:
+console create:user e depois preencher os dados
+
+Se não tiver regras, sempre que o user que esta dentro da rede pesquisar algo vai para o captive portal
+
+Tem tempo de uso depois de fazer login
