@@ -546,6 +546,7 @@
     <Content Include="Views\Produtos\ListaProdutos.cshtml" />
     <Content Include="Views\Produtos\View.cshtml" />
     <Content Include="Views\Produtos\CarrinhoProdutos.cshtml" />
+    <Content Include="Views\Home\Teste.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

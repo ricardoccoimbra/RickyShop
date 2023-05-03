@@ -216,5 +216,12 @@ namespace RickyShop_Site.Controllers
                 return View();
             }
         }
+
+
+
+        public ActionResult Teste()
+        {
+            return View();
+        }
     }
 }
