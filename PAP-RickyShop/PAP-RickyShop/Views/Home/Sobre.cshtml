@@ -1,0 +1,88 @@
+﻿<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="~/Content/StyleAbout.css" rel="stylesheet" />
+<!------ Include the above in your HEAD tag ---------->
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 style="font-size: 40px; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; text-align: center; color: #0a5e00;"> Sobre Nós </h1>
+                <div class="team-img thumbnail">
+                    <img src="~/Imagens/Captura de ecrã 2023-03-31 141642.png" />
+                </div>
+                <p style="font-size: 20px;">Seja o centro das atenções!</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container paddingTB60">
+    <div class="row">
+
+        <!-- Blog Post Content Column -->
+        <div class="col-lg-8">
+
+            <hr>
+            <h2>Conhece mais sobre a tua marca.</h2>
+            <hr>
+
+            <!-- Preview Image -->
+
+
+            <hr>
+
+            <!-- Post Content -->
+            <p class="lead">Fundada no ano de 2005 por Ricardo Coimbra, a RickyShop há muito se estabeleceu como a principal loja especializada no Reino Unido de marcas da moda, desportivas e roupas casuais.</p>
+            <p> O que começou como uma única loja em Odivelas/Arroja, em Portugal, agora se expandiu por todo o Portugal e, em 2008, a RickyShop abriu um total de 56 lojas. Em 2011, RickyShop dominou a maior parte da UE, principalmente na Alemanha, Irlanda, França, Holanda e Espanha, com a Dinamarca e a Suécia seguindo o exemplo. Neste momento, RickyShop já era considerado o mais inovador visual merchandiser de roupas desportivas com a melhor e mais exclusiva linha de estilo. </p>
+            <p>Avançando para 2016, a RickyShop lançou oficialmente sua primeira loja na Ásia, na Malásia. Em novembro, a RickyShop abriu sua primeira loja principal em Pavilion Elite, Kuala Lumpur, e sua terceira loja na Ásia em Sunway Velocity, Cheras.</p>
+            <p>RickyShop espera um desenvolvimento progressivo na Ásia nos próximos anos.</p>
+
+            <hr>
+
+        </div>
+
+        <!-- Blog Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+            <!-- Blog Categories Well -->
+            <div class="well">
+                <h4>Categorias</h4>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#">Roupa</a>
+                            </li>
+                            <li>
+                                <a href="#">Ténis</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#">Desportivo</a>
+                            </li>
+                            <li>
+                                <a href="#">Promoções</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+
+            <!-- Side Widget Well -->
+            @if (Session["UserID"] == null)
+            {
+                <div class="well bgcolor-skyblue">
+                    <h4>Ainda não tens conta?</h4>
+                    <p>Aproveita a melhor qualidade aos melhores preços!</p>
+                    <input type="submit" value="Criar Conta" class="btn btn-success" onclick="location.href = '@Url.Action("Registar", "Home")'">
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -3,7 +3,11 @@
 @{
     RickyShop_Site.Models.GestãoRickyShopEntities db = new RickyShop_Site.Models.GestãoRickyShopEntities();
     int cntAux = 0;
-    int x = Model.FirstOrDefault().ID_Categoria;
+    int x = 0;
+    if (Model.FirstOrDefault().ID_Categoria != null)
+    {
+         x = Model.FirstOrDefault().ID_Categoria;
+    }
 }
 
 <link href="~/Content/Shop.css" rel="stylesheet" />
@@ -62,7 +66,7 @@
                         <i class="glyphicon glyphicon-arrow-up"></i>
                     </button>
 
-                    <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Mais Alto para Mais Baixo" style="background-color:gray; color:white; margin-left:5px" onclick="location.href = '@Url.Action("OrdemPrecos", "Produtos", new { tipo = "PrecoDesc" , id = Model.FirstOrDefault().ID_Categoria })'">
+                    <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="Mais Alto para Mais Baixo" style="background-color:gray; color:white; margin-left:5px" onclick="location.href = '@Url.Action("OrdemPrecos", "Produtos", new { tipo = "PrecoDesc" , id = x })'">
                         <i class="glyphicon glyphicon-arrow-down"></i>
                     </button>
                 </div>
@@ -85,7 +89,7 @@
                         <img src="@Html.DisplayFor(modelItem => item.ImagemPath)"  style="height:280px;"/>
                     </div>
 
-                    <div class="panel-body text-center">
+                    <div class="panel-body text-center" style="height: 170px; width:255px">
                         <h4>
                             <a class="pro-title">
                                 @Html.DisplayFor(modelItem => item.Nome)

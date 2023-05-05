@@ -2,6 +2,7 @@
 @{ int auxCarrosel = 0;
     int cnt = 0;
 }
+
 <link href="~/Content/Shop.css" rel="stylesheet" />
 
 <div class="row">
@@ -22,25 +23,25 @@
             {
                 {
 
-                     if (item.Desconto != null)
+                    if (item.Desconto != null)
                     {
                         if (auxCarrosel == 0)
                         {
                             <div class="slide first">
-                                <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" /> 
+                                <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" />
                             </div>
 
                         }
                         if (auxCarrosel == 1)
                         {
                             <div class="slide second">
-                                <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" /> 
+                                <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" />
                             </div>
                         }
                         if (auxCarrosel == 2)
                         {
-                            <div class="slide third"> 
-                                <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" /> 
+                            <div class="slide third">
+                                <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" />
                             </div>
                         }
 

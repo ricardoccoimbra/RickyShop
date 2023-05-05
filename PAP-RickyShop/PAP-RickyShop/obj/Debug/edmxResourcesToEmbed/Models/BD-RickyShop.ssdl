@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GestãoRickyShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="ID_Admin" />
+    </Key>
+    <Property Name="ID_Admin" Type="int" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Carrinho">
+    <Key>
+      <PropertyRef Name="ID_Carrinho" />
+    </Key>
+    <Property Name="ID_Carrinho" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Utilizador" Type="int" Nullable="false" />
+    <Property Name="PrecoProduto" Type="money" Nullable="false" />
+    <Property Name="ID_Produto" Type="int" Nullable="false" />
+    <Property Name="Quantidade" Type="int" Nullable="false" />
+    <Property Name="Tamanho" Type="varchar" MaxLength="5" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Categoria">
+    <Key>
+      <PropertyRef Name="ID_Categoria" />
+    </Key>
+    <Property Name="ID_Categoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NomeCategoria" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EstadoDoPedido">
+    <Key>
+      <PropertyRef Name="ID_Estado" />
+    </Key>
+    <Property Name="ID_Estado" Type="int" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Logs">
+    <Key>
+      <PropertyRef Name="ID_Log" />
+    </Key>
+    <Property Name="ID_Log" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Utilizador" Type="int" Nullable="false" />
+    <Property Name="Erro_Login" Type="datetime" />
+    <Property Name="Login" Type="datetime" />
+    <Property Name="LogOff" Type="datetime" />
+    <Property Name="IP_TentativaLogin" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="MarcaProduto">
+    <Key>
+      <PropertyRef Name="ID_Marca" />
+    </Key>
+    <Property Name="ID_Marca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Marca" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pedidos">
+    <Key>
+      <PropertyRef Name="ID_Pedido" />
+    </Key>
+    <Property Name="ID_Pedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Utilizador" Type="int" Nullable="false" />
+    <Property Name="DataDoPedido" Type="datetime" Nullable="false" />
+    <Property Name="DataDeEntrega" Type="datetime" Nullable="false" />
+    <Property Name="LocalDeEntrega" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="CodigoPostal" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="PreçoTotal" Type="money" Nullable="false" />
+    <Property Name="ID_Estado" Type="int" Nullable="false" />
+    <Property Name="Marca" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="PedidosDetalhes">
+    <Key>
+      <PropertyRef Name="ID_Pedido" />
+      <PropertyRef Name="ID_Produto" />
+      <PropertyRef Name="Quantidade" />
+      <PropertyRef Name="Preco" />
+    </Key>
+    <Property Name="ID_Pedido" Type="int" Nullable="false" />
+    <Property Name="ID_Produto" Type="int" Nullable="false" />
+    <Property Name="Quantidade" Type="int" Nullable="false" />
+    <Property Name="Preco" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Produto">
+    <Key>
+      <PropertyRef Name="ID_Produto" />
+    </Key>
+    <Property Name="ID_Produto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nome" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PreçoPorQuantidade" Type="money" Nullable="false" />
+    <Property Name="ID_Categoria" Type="int" Nullable="false" />
+    <Property Name="QuantidadeStock" Type="int" Nullable="false" />
+    <Property Name="ImagemPath" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="Descrição" Type="varchar" MaxLength="1000" Nullable="false" />
+    <Property Name="Desconto" Type="int" />
+    <Property Name="ID_Marca" Type="int" Nullable="false" />
+    <Property Name="Genero" Type="varchar" MaxLength="9" Nullable="false" />
+    <Property Name="Descontinuado" Type="int" Nullable="false" />
+    <Property Name="Destaque" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProdutosFavoritos">
+    <Key>
+      <PropertyRef Name="ID_Favoritos" />
+    </Key>
+    <Property Name="ID_Favoritos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Produto" Type="int" Nullable="false" />
+    <Property Name="ID_Utilizador" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Token">
+    <Key>
+      <PropertyRef Name="ID_Token" />
+    </Key>
+    <Property Name="ID_Token" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Utilizador" Type="int" Nullable="false" />
+    <Property Name="TokenAleatorio" Type="varchar" MaxLength="7" Nullable="false" />
+    <Property Name="Estado" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Utilizadores">
+    <Key>
+      <PropertyRef Name="ID_Utilizador" />
+    </Key>
+    <Property Name="ID_Utilizador" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PrimeiroNome" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="SegundoNome" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DataDeNascimento" Type="date" Nullable="false" />
+    <Property Name="NIF" Type="varchar" MaxLength="9" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="PassWord" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Contacto" Type="varchar" MaxLength="9" Nullable="false" />
+    <Property Name="DataDeAdesao" Type="datetime" Nullable="false" />
+    <Property Name="Desconto" Type="int" />
+  </EntityType>
+  <Association Name="FK_Carrinho_Produto">
+    <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
+    <End Role="Carrinho" Type="Self.Carrinho" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Produto">
+        <PropertyRef Name="ID_Produto" />
+      </Principal>
+      <Dependent Role="Carrinho">
+        <PropertyRef Name="ID_Produto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Carrinho_Utilizadores">
+    <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+    <End Role="Carrinho" Type="Self.Carrinho" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizadores">
+        <PropertyRef Name="ID_Utilizador" />
+      </Principal>
+      <Dependent Role="Carrinho">
+        <PropertyRef Name="ID_Utilizador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Logs_Utilizadores">
+    <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+    <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizadores">
+        <PropertyRef Name="ID_Utilizador" />
+      </Principal>
+      <Dependent Role="Logs">
+        <PropertyRef Name="ID_Utilizador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pedidos_EstadoDoPedido">
+    <End Role="EstadoDoPedido" Type="Self.EstadoDoPedido" Multiplicity="1" />
+    <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EstadoDoPedido">
+        <PropertyRef Name="ID_Estado" />
+      </Principal>
+      <Dependent Role="Pedidos">
+        <PropertyRef Name="ID_Estado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pedidos_Utilizadores">
+    <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+    <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizadores">
+        <PropertyRef Name="ID_Utilizador" />
+      </Principal>
+      <Dependent Role="Pedidos">
+        <PropertyRef Name="ID_Utilizador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PedidosDetalhes_Pedidos">
+    <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="1" />
+    <End Role="PedidosDetalhes" Type="Self.PedidosDetalhes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pedidos">
+        <PropertyRef Name="ID_Pedido" />
+      </Principal>
+      <Dependent Role="PedidosDetalhes">
+        <PropertyRef Name="ID_Pedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PedidosDetalhes_Produto">
+    <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
+    <End Role="PedidosDetalhes" Type="Self.PedidosDetalhes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Produto">
+        <PropertyRef Name="ID_Produto" />
+      </Principal>
+      <Dependent Role="PedidosDetalhes">
+        <PropertyRef Name="ID_Produto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Produto_Categoria">
+    <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+    <End Role="Produto" Type="Self.Produto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categoria">
+        <PropertyRef Name="ID_Categoria" />
+      </Principal>
+      <Dependent Role="Produto">
+        <PropertyRef Name="ID_Categoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Produto_MarcaProduto">
+    <End Role="MarcaProduto" Type="Self.MarcaProduto" Multiplicity="1" />
+    <End Role="Produto" Type="Self.Produto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MarcaProduto">
+        <PropertyRef Name="ID_Marca" />
+      </Principal>
+      <Dependent Role="Produto">
+        <PropertyRef Name="ID_Marca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProdutosFavoritos_Produto">
+    <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
+    <End Role="ProdutosFavoritos" Type="Self.ProdutosFavoritos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Produto">
+        <PropertyRef Name="ID_Produto" />
+      </Principal>
+      <Dependent Role="ProdutosFavoritos">
+        <PropertyRef Name="ID_Produto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProdutosFavoritos_Utilizadores">
+    <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+    <End Role="ProdutosFavoritos" Type="Self.ProdutosFavoritos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizadores">
+        <PropertyRef Name="ID_Utilizador" />
+      </Principal>
+      <Dependent Role="ProdutosFavoritos">
+        <PropertyRef Name="ID_Utilizador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Token_Utilizadores">
+    <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+    <End Role="Token" Type="Self.Token" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizadores">
+        <PropertyRef Name="ID_Utilizador" />
+      </Principal>
+      <Dependent Role="Token">
+        <PropertyRef Name="ID_Utilizador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="DadosCarrinhoProduto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="GestãoRickyShopModelStoreContainer">
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Carrinho" EntityType="Self.Carrinho" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EstadoDoPedido" EntityType="Self.EstadoDoPedido" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MarcaProduto" EntityType="Self.MarcaProduto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Produto" EntityType="Self.Produto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProdutosFavoritos" EntityType="Self.ProdutosFavoritos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Utilizadores" EntityType="Self.Utilizadores" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PedidosDetalhes" EntityType="Self.PedidosDetalhes" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [PedidosDetalhes].[ID_Pedido] AS [ID_Pedido], 
+    [PedidosDetalhes].[ID_Produto] AS [ID_Produto], 
+    [PedidosDetalhes].[Quantidade] AS [Quantidade], 
+    [PedidosDetalhes].[Preco] AS [Preco]
+    FROM [dbo].[PedidosDetalhes] AS [PedidosDetalhes]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Carrinho_Produto" Association="Self.FK_Carrinho_Produto">
+      <End Role="Produto" EntitySet="Produto" />
+      <End Role="Carrinho" EntitySet="Carrinho" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Carrinho_Utilizadores" Association="Self.FK_Carrinho_Utilizadores">
+      <End Role="Utilizadores" EntitySet="Utilizadores" />
+      <End Role="Carrinho" EntitySet="Carrinho" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Logs_Utilizadores" Association="Self.FK_Logs_Utilizadores">
+      <End Role="Utilizadores" EntitySet="Utilizadores" />
+      <End Role="Logs" EntitySet="Logs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pedidos_EstadoDoPedido" Association="Self.FK_Pedidos_EstadoDoPedido">
+      <End Role="EstadoDoPedido" EntitySet="EstadoDoPedido" />
+      <End Role="Pedidos" EntitySet="Pedidos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pedidos_Utilizadores" Association="Self.FK_Pedidos_Utilizadores">
+      <End Role="Utilizadores" EntitySet="Utilizadores" />
+      <End Role="Pedidos" EntitySet="Pedidos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PedidosDetalhes_Pedidos" Association="Self.FK_PedidosDetalhes_Pedidos">
+      <End Role="Pedidos" EntitySet="Pedidos" />
+      <End Role="PedidosDetalhes" EntitySet="PedidosDetalhes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PedidosDetalhes_Produto" Association="Self.FK_PedidosDetalhes_Produto">
+      <End Role="Produto" EntitySet="Produto" />
+      <End Role="PedidosDetalhes" EntitySet="PedidosDetalhes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Produto_Categoria" Association="Self.FK_Produto_Categoria">
+      <End Role="Categoria" EntitySet="Categoria" />
+      <End Role="Produto" EntitySet="Produto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Produto_MarcaProduto" Association="Self.FK_Produto_MarcaProduto">
+      <End Role="MarcaProduto" EntitySet="MarcaProduto" />
+      <End Role="Produto" EntitySet="Produto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProdutosFavoritos_Produto" Association="Self.FK_ProdutosFavoritos_Produto">
+      <End Role="Produto" EntitySet="Produto" />
+      <End Role="ProdutosFavoritos" EntitySet="ProdutosFavoritos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProdutosFavoritos_Utilizadores" Association="Self.FK_ProdutosFavoritos_Utilizadores">
+      <End Role="Utilizadores" EntitySet="Utilizadores" />
+      <End Role="ProdutosFavoritos" EntitySet="ProdutosFavoritos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Token_Utilizadores" Association="Self.FK_Token_Utilizadores">
+      <End Role="Utilizadores" EntitySet="Utilizadores" />
+      <End Role="Token" EntitySet="Token" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

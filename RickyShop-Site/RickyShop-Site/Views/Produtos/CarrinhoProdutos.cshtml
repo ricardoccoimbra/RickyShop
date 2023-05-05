@@ -1,8 +1,7 @@
 ﻿@model List<RickyShop_Site.Models.DadosCarrinhoProduto_Result>
 @{
-    RickyShop_Site.Models.GestãoRickyShopEntities db = new RickyShop_Site.Models.GestãoRickyShopEntities();
     var total = 0.0;
-    foreach (var item in db.Carrinho)
+    foreach (var item in RickyShop_Site.Models.Entities.db.Carrinho)
     {
         total += Convert.ToDouble(item.PrecoProduto * item.Quantidade);
     }
@@ -54,11 +53,11 @@
                                 </div>
                                 <div style="display: flex;">
                                     <input type="text" class="form-control input-sm product-qtd-input" value="@item.Quantidade" style="width: 40px; border-radius: 1px; text-align: center;" readonly="readonly">
-                                    <button type="button" style="width: 30px; border-radius: 1px; font-size:15px" class="estiloButtons" onclick="location.href = '@Url.Action("SomaProd", "Produtos", new { @id = 9})'"> 
+                                    <button type="button" style="width: 30px; border-radius: 1px;" onclick="location.href = '@Url.Action("SomaProd", "Produtos", new { @id = 9})'"> 
                                         @*Mudar a SP e adicionar ID do produto*@
                                         <i class="glyphicon  glyphicon-plus"></i>
                                     </button>
-                                    <button type="button" style="width: 30px; border-radius: 1px;">
+                                    <button type="button" style="width: 30px; border-radius: 1px;" onclick="location.href = '@Url.Action("DiminuiProd", "Produtos", new { @id = 9})'">
                                         <i class="glyphicon  glyphicon-minus"></i>
                                     </button>
 
@@ -88,6 +87,7 @@
     </div>
 </div>
 
+
 @*<div class="col-sm-6 col-md-6">
     <div class="alert alert-success">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true" id="teste">
@@ -105,7 +105,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+@*<div class="modal fade" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -122,7 +122,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 @*<script>
         let total = 0
