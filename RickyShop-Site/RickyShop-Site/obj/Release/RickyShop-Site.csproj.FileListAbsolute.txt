@@ -88,3 +88,7 @@ C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\obj\Rele
 C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\obj\Release\RickyShop-Site.csproj.CopyComplete
 C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\obj\Release\RickyShop-Site.dll
 C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\obj\Release\RickyShop-Site.pdb
+C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\bin\PagedList.dll
+C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\bin\PagedList.Mvc.dll
+C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\bin\PagedList.xml
+C:\Users\pitoc\Documents\GitHub\RickyShop\RickyShop-Site\RickyShop-Site\bin\PagedList.Mvc.xml

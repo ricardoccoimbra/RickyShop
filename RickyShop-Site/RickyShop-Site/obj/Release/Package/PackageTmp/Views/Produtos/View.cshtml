@@ -1,0 +1,99 @@
+﻿@model IEnumerable<RickyShop_Site.Models.Produto>
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ID_Produto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PreçoPorQuantidade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ID_Categoria)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuantidadeStock)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImagemPath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descrição)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Desconto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ID_Marca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Genero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descontinuado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Destaque)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID_Produto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID_Categoria)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuantidadeStock)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ImagemPath)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descrição)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Desconto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID_Marca)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Genero)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descontinuado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Destaque)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

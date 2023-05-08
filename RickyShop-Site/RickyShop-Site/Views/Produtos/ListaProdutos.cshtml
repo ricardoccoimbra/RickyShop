@@ -2,12 +2,7 @@
 @model  PagedList.PagedList<RickyShop_Site.Models.Produto>
 @{
     RickyShop_Site.Models.GestãoRickyShopEntities db = new RickyShop_Site.Models.GestãoRickyShopEntities();
-    int cntAux = 0;
-    int x = 0;
-    if (Model.FirstOrDefault().ID_Categoria != null)
-    {
-         x = Model.FirstOrDefault().ID_Categoria;
-    }
+    int x = Model.FirstOrDefault().ID_Categoria;
 }
 
 <link href="~/Content/Shop.css" rel="stylesheet" />
@@ -15,8 +10,6 @@
 <link href="~/Content/StyleListaProdutos.css" rel="stylesheet" />
 <link href="~/Content/StyleButtonToTop.css" rel="stylesheet" />
 
-@if (cntAux == 0)
-{
     <div class="col-md-3">
         <form role="form">
             <section class="panel">
@@ -41,11 +34,21 @@
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-group">
-                        @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto.Where(s => s.Produto.Count(c => c.ID_Categoria == x) != 0), "ID_Marca", "Marca"), "Marca", new { id = "cat_pedido" })
+                        @if (x != 0)
+                        {
+                            @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto.Where(s => s.Produto.Count(c => c.ID_Categoria == x) != 0), "ID_Marca", "Marca"), "Marca", new { id = "cat_pedido" })
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto.Where(s => s.Produto.Count(z => z.Desconto != null) != 0), "ID_Marca", "Marca"), "Marca", new { id = "cat_pedido" })
+                        }
                     </div>
 
                     <br />
-                    @Html.CheckBoxFor(model => model.FirstOrDefault().EstadoProm) <label style="font-size: 15px; color: #195712;"> Promoções </label>
+                    if (x != 0)
+                    {
+                        @Html.CheckBoxFor(model => model.FirstOrDefault().EstadoProm) <label style="font-size: 15px; color: #195712;"> Promoções </label>
+                    }
                     <br />
 
                     <input type="submit" value="Filtrar" class="btn btn-success"> @Html.ActionLink("Limpar Filtro", "LimparFiltro", "Produtos", new { id = Model.FirstOrDefault().ID_Categoria }, new { })
@@ -75,8 +78,7 @@
             </div>
         </section>
     </div>
-    cntAux++;
-}
+
 <div class="col-md-9">
     <div class="row product-list">
 
@@ -86,7 +88,7 @@
             <div class="col-md-4">
                 <section class="panel">
                     <div class="pro-img-box">
-                        <img src="@Html.DisplayFor(modelItem => item.ImagemPath)"  style="height:280px;"/>
+                        <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" style="height:280px;" />
                     </div>
 
                     <div class="panel-body text-center" style="height: 170px; width:255px">

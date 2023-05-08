@@ -17,6 +17,7 @@
     <Property Name="PrecoProduto" Type="money" Nullable="false" />
     <Property Name="ID_Produto" Type="int" Nullable="false" />
     <Property Name="Quantidade" Type="int" Nullable="false" />
+    <Property Name="Tamanho" Type="varchar" MaxLength="5" Nullable="false" />
   </EntityType>
   <EntityType Name="Categoria">
     <Key>
@@ -25,14 +26,6 @@
     <Property Name="ID_Categoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="NomeCategoria" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
-  <EntityType Name="Descontos">
-    <Key>
-      <PropertyRef Name="ID_Cupao" />
-    </Key>
-    <Property Name="ID_Cupao" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ID_Produto" Type="int" Nullable="false" />
-    <Property Name="Desconto" Type="int" Nullable="false" />
-  </EntityType>
   <EntityType Name="EstadoDoPedido">
     <Key>
       <PropertyRef Name="ID_Estado" />
@@ -40,13 +33,16 @@
     <Property Name="ID_Estado" Type="int" Nullable="false" />
     <Property Name="Estado" Type="varchar" MaxLength="20" Nullable="false" />
   </EntityType>
-  <EntityType Name="EstadoUtilizadores">
+  <EntityType Name="Logs">
     <Key>
-      <PropertyRef Name="ID_Utilizadores" />
+      <PropertyRef Name="ID_Log" />
     </Key>
-    <Property Name="ID_Utilizadores" Type="int" Nullable="false" />
-    <Property Name="LogOn" Type="datetime" Nullable="false" />
-    <Property Name="LogOff" Type="datetime" Nullable="false" />
+    <Property Name="ID_Log" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Utilizador" Type="int" Nullable="false" />
+    <Property Name="Erro_Login" Type="datetime" />
+    <Property Name="Login" Type="datetime" />
+    <Property Name="LogOff" Type="datetime" />
+    <Property Name="IP_TentativaLogin" Type="varchar" MaxLength="15" />
   </EntityType>
   <EntityType Name="MarcaProduto">
     <Key>
@@ -88,7 +84,7 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
       <PropertyRef Name="ID_Produto" />
     </Key>
     <Property Name="ID_Produto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Nome" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="PreçoPorQuantidade" Type="money" Nullable="false" />
     <Property Name="ID_Categoria" Type="int" Nullable="false" />
     <Property Name="QuantidadeStock" Type="int" Nullable="false" />
@@ -135,12 +131,12 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
     <Property Name="PrimeiroNome" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="SegundoNome" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="DataDeNascimento" Type="date" Nullable="false" />
-    <Property Name="NIF" Type="int" Nullable="false" />
+    <Property Name="NIF" Type="varchar" MaxLength="9" Nullable="false" />
     <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="PassWord" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Contacto" Type="int" Nullable="false" />
+    <Property Name="PassWord" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Contacto" Type="varchar" MaxLength="9" Nullable="false" />
     <Property Name="DataDeAdesao" Type="datetime" Nullable="false" />
-    <Property Name="Desconto" Type="float" />
+    <Property Name="Desconto" Type="int" />
   </EntityType>
   <Association Name="FK_Carrinho_Produto">
     <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
@@ -166,27 +162,15 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Descontos_Produto">
-    <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
-    <End Role="Descontos" Type="Self.Descontos" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Produto">
-        <PropertyRef Name="ID_Produto" />
-      </Principal>
-      <Dependent Role="Descontos">
-        <PropertyRef Name="ID_Produto" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_EstadoUtilizadores_Utilizadores">
+  <Association Name="FK_Logs_Utilizadores">
     <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
-    <End Role="EstadoUtilizadores" Type="Self.EstadoUtilizadores" Multiplicity="0..1" />
+    <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Utilizadores">
         <PropertyRef Name="ID_Utilizador" />
       </Principal>
-      <Dependent Role="EstadoUtilizadores">
-        <PropertyRef Name="ID_Utilizadores" />
+      <Dependent Role="Logs">
+        <PropertyRef Name="ID_Utilizador" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -298,6 +282,9 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="DadosCarrinhoProduto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="int" Mode="In" />
+  </Function>
   <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
   <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -333,9 +320,8 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
     <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Carrinho" EntityType="Self.Carrinho" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Descontos" EntityType="Self.Descontos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EstadoDoPedido" EntityType="Self.EstadoDoPedido" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="EstadoUtilizadores" EntityType="Self.EstadoUtilizadores" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MarcaProduto" EntityType="Self.MarcaProduto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Produto" EntityType="Self.Produto" Schema="dbo" store:Type="Tables" />
@@ -359,13 +345,9 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
       <End Role="Utilizadores" EntitySet="Utilizadores" />
       <End Role="Carrinho" EntitySet="Carrinho" />
     </AssociationSet>
-    <AssociationSet Name="FK_Descontos_Produto" Association="Self.FK_Descontos_Produto">
-      <End Role="Produto" EntitySet="Produto" />
-      <End Role="Descontos" EntitySet="Descontos" />
-    </AssociationSet>
-    <AssociationSet Name="FK_EstadoUtilizadores_Utilizadores" Association="Self.FK_EstadoUtilizadores_Utilizadores">
+    <AssociationSet Name="FK_Logs_Utilizadores" Association="Self.FK_Logs_Utilizadores">
       <End Role="Utilizadores" EntitySet="Utilizadores" />
-      <End Role="EstadoUtilizadores" EntitySet="EstadoUtilizadores" />
+      <End Role="Logs" EntitySet="Logs" />
     </AssociationSet>
     <AssociationSet Name="FK_Pedidos_EstadoDoPedido" Association="Self.FK_Pedidos_EstadoDoPedido">
       <End Role="EstadoDoPedido" EntitySet="EstadoDoPedido" />

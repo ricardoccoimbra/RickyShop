@@ -38,16 +38,6 @@ namespace RickyShop_Site.Controllers
             // valor não pode ser nulo, caso seja ele fica a 1, como se fosse um if
             int numeroPagina = pagina ?? 1;
 
-            if (id == 0)
-            {
-                prodPage = db.Produto.Where(s => s.Desconto != null).ToList().ToPagedList(numeroPagina, tamanhoPagina);
-                prodPage.FirstOrDefault().ID_Categoria = 0;
-
-            }
-            else
-            {
-                prodPage = db.Produto.Where(s => s.ID_Categoria == id).ToList().ToPagedList(numeroPagina, tamanhoPagina);
-            }
             var produtos = from s in db.Produto select s;
 
             if (!String.IsNullOrEmpty(searchString))
@@ -62,11 +52,17 @@ namespace RickyShop_Site.Controllers
                 {
                     produtos = produtos.Where(s => s.Nome.ToUpper().Contains(searchString.ToUpper())
                              || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper())).Where(c => c.ID_Categoria == id);
+
+                    if (produtos.Count() == 0)
+                    {
+                        Response.Write($"<script>alert('Não existe nenhum produto pesquisado!')</script>");
+                        return View(db.Produto.Where(s => s.ID_Categoria == id).ToList().ToPagedList(numeroPagina, tamanhoPagina));
+                    }
+                    else
+                    {
+                        return View(produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina));
+                    }
                 }
-
-
-
-                return View(produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina));
             }
 
 
@@ -79,46 +75,76 @@ namespace RickyShop_Site.Controllers
                 {
                     var filtro2 = filtro[1].ToString();
                     int n = Convert.ToInt32(filtro[0]);
-                    if (filtro2 == "PrecoCres")
+
+
+                    if (id == 0)
                     {
-                        prodPage = prodPage.Where(s => s.ID_Marca == n).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
-                        return View(prodPage);
+                        if (filtro2 == "PrecoCres")
+                        {
+                            prodPage = db.Produto.Where(s => s.ID_Marca == n && s.Desconto != null).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            prodPage.FirstOrDefault().ID_Categoria = id;
+                            return View(prodPage);
+                        }
+                        else
+                        {
+                            prodPage = db.Produto.Where(s => s.ID_Marca == n && s.Desconto != null).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            prodPage.FirstOrDefault().ID_Categoria = id;
+                            return View(prodPage);
+                        }
                     }
                     else
                     {
-                        prodPage = prodPage.Where(s => s.ID_Marca == n).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
-                        return View(prodPage);
+                        if (filtro2 == "PrecoCres")
+                        {
+                            prodPage = db.Produto.Where(s => s.ID_Marca == n && s.ID_Categoria == id).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            return View(prodPage);
+                        }
+                        else
+                        {
+                            prodPage = db.Produto.Where(s => s.ID_Marca == n && s.ID_Categoria == id).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            return View(prodPage);
+                        }
                     }
+
                 }
                 else
                 {
-                    if (filtro[1].ToString() == "PrecoCres")
+                    if (id == 0)
                     {
-                        prodPage = prodPage.OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
-                        return View(prodPage);
+                        if (filtro[1].ToString() == "PrecoCres")
+                        {
+                            prodPage = db.Produto.Where(s => s.Desconto != null).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            prodPage.FirstOrDefault().ID_Categoria = id;
+                            return View(prodPage);
+                        }
+                        else
+                        {
+                            prodPage = db.Produto.Where(s => s.Desconto != null).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            prodPage.FirstOrDefault().ID_Categoria = id;
+                            return View(prodPage);
+                        }
                     }
                     else
                     {
-                        prodPage = prodPage.OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
-                        return View(prodPage);
+                        if (filtro[1].ToString() == "PrecoCres")
+                        {
+                            prodPage = db.Produto.Where(s => s.ID_Categoria == id).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            return View(prodPage);
+                        }
+                        else
+                        {
+                            prodPage = db.Produto.Where(s => s.ID_Categoria == id).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            return View(prodPage);
+                        }
                     }
                 }
             }
-            else
-            { return View(prodPage); }
-        }
 
-        [HttpPost]
-        public ActionResult ListaProdutos(int? pagina, Produto p, int id)
-        {
-            IPagedList<Produto> prodPage;
-            int tamanhoPagina = 6;
-            // valor não pode ser nulo, caso seja ele fica a 1, como se fosse um if
-            int numeroPagina = pagina ?? 1;
 
             if (id == 0)
             {
                 prodPage = db.Produto.Where(s => s.Desconto != null).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                prodPage.FirstOrDefault().ID_Categoria = 0;
 
             }
             else
@@ -126,28 +152,34 @@ namespace RickyShop_Site.Controllers
                 prodPage = db.Produto.Where(s => s.ID_Categoria == id).ToList().ToPagedList(numeroPagina, tamanhoPagina);
             }
 
+            return View(prodPage);
+        }
+
+        [HttpPost]
+        public ActionResult ListaProdutos(Produto p, int id)
+        {
+            IPagedList<Produto> prodPage;
+            int tamanhoPagina = 6;
+            // valor não pode ser nulo, caso seja ele fica a 1, como se fosse um if
+            int numeroPagina = 1;
 
             if (p.ID_Marca == 0)
             {
 
                 if (p.EstadoProm == true)
                 {
-                    prodPage = prodPage.Where(s => s.Desconto != null).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                    prodPage = db.Produto.Where(s => s.Desconto != null && s.ID_Categoria == id).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                 }
                 else
                 {
                     Response.Write($"<script>alert('Selecione uma Marca!')</script>");
-                    prodPage = prodPage.ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                    prodPage = db.Produto.ToList().ToPagedList(numeroPagina, tamanhoPagina);
 
                 }
-
-
                 return View(prodPage);
             }
             else
             {
-
-
                 if (Session["Filtro"] == null)
                 {
                     Session["Filtro"] = p.ID_Marca + "-nada";
@@ -161,13 +193,33 @@ namespace RickyShop_Site.Controllers
                 }
             }
 
-            if (p.EstadoProm == true)
+
+
+
+            if (id == 0)
             {
-                prodPage = prodPage.Where(s => s.ID_Marca == p.ID_Marca && s.Desconto != null).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                prodPage = db.Produto.Where(s => s.Desconto != null && s.ID_Marca == p.ID_Marca).ToList().ToPagedList(numeroPagina, tamanhoPagina);
             }
             else
-                prodPage = prodPage.Where(s => s.ID_Marca == p.ID_Marca).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+            {
+                if (p.EstadoProm == true)
+                {
+                    if (db.Produto.Where(s => s.ID_Marca == p.ID_Marca && s.Desconto != null).Count() == 0)
+                    {
+                        Response.Write($"<script>alert('Não existe promoções nesta marca.')</script>");
+                        prodPage = db.Produto.Where(s => s.ID_Marca == p.ID_Marca && s.ID_Categoria == id).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                    }
+                    else
+                        prodPage = db.Produto.Where(s => s.ID_Marca == p.ID_Marca && s.Desconto != null && s.ID_Categoria == id).ToList().ToPagedList(numeroPagina, tamanhoPagina);
 
+                }
+                else
+                    prodPage = db.Produto.Where(s => s.ID_Marca == p.ID_Marca && s.ID_Categoria == id).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+
+            }
+
+
+            prodPage.FirstOrDefault().ID_Categoria = id;
             return View(prodPage);
         }
         public ActionResult LimparFiltro(int id)
@@ -277,7 +329,6 @@ namespace RickyShop_Site.Controllers
 
             return RedirectToAction("CarrinhoProdutos", new { id = UserID });
         }
-
         public ActionResult DiminuiProd(int id)
         {
             int UserID = Convert.ToInt32(Session["UserID"]);
@@ -293,6 +344,26 @@ namespace RickyShop_Site.Controllers
             db.SaveChangesAsync();
 
             return RedirectToAction("CarrinhoProdutos", new { id = UserID });
+        }
+        public ActionResult PesquisarProduto(int? pagina, string searchString)
+        {
+            IPagedList<Produto> prodPage;
+            // valor não pode ser nulo, caso seja ele fica a 1, como se fosse um if
+            int numeroPagina = pagina ?? 1;
+            int tamanhoPagina = 6;
+            var produtos = from s in db.Produto select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+
+                produtos = produtos.Where(s => s.Nome.ToUpper().Contains(searchString.ToUpper())
+                        || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper()));
+
+                
+                return View("ListaProdutos", db.Produto.ToList().ToPagedList(numeroPagina, tamanhoPagina));
+            }
+
+            return View("ListaProdutos", db.Produto.ToList().ToPagedList(numeroPagina, tamanhoPagina));
         }
 
     }

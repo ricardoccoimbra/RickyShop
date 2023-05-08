@@ -19,6 +19,7 @@
     <Property Name="Quantidade" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Produto" Relationship="Self.FK_Carrinho_Produto" FromRole="Carrinho" ToRole="Produto" />
     <NavigationProperty Name="Utilizadores" Relationship="Self.FK_Carrinho_Utilizadores" FromRole="Carrinho" ToRole="Utilizadores" />
+    <Property Name="Tamanho" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Categoria">
     <Key>
@@ -28,15 +29,6 @@
     <Property Name="NomeCategoria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Produto" Relationship="Self.FK_Produto_Categoria" FromRole="Categoria" ToRole="Produto" />
   </EntityType>
-  <EntityType Name="Descontos">
-    <Key>
-      <PropertyRef Name="ID_Cupao" />
-    </Key>
-    <Property Name="ID_Cupao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ID_Produto" Type="Int32" Nullable="false" />
-    <Property Name="Desconto" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Produto" Relationship="Self.FK_Descontos_Produto" FromRole="Descontos" ToRole="Produto" />
-  </EntityType>
   <EntityType Name="EstadoDoPedido">
     <Key>
       <PropertyRef Name="ID_Estado" />
@@ -45,14 +37,17 @@
     <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Pedidos" Relationship="Self.FK_Pedidos_EstadoDoPedido" FromRole="EstadoDoPedido" ToRole="Pedidos" />
   </EntityType>
-  <EntityType Name="EstadoUtilizadores">
+  <EntityType Name="Logs">
     <Key>
-      <PropertyRef Name="ID_Utilizadores" />
+      <PropertyRef Name="ID_Log" />
     </Key>
-    <Property Name="ID_Utilizadores" Type="Int32" Nullable="false" />
-    <Property Name="LogOn" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="LogOff" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="Utilizadores" Relationship="Self.FK_EstadoUtilizadores_Utilizadores" FromRole="EstadoUtilizadores" ToRole="Utilizadores" />
+    <Property Name="ID_Log" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Utilizador" Type="Int32" Nullable="false" />
+    <Property Name="Erro_Login" Type="DateTime" Precision="3" />
+    <Property Name="Login" Type="DateTime" Precision="3" />
+    <Property Name="LogOff" Type="DateTime" Precision="3" />
+    <Property Name="IP_TentativaLogin" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Utilizadores" Relationship="Self.FK_Logs_Utilizadores" FromRole="Logs" ToRole="Utilizadores" />
   </EntityType>
   <EntityType Name="MarcaProduto">
     <Key>
@@ -84,7 +79,7 @@
       <PropertyRef Name="ID_Produto" />
     </Key>
     <Property Name="ID_Produto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nome" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="PreçoPorQuantidade" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="ID_Categoria" Type="Int32" Nullable="false" />
     <Property Name="QuantidadeStock" Type="Int32" Nullable="false" />
@@ -94,13 +89,12 @@
     <Property Name="ID_Marca" Type="Int32" Nullable="false" />
     <Property Name="Genero" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Descontinuado" Type="Int32" Nullable="false" />
+    <Property Name="Destaque" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Carrinho" Relationship="Self.FK_Carrinho_Produto" FromRole="Produto" ToRole="Carrinho" />
     <NavigationProperty Name="Categoria" Relationship="Self.FK_Produto_Categoria" FromRole="Produto" ToRole="Categoria" />
-    <NavigationProperty Name="Descontos" Relationship="Self.FK_Descontos_Produto" FromRole="Produto" ToRole="Descontos" />
     <NavigationProperty Name="MarcaProduto" Relationship="Self.FK_Produto_MarcaProduto" FromRole="Produto" ToRole="MarcaProduto" />
     <NavigationProperty Name="PedidosDetalhes" Relationship="Self.FK_PedidosDetalhes_Produto" FromRole="Produto" ToRole="PedidosDetalhes" />
     <NavigationProperty Name="ProdutosFavoritos" Relationship="Self.FK_ProdutosFavoritos_Produto" FromRole="Produto" ToRole="ProdutosFavoritos" />
-    <Property Name="Destaque" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="ProdutosFavoritos">
     <Key>
@@ -140,14 +134,14 @@
     <Property Name="PrimeiroNome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="SegundoNome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DataDeNascimento" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="NIF" Type="Int32" Nullable="false" />
+    <Property Name="NIF" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="PassWord" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Contacto" Type="Int32" Nullable="false" />
+    <Property Name="PassWord" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Contacto" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DataDeAdesao" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="Desconto" Type="Double" />
+    <Property Name="Desconto" Type="Int32" />
     <NavigationProperty Name="Carrinho" Relationship="Self.FK_Carrinho_Utilizadores" FromRole="Utilizadores" ToRole="Carrinho" />
-    <NavigationProperty Name="EstadoUtilizadores" Relationship="Self.FK_EstadoUtilizadores_Utilizadores" FromRole="Utilizadores" ToRole="EstadoUtilizadores" />
+    <NavigationProperty Name="Logs" Relationship="Self.FK_Logs_Utilizadores" FromRole="Utilizadores" ToRole="Logs" />
     <NavigationProperty Name="Pedidos" Relationship="Self.FK_Pedidos_Utilizadores" FromRole="Utilizadores" ToRole="Pedidos" />
     <NavigationProperty Name="ProdutosFavoritos" Relationship="Self.FK_ProdutosFavoritos_Utilizadores" FromRole="Utilizadores" ToRole="ProdutosFavoritos" />
     <NavigationProperty Name="Token" Relationship="Self.FK_Token_Utilizadores" FromRole="Utilizadores" ToRole="Token" />
@@ -202,18 +196,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Descontos_Produto">
-    <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
-    <End Role="Descontos" Type="Self.Descontos" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Produto">
-        <PropertyRef Name="ID_Produto" />
-      </Principal>
-      <Dependent Role="Descontos">
-        <PropertyRef Name="ID_Produto" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Pedidos_EstadoDoPedido">
     <End Role="EstadoDoPedido" Type="Self.EstadoDoPedido" Multiplicity="1" />
     <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
@@ -226,15 +208,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_EstadoUtilizadores_Utilizadores">
+  <Association Name="FK_Logs_Utilizadores">
     <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
-    <End Role="EstadoUtilizadores" Type="Self.EstadoUtilizadores" Multiplicity="0..1" />
+    <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Utilizadores">
         <PropertyRef Name="ID_Utilizador" />
       </Principal>
-      <Dependent Role="EstadoUtilizadores">
-        <PropertyRef Name="ID_Utilizadores" />
+      <Dependent Role="Logs">
+        <PropertyRef Name="ID_Utilizador" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -326,9 +308,8 @@
     <EntitySet Name="Admin" EntityType="Self.Admin" />
     <EntitySet Name="Carrinho" EntityType="Self.Carrinho" />
     <EntitySet Name="Categoria" EntityType="Self.Categoria" />
-    <EntitySet Name="Descontos" EntityType="Self.Descontos" />
     <EntitySet Name="EstadoDoPedido" EntityType="Self.EstadoDoPedido" />
-    <EntitySet Name="EstadoUtilizadores" EntityType="Self.EstadoUtilizadores" />
+    <EntitySet Name="Logs" EntityType="Self.Logs" />
     <EntitySet Name="MarcaProduto" EntityType="Self.MarcaProduto" />
     <EntitySet Name="Pedidos" EntityType="Self.Pedidos" />
     <EntitySet Name="Produto" EntityType="Self.Produto" />
@@ -349,17 +330,13 @@
       <End Role="Categoria" EntitySet="Categoria" />
       <End Role="Produto" EntitySet="Produto" />
     </AssociationSet>
-    <AssociationSet Name="FK_Descontos_Produto" Association="Self.FK_Descontos_Produto">
-      <End Role="Produto" EntitySet="Produto" />
-      <End Role="Descontos" EntitySet="Descontos" />
-    </AssociationSet>
     <AssociationSet Name="FK_Pedidos_EstadoDoPedido" Association="Self.FK_Pedidos_EstadoDoPedido">
       <End Role="EstadoDoPedido" EntitySet="EstadoDoPedido" />
       <End Role="Pedidos" EntitySet="Pedidos" />
     </AssociationSet>
-    <AssociationSet Name="FK_EstadoUtilizadores_Utilizadores" Association="Self.FK_EstadoUtilizadores_Utilizadores">
+    <AssociationSet Name="FK_Logs_Utilizadores" Association="Self.FK_Logs_Utilizadores">
       <End Role="Utilizadores" EntitySet="Utilizadores" />
-      <End Role="EstadoUtilizadores" EntitySet="EstadoUtilizadores" />
+      <End Role="Logs" EntitySet="Logs" />
     </AssociationSet>
     <AssociationSet Name="FK_Produto_MarcaProduto" Association="Self.FK_Produto_MarcaProduto">
       <End Role="MarcaProduto" EntitySet="MarcaProduto" />
@@ -419,6 +396,12 @@
       <Parameter Name="new_diagramname" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="DadosUserToken" ReturnType="Collection(GestãoRickyShopModel.DadosUserToken_Result)">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DadosCarrinhoProduto" ReturnType="Collection(GestãoRickyShopModel.DadosCarrinhoProduto_Result)">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -430,5 +413,19 @@
     <Property Type="Int32" Name="ID" Nullable="false" />
     <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
     <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="DadosUserToken_Result">
+    <Property Type="String" Name="PrimeiroNome" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="SegundoNome" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="TokenAleatorio" Nullable="false" MaxLength="7" />
+  </ComplexType>
+  <ComplexType Name="DadosCarrinhoProduto_Result">
+    <Property Type="String" Name="Nome" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="ImagemPath" Nullable="false" MaxLength="250" />
+    <Property Type="Decimal" Name="PreçoPorQuantidade" Nullable="false" Precision="19" />
+    <Property Type="String" Name="Descrição" Nullable="false" MaxLength="1000" />
+    <Property Type="Int32" Name="Quantidade" Nullable="false" />
+    <Property Type="String" Name="Tamanho" Nullable="false" MaxLength="5" />
   </ComplexType>
 </Schema>

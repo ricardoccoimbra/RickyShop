@@ -25,7 +25,7 @@
         <div class="col-lg-8">
 
             <hr>
-            <h2>Conheça mais sobre a tua marca.</h2>
+            <h2>Conhece mais sobre a tua marca.</h2>
             <hr>
 
             <!-- Preview Image -->
@@ -75,11 +75,14 @@
             </div>
 
             <!-- Side Widget Well -->
-            <div class="well bgcolor-skyblue">
-                <h4>Ainda não tens conta?</h4>
-                <p>Aproveita a melhor qualidade aos melhores preços!</p>
-                <input type="submit" value="Criar Conta" class="btn btn-success" onclick="location.href = '@Url.Action("Registar", "Home")'">
-            </div>
+            @if (Session["UserID"] == null)
+            {
+                <div class="well bgcolor-skyblue">
+                    <h4>Ainda não tens conta?</h4>
+                    <p>Aproveita a melhor qualidade aos melhores preços!</p>
+                    <input type="submit" value="Criar Conta" class="btn btn-success" onclick="location.href = '@Url.Action("Registar", "Home")'">
+                </div>
+            }
         </div>
     </div>
 </div>
