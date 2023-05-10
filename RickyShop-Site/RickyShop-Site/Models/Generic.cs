@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -63,7 +64,7 @@ namespace RickyShop_Site.Models
 
         public static void MarcaID()
         {
-            
+
             List<string> ls = new List<string>();
 
             foreach (var item in db.MarcaProduto)
@@ -72,6 +73,94 @@ namespace RickyShop_Site.Models
             }
         }
 
+        public static IPagedList Filtros(string filtros, int id, IQueryable<Produto> produtos, int? pagina, int numeroPagina, int tamanhoPagina)
+        {
+            IPagedList<Produto> prodPage;
+
+            var filtro = filtros.ToString().Split('-');
+            if (filtro[0].ToString() != "nada")
+            {
+                var filtro2 = filtro[1].ToString();
+                int n = Convert.ToInt32(filtro[0]);
+
+
+                if (id == 0)
+                {
+                    if (filtro2 == "PrecoCres")
+                    {
+                        prodPage = produtos.Where(s => s.ID_Marca == n && s.Desconto != null).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                        prodPage.FirstOrDefault().ID_Categoria = id;
+                        return prodPage;
+                    }
+                    else
+                    {
+                        prodPage = produtos.Where(s => s.ID_Marca == n && s.Desconto != null).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                        prodPage.FirstOrDefault().ID_Categoria = id;
+                        return prodPage;
+                    }
+                }
+                else
+                {
+                    if (filtro2 == "PrecoCres")
+                    {
+                        prodPage = produtos.Where(s => s.ID_Marca == n && s.ID_Categoria == id).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                        return prodPage;
+                    }
+                    else
+                    {
+                        prodPage = produtos.Where(s => s.ID_Marca == n && s.ID_Categoria == id).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                        return prodPage;
+                    }
+                }
+
+            }
+            else
+            {
+                if (id == 0)
+                {
+                    if (filtro[1].ToString() == "PrecoCres")
+                    {
+                        prodPage = produtos.Where(s => s.Desconto != null).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                        prodPage.FirstOrDefault().ID_Categoria = id;
+                        return prodPage;
+                    }
+                    else
+                    {
+                        prodPage = produtos.Where(s => s.Desconto != null).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                        prodPage.FirstOrDefault().ID_Categoria = id;
+                        return prodPage;
+                    }
+                }
+                else
+                {
+                    if (id != 4)
+                    {
+                        if (filtro[1].ToString() == "PrecoCres")
+                        {
+                            prodPage = produtos.Where(s => s.ID_Categoria == id).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            return prodPage;
+                        }
+                        else
+                        {
+                            prodPage = produtos.Where(s => s.ID_Categoria == id).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            return prodPage;
+                        }
+                    }
+                    else
+                    {
+                        if (filtro[1].ToString() == "PrecoCres")
+                        {
+                            prodPage = produtos.OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            return prodPage;
+                        }
+                        else
+                        {
+                            prodPage = produtos.OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            return prodPage;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
-
