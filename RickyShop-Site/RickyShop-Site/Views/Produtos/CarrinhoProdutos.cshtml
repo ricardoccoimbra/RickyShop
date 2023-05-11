@@ -1,9 +1,9 @@
 ﻿@model List<RickyShop_Site.Models.DadosCarrinhoProduto_Result>
 @{
     var total = 0.0;
-    foreach (var item in RickyShop_Site.Models.Entities.db.Carrinho)
+    foreach (var item in Model)
     {
-        total += Convert.ToDouble(item.PrecoProduto * item.Quantidade);
+        total += Convert.ToDouble(item.PreçoPorQuantidade * item.Quantidade);
     }
 }
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -16,147 +16,131 @@
 
 
 <div class="container">
-    <div class="row">
-        <div class="col-xs-8">
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <div class="panel-title">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h5><span class="glyphicon glyphicon-shopping-cart"></span> Carrinho Produtos</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    @foreach (var item in Model)
-                    {
-                        <div class="row cart-product">
-                            <div class="col-xs-2">
-                                <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" class="img-responsive" />
-                                @*<img  src="http://placehold.it/100x70">*@
-                            </div>
-                            <div class="col-xs-4">
-                                <h4 class="product-name">
-                                    <strong>
-                                        @Html.DisplayFor(modelItem => item.Nome)
-                                    </strong>
-                                </h4><h4><small>@Html.DisplayFor(modelItem => item.Descrição)</small></h4>
-                            </div>
-                            <div class="col-xs-6">
-                                <div class="col-xs-6 text-right ">
-                                    <label style="font-size:20px">
-                                        <strong class="cart-product-price">
-                                            @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)€
-                                        </strong>
-                                    </label>
-                                </div>
-                                <div style="display: flex;">
-                                    <input type="text" class="form-control input-sm product-qtd-input" value="@item.Quantidade" style="width: 40px; border-radius: 1px; text-align: center;" readonly="readonly">
-                                    <button type="button" style="width: 30px; border-radius: 1px;" onclick="location.href = '@Url.Action("SomaProd", "Produtos", new { @id = 9})'"> 
-                                        @*Mudar a SP e adicionar ID do produto*@
-                                        <i class="glyphicon  glyphicon-plus"></i>
-                                    </button>
-                                    <button type="button" style="width: 30px; border-radius: 1px;" onclick="location.href = '@Url.Action("DiminuiProd", "Produtos", new { @id = 9})'">
-                                        <i class="glyphicon  glyphicon-minus"></i>
-                                    </button>
-
-                                    <button type="button" class="btn btn-link btn-xs remove-products">
-                                        <span class="glyphicon glyphicon-trash "> </span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                    }
-                </div>
-                <div class="panel-footer">
-                    <div class="row text-center">
-                        <div class="col-xs-9">
-                            <h4 class="text-right ">Total: <b>@total€</b></h4>
-                        </div>
-                        <div class="col-xs-3">
-                            <button type="button" class="ui green button" data-toggle="modal" data-target="#flipFlop">
-                                Checkout
-                            </button>
+    <div class="col-xs-8">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <h5><span class="glyphicon glyphicon-shopping-cart"></span> Carrinho Produtos</h5>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="panel-body">
+                @foreach (var item in Model)
+                {
+                    <div class="row cart-product">
+                        <div class="col-xs-2">
+                            <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" class="img-responsive" />
+                            @*<img  src="http://placehold.it/100x70">*@
+                        </div>
+                        <div class="col-xs-4">
+                            <h4 class="product-name">
+                                <strong>
+                                    @Html.DisplayFor(modelItem => item.Nome)
+                                </strong>
+                            </h4><h4><small>@Html.DisplayFor(modelItem => item.Descrição)</small></h4>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="col-xs-6 text-right ">
+                                <label style="font-size:20px">
+                                    <strong class="cart-product-price">
+                                        @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)€
+                                    </strong>
+                                </label>
+                            </div>
+                            <div style="display: flex;">
+                                <input type="text" class="form-control input-sm product-qtd-input" value="@item.Quantidade" style="width: 40px; border-radius: 1px; text-align: center;" readonly="readonly">
+                                <button type="button" style="width: 30px; border-radius: 1px;" onclick="location.href = '@Url.Action("SomaProd", "Produtos", new { @id = item.ID_Produto})'">
+                                    @*Mudar a SP e adicionar ID do produto*@
+                                    <i class="glyphicon  glyphicon-plus"></i>
+                                </button>
+                                <button type="button" style="width: 30px; border-radius: 1px;" onclick="location.href = '@Url.Action("DiminuiProd", "Produtos", new { @id = item.ID_Produto})'">
+                                    <i class="glyphicon  glyphicon-minus"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-link btn-xs remove-products" onclick="location.href = '@Url.Action("EliminarProdCarrinho", "Produtos", new { @id = item.ID_Produto})'">
+                                    <span class="glyphicon glyphicon-trash "> </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                }
+            </div>
         </div>
+    </div>
+
+    <div class="col-md-4" style="background: #195712; border-radius: 5px; color:white">
+        <div class="card text-white rounded-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 style="text-align: center;font-size: 25px;" class="">SUMÁRIO</h5>
+                </div>
+
+                <br />
+                <div class="d-flex justify-content-between">
+                    <div style="font-size:15px">Subtotal: @total€</div>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <div style="font-size:15px">Envio: Grátis</div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="d-flex justify-content-between">
+                    <div style="font-size:20px"><b>TOTAL: @total€</b></div>
+                </div>
+
+                <br />
+                <br />
+
+                <div class="btn-group" role="group" aria-label="Exemplo básico" style="margin-left: 85px;  margin-bottom: 10px">
+                    <button type="button" style="background-color: grey; border-color:white" class="btn">
+                        <div class="d-flex justify-content-between">
+                            <span>Dados<i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                        </div>
+                    </button>
+                    <button type="button" style="background-color: grey; border-color: white;" class="btn">
+                        <div class="d-flex justify-content-between">
+                            <span>@total€</span>
+                            <span>Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                        </div>
+                    </button>
+                </div>
+
+
+                <br />
+
+                <div class="card-body">
+                    <img class="me-2" width="45px"
+                         src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+                         alt="Visa" />
+                    <img class="me-2" width="45px"
+                         src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+                         alt="American Express" />
+                    <img class="me-2" width="45px"
+                         src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+                         alt="Mastercard" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paypal" viewBox="0 0 16 16">
+                        <path d="M14.06 3.713c.12-1.071-.093-1.832-.702-2.526C12.628.356 11.312 0 9.626 0H4.734a.7.7 0 0 0-.691.59L2.005 13.509a.42.42 0 0 0 .415.486h2.756l-.202 1.28a.628.628 0 0 0 .62.726H8.14c.429 0 .793-.31.862-.731l.025-.13.48-3.043.03-.164.001-.007a.351.351 0 0 1 .348-.297h.38c1.266 0 2.425-.256 3.345-.91.379-.27.712-.603.993-1.005a4.942 4.942 0 0 0 .88-2.195c.242-1.246.13-2.356-.57-3.154a2.687 2.687 0 0 0-.76-.59l-.094-.061ZM6.543 8.82a.695.695 0 0 1 .321-.079H8.3c2.82 0 5.027-1.144 5.672-4.456l.003-.016c.217.124.4.27.548.438.546.623.679 1.535.45 2.71-.272 1.397-.866 2.307-1.663 2.874-.802.57-1.842.815-3.043.815h-.38a.873.873 0 0 0-.863.734l-.03.164-.48 3.043-.024.13-.001.004a.352.352 0 0 1-.348.296H5.595a.106.106 0 0 1-.105-.123l.208-1.32.845-5.214Z" />
+                    </svg>
+                    <div class="rounded border w-100 p-3">
+                        <p class="d-flex align-items-center mb-0">
+                            <i class=" fa-paypal "></i>
+                    </div>
+                </div>
+
+                <br />
+            </div>
+        </div>
+
     </div>
 </div>
 
 
-@*<div class="col-sm-6 col-md-6">
-    <div class="alert alert-success">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true" id="teste">
-            ×
-        </button>
-        <span class="glyphicon glyphicon-ok"></span> <strong>Success Message</strong>
-        <hr class="message-inner-separator">
-        <p>
-            You successfully read this important alert message.
-        </p>
-    </div>
-</div>*@
 
 
 
-
-<!-- Modal -->
-@*<div class="modal fade" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="modalLabel">Modal Title</h4>
-            </div>
-            <div class="modal-body">
-                Modal content...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>*@
-
-@*<script>
-        let total = 0
-        let itemId = 1
-
-        const cartProducts = document.getElementsByClassName("cart-product")
-        for (var i = 0; i < cartProducts.length; i++) {
-            //console.log(cartProducts[i])
-
-
-            const ProductPrice = cartProducts[i].getElementsByClassName("cart-product-price")[0].innerText.replace(",", ".")
-            const ProductQuantity = cartProducts[i].getElementsByClassName("product-qtd-input")[0].value
-
-            fetch(`/Produtos/UpdateQuantity?ProdID=${ProductPrice}&quantidade=${ProductQuantity}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-
-
-            total += ProductPrice * ProductQuantity
-            console
-        }
-
-
-        document.querySelector(".col-xs-9 strong").innerText = total.toFixed(2).replace(".", ",") + "€"
-        //reload();
-
-
-        //function reload() {
-        //    location.replace('https://localhost:44372/Produtos/CarrinhoProdutos/2')
-        //}
-
-
-
-    </script>*@

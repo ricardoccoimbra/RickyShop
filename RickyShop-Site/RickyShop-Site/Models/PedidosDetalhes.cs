@@ -14,6 +14,7 @@ namespace RickyShop_Site.Models
     
     public partial class PedidosDetalhes
     {
+        public int ID { get; set; }
         public int ID_Pedido { get; set; }
         public int ID_Produto { get; set; }
         public int Quantidade { get; set; }

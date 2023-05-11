@@ -17,11 +17,6 @@ namespace RickyShop_Site.Controllers
     {
         GestãoRickyShopEntities db = new GestãoRickyShopEntities();
 
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

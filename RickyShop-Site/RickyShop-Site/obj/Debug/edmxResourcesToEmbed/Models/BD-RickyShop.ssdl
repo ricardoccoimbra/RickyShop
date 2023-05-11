@@ -65,15 +65,11 @@
     <Property Name="ID_Estado" Type="int" Nullable="false" />
     <Property Name="Marca" Type="varchar" MaxLength="50" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="PedidosDetalhes">
     <Key>
-      <PropertyRef Name="ID_Pedido" />
-      <PropertyRef Name="ID_Produto" />
-      <PropertyRef Name="Quantidade" />
-      <PropertyRef Name="Preco" />
+      <PropertyRef Name="ID" />
     </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ID_Pedido" Type="int" Nullable="false" />
     <Property Name="ID_Produto" Type="int" Nullable="false" />
     <Property Name="Quantidade" Type="int" Nullable="false" />
@@ -324,19 +320,12 @@ warning 6002: The table/view 'GestãoRickyShop.dbo.PedidosDetalhes' does not hav
     <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MarcaProduto" EntityType="Self.MarcaProduto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PedidosDetalhes" EntityType="Self.PedidosDetalhes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Produto" EntityType="Self.Produto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProdutosFavoritos" EntityType="Self.ProdutosFavoritos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Utilizadores" EntityType="Self.Utilizadores" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="PedidosDetalhes" EntityType="Self.PedidosDetalhes" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [PedidosDetalhes].[ID_Pedido] AS [ID_Pedido], 
-    [PedidosDetalhes].[ID_Produto] AS [ID_Produto], 
-    [PedidosDetalhes].[Quantidade] AS [Quantidade], 
-    [PedidosDetalhes].[Preco] AS [Preco]
-    FROM [dbo].[PedidosDetalhes] AS [PedidosDetalhes]</DefiningQuery>
-    </EntitySet>
     <AssociationSet Name="FK_Carrinho_Produto" Association="Self.FK_Carrinho_Produto">
       <End Role="Produto" EntitySet="Produto" />
       <End Role="Carrinho" EntitySet="Carrinho" />

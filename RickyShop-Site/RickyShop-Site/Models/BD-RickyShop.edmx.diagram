@@ -17,7 +17,6 @@
         <EntityTypeShape EntityType="GestãoRickyShopModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="GestãoRickyShopModel.Token" Width="1.5" PointX="3" PointY="20.375" IsExpanded="true" />
         <EntityTypeShape EntityType="GestãoRickyShopModel.Utilizadores" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.PedidosDetalhes" Width="1.5" PointX="8.25" PointY="8.75" IsExpanded="true" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_Carrinho_Produto" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_Carrinho_Utilizadores" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_Produto_Categoria" ManuallyRouted="false" />
@@ -25,11 +24,12 @@
         <AssociationConnector Association="GestãoRickyShopModel.FK_Logs_Utilizadores" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_Produto_MarcaProduto" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_Pedidos_Utilizadores" ManuallyRouted="false" />
-        <AssociationConnector Association="GestãoRickyShopModel.FK_PedidosDetalhes_Pedidos" ManuallyRouted="false" />
-        <AssociationConnector Association="GestãoRickyShopModel.FK_PedidosDetalhes_Produto" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_ProdutosFavoritos_Produto" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_ProdutosFavoritos_Utilizadores" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_Token_Utilizadores" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.PedidosDetalhes" Width="1.5" PointX="8.25" PointY="5" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_PedidosDetalhes_Pedidos" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_PedidosDetalhes_Produto" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

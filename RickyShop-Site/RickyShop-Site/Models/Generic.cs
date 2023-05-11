@@ -131,6 +131,7 @@ namespace RickyShop_Site.Models
                         return prodPage;
                     }
                 }
+
                 else
                 {
                     if (id != 4)
@@ -151,11 +152,13 @@ namespace RickyShop_Site.Models
                         if (filtro[1].ToString() == "PrecoCres")
                         {
                             prodPage = produtos.OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            prodPage.FirstOrDefault().ID_Categoria = 4;
                             return prodPage;
                         }
                         else
                         {
                             prodPage = produtos.OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            prodPage.FirstOrDefault().ID_Categoria = 4;
                             return prodPage;
                         }
                     }

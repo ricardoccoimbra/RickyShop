@@ -137,16 +137,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PedidosDetalhes">
-      <EntityTypeMapping TypeName="GestãoRickyShopModel.PedidosDetalhes">
-        <MappingFragment StoreEntitySet="PedidosDetalhes">
-          <ScalarProperty Name="ID_Pedido" ColumnName="ID_Pedido" />
-          <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
-          <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
-          <ScalarProperty Name="Preco" ColumnName="Preco" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="GestãoRickyShopModel.Store.sp_alterdiagram" />
     <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="GestãoRickyShopModel.Store.sp_creatediagram" />
     <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="GestãoRickyShopModel.Store.sp_dropdiagram" />
@@ -180,8 +170,20 @@
           <ScalarProperty Name="Descrição" ColumnName="Descrição" />
           <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
           <ScalarProperty Name="Tamanho" ColumnName="Tamanho" />
+          <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="PedidosDetalhes">
+      <EntityTypeMapping TypeName="GestãoRickyShopModel.PedidosDetalhes">
+        <MappingFragment StoreEntitySet="PedidosDetalhes">
+          <ScalarProperty Name="Preco" ColumnName="Preco" />
+          <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
+          <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
+          <ScalarProperty Name="ID_Pedido" ColumnName="ID_Pedido" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -19,5 +19,6 @@ namespace RickyShop_Site.Models
         public string Descrição { get; set; }
         public int Quantidade { get; set; }
         public string Tamanho { get; set; }
+        public int ID_Produto { get; set; }
     }
 }

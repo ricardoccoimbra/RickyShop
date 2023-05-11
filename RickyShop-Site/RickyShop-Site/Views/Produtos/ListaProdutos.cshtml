@@ -43,12 +43,12 @@
                         if (x != 4)
                         {
 
-                            @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto.Where(s => s.Produto.Count(c => c.ID_Categoria == x) != 0), "ID_Marca", "Marca"), new { id = "cat_pedido", @class = "btn btn-default dropdown-toggle" })
+                            @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto.Where(s => s.Produto.Count(c => c.ID_Categoria == x) != 0), "ID_Marca", "Marca"), "Nenhum", new { id = "cat_pedido", @class = "btn btn-default dropdown-toggle" })
                         }
                     }
                     else
                     {
-                        @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto.Where(s => s.Produto.Count(z => z.Desconto != null) != 0), "ID_Marca", "Marca"), new { id = "cat_pedido", @class = "btn btn-default dropdown-toggle" })
+                        @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto.Where(s => s.Produto.Count(z => z.Desconto != null) != 0), "ID_Marca", "Marca"), "Nenhum", new { id = "cat_pedido", @class = "btn btn-default dropdown-toggle" })
                     }
 
                 </div>
