@@ -69,10 +69,11 @@
     <Property Name="CodigoPostal" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="PreçoTotal" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="ID_Estado" Type="Int32" Nullable="false" />
-    <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="EstadoDoPedido" Relationship="Self.FK_Pedidos_EstadoDoPedido" FromRole="Pedidos" ToRole="EstadoDoPedido" />
     <NavigationProperty Name="Utilizadores" Relationship="Self.FK_Pedidos_Utilizadores" FromRole="Pedidos" ToRole="Utilizadores" />
     <NavigationProperty Name="PedidosDetalhes" Relationship="GestãoRickyShopModel.FK_PedidosDetalhes_Pedidos" FromRole="Pedidos" ToRole="PedidosDetalhes" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Contacto" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Produto">
     <Key>

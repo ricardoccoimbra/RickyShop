@@ -1,6 +1,8 @@
 ﻿@model List<RickyShop_Site.Models.DadosCarrinhoProduto_Result>
 @{
     var total = 0.0;
+    int UserID = Convert.ToInt32(Session["UserID"]);
+    var u = RickyShop_Site.Models.Entities.db.Utilizadores.Where(s => s.ID_Utilizador == UserID).FirstOrDefault();
     foreach (var item in Model)
     {
         total += Convert.ToDouble(item.PreçoPorQuantidade * item.Quantidade);
@@ -12,6 +14,7 @@
 <!------ Include the above in your HEAD tag ---------->
 <link href="~/Content/StyleCarrinhoProdutos.css" rel="stylesheet" />
 <link href="~/Content/StylePopUp.css" rel="stylesheet" />
+
 
 
 
@@ -33,7 +36,6 @@
                     <div class="row cart-product">
                         <div class="col-xs-2">
                             <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" class="img-responsive" />
-                            @*<img  src="http://placehold.it/100x70">*@
                         </div>
                         <div class="col-xs-4">
                             <h4 class="product-name">
@@ -46,21 +48,31 @@
                             <div class="col-xs-6 text-right ">
                                 <label style="font-size:20px">
                                     <strong class="cart-product-price">
-                                        @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)€
+                                        @if (u.Desconto == null)
+                                        {
+                                            @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)<i>€</i>
+
+                                        }
+                                        else
+                                        {
+                                            double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * u.Desconto) / 100;
+                                            string preco = (Convert.ToDouble(item.PreçoPorQuantidade) - valDesconto).ToString("N2") + "€";
+                                            @Html.DisplayFor(modelItem => preco)
+                                        }
                                     </strong>
                                 </label>
                             </div>
                             <div style="display: flex;">
                                 <input type="text" class="form-control input-sm product-qtd-input" value="@item.Quantidade" style="width: 40px; border-radius: 1px; text-align: center;" readonly="readonly">
-                                <button type="button" style="width: 30px; border-radius: 1px;" onclick="location.href = '@Url.Action("SomaProd", "Produtos", new { @id = item.ID_Produto})'">
+                                <button type="button" style="width: 30px; border-radius: 1px;" onclick="location.href = '@Url.Action("SomaProd", "Produtos", new { @id = item.ID_Produto })'">
                                     @*Mudar a SP e adicionar ID do produto*@
                                     <i class="glyphicon  glyphicon-plus"></i>
                                 </button>
-                                <button type="button" style="width: 30px; border-radius: 1px;" onclick="location.href = '@Url.Action("DiminuiProd", "Produtos", new { @id = item.ID_Produto})'">
+                                <button type="button" style="width: 30px; border-radius: 1px;" onclick="location.href = '@Url.Action("DiminuiProd", "Produtos", new { @id = item.ID_Produto })'">
                                     <i class="glyphicon  glyphicon-minus"></i>
                                 </button>
 
-                                <button type="button" class="btn btn-link btn-xs remove-products" onclick="location.href = '@Url.Action("EliminarProdCarrinho", "Produtos", new { @id = item.ID_Produto})'">
+                                <button type="button" class="btn btn-link btn-xs remove-products" onclick="location.href = '@Url.Action("EliminarProdCarrinho", "Produtos", new { @id = item.ID_Produto })'">
                                     <span class="glyphicon glyphicon-trash "> </span>
                                 </button>
                             </div>
@@ -81,56 +93,83 @@
 
                 <br />
                 <div class="d-flex justify-content-between">
-                    <div style="font-size:15px">Subtotal: @total€</div>
+                    <div style="font-size:15px">Subtotal: @total€ </div>
                 </div>
 
                 <div class="d-flex justify-content-between">
                     <div style="font-size:15px">Envio: Grátis</div>
                 </div>
 
+
+                @{
+                    if (u.Desconto != null)
+                    {
+                        <div class="d-flex justify-content-between">
+                            <div style="font-size:15px">
+                                Desconto: @u.Desconto%
+                            </div>
+                        </div>
+                    }
+                }
+
+
                 <hr class="my-4">
+                @if (u.Desconto != null)
+                {
+                    <div class="d-flex justify-content-between">
+                        <div style="font-size:20px">
+                            <b>
+                                TOTAL:
+                                @{
+                                    double valDesconto = Convert.ToDouble(total * u.Desconto) / 100;
+                                    total = Convert.ToDouble(total) - valDesconto;
+                                }
+                                @total.ToString("N2")€
+                            </b>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex justify-content-between">
+                        <div style="font-size:20px"><b>TOTAL: @total€</b></div>
+                    </div>
+                }
+
+                <br />
+                <br />
+
+                <button class="btn btn-primary d-flex center-block" type="button" style="background-color: grey; border-color: white;">
+                    <div class="d-flex justify-content-between">
+                        <span>@total€</span>
+                        <span>Checkout</span>
+                    </div>
+                </button>
+
+
+                <br />
+
 
                 <div class="d-flex justify-content-between">
-                    <div style="font-size:20px"><b>TOTAL: @total€</b></div>
+                    <div><b>Tipos de Pagamento</b></div>
                 </div>
-
-                <br />
-                <br />
-
-                <div class="btn-group" role="group" aria-label="Exemplo básico" style="margin-left: 85px;  margin-bottom: 10px">
-                    <button type="button" style="background-color: grey; border-color:white" class="btn">
-                        <div class="d-flex justify-content-between">
-                            <span>Dados<i class="fas fa-long-arrow-alt-right ms-2"></i></span>
-                        </div>
-                    </button>
-                    <button type="button" style="background-color: grey; border-color: white;" class="btn">
-                        <div class="d-flex justify-content-between">
-                            <span>@total€</span>
-                            <span>Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
-                        </div>
-                    </button>
-                </div>
-
-
-                <br />
 
                 <div class="card-body">
-                    <img class="me-2" width="45px"
+                    <img class="me-2" style="height:28px; width:45px"
                          src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
-                         alt="Visa" />
-                    <img class="me-2" width="45px"
-                         src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
-                         alt="American Express" />
-                    <img class="me-2" width="45px"
+                         data-toggle="tooltip" data-placement="top" title="Visa" />
+                    <img class="me-2" style="height:28px; width:45px"
                          src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
-                         alt="Mastercard" />
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paypal" viewBox="0 0 16 16">
-                        <path d="M14.06 3.713c.12-1.071-.093-1.832-.702-2.526C12.628.356 11.312 0 9.626 0H4.734a.7.7 0 0 0-.691.59L2.005 13.509a.42.42 0 0 0 .415.486h2.756l-.202 1.28a.628.628 0 0 0 .62.726H8.14c.429 0 .793-.31.862-.731l.025-.13.48-3.043.03-.164.001-.007a.351.351 0 0 1 .348-.297h.38c1.266 0 2.425-.256 3.345-.91.379-.27.712-.603.993-1.005a4.942 4.942 0 0 0 .88-2.195c.242-1.246.13-2.356-.57-3.154a2.687 2.687 0 0 0-.76-.59l-.094-.061ZM6.543 8.82a.695.695 0 0 1 .321-.079H8.3c2.82 0 5.027-1.144 5.672-4.456l.003-.016c.217.124.4.27.548.438.546.623.679 1.535.45 2.71-.272 1.397-.866 2.307-1.663 2.874-.802.57-1.842.815-3.043.815h-.38a.873.873 0 0 0-.863.734l-.03.164-.48 3.043-.024.13-.001.004a.352.352 0 0 1-.348.296H5.595a.106.106 0 0 1-.105-.123l.208-1.32.845-5.214Z" />
-                    </svg>
-                    <div class="rounded border w-100 p-3">
-                        <p class="d-flex align-items-center mb-0">
-                            <i class=" fa-paypal "></i>
-                    </div>
+                         data-toggle="tooltip" data-placement="top" title="MasterCard" />
+                    <img class="me-2" style="height:30px; width:45px; background-color:white; border-radius:2px" src="https://icount.co.uk/wp-content/uploads/paypal-784404_1280.png"
+                         data-toggle="tooltip" data-placement="top" title="PayPal" />
+                    <img class="me-2" style="height: 28px; width: 45px; border-radius: 2px"
+                         src="https://static.vecteezy.com/ti/vetor-gratis/p1/15411412-notas-e-moedas-de-dolar-icone-de-dinheiro-nota-de-banco-para-infograficos-de-simbolo-dinheiro-em-dolar-ilustracaoial-plana-vetor.jpg"
+                         data-toggle="tooltip" data-placement="top" title="Saldo" />
+
+                    @*<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paypal" viewBox="0 0 16 16">
+                            <path d="M14.06 3.713c.12-1.071-.093-1.832-.702-2.526C12.628.356 11.312 0 9.626 0H4.734a.7.7 0 0 0-.691.59L2.005 13.509a.42.42 0 0 0 .415.486h2.756l-.202 1.28a.628.628 0 0 0 .62.726H8.14c.429 0 .793-.31.862-.731l.025-.13.48-3.043.03-.164.001-.007a.351.351 0 0 1 .348-.297h.38c1.266 0 2.425-.256 3.345-.91.379-.27.712-.603.993-1.005a4.942 4.942 0 0 0 .88-2.195c.242-1.246.13-2.356-.57-3.154a2.687 2.687 0 0 0-.76-.59l-.094-.061ZM6.543 8.82a.695.695 0 0 1 .321-.079H8.3c2.82 0 5.027-1.144 5.672-4.456l.003-.016c.217.124.4.27.548.438.546.623.679 1.535.45 2.71-.272 1.397-.866 2.307-1.663 2.874-.802.57-1.842.815-3.043.815h-.38a.873.873 0 0 0-.863.734l-.03.164-.48 3.043-.024.13-.001.004a.352.352 0 0 1-.348.296H5.595a.106.106 0 0 1-.105-.123l.208-1.32.845-5.214Z" />
+                        </svg>*@
                 </div>
 
                 <br />
@@ -140,7 +179,56 @@
     </div>
 </div>
 
+<!--<button type="button" style="background-color: grey; border-color:white" class="btn" data-toggle="modal" data-target="#squarespaceModal">
+    <div class="d-flex justify-content-between">
+        <span>Dados<i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+    </div>
+</button>
+<div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">My Modal</h3>
+            </div>
+            <div class="modal-body">-->
+<!-- content goes here -->
+<!--<form>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputFile">File input</label>
+                        <input type="file" id="exampleInputFile">
+                        <p class="help-block">Example block-level help text here.</p>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Check me out
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
 
-
-
-
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" role="button">Close</button>
+                    </div>
+                    <div class="btn-group btn-delete hidden" role="group">
+                        <button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal" role="button">Delete</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" id="saveImage" class="btn btn-default btn-hover-green" data-action="save" role="button">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->

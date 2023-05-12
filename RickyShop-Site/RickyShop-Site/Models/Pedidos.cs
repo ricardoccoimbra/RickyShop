@@ -28,7 +28,8 @@ namespace RickyShop_Site.Models
         public string CodigoPostal { get; set; }
         public decimal PreçoTotal { get; set; }
         public int ID_Estado { get; set; }
-        public string Marca { get; set; }
+        public string Email { get; set; }
+        public string Contacto { get; set; }
     
         public virtual EstadoDoPedido EstadoDoPedido { get; set; }
         public virtual Utilizadores Utilizadores { get; set; }

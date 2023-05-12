@@ -448,6 +448,7 @@
     <Content Include="Imagens\Lacoste-Sweatshirt-Tape.jpg" />
     <Content Include="Imagens\login-image.jpg" />
     <Content Include="Imagens\McKenzie-Fato-de-Treino.jpg" />
+    <Content Include="Imagens\PayPal.png" />
     <Content Include="Imagens\ResetPassword-image.png" />
     <Content Include="Models\BD-RickyShop.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -68,7 +68,8 @@
           <Property Name="CodigoPostal" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="PreçoTotal" Type="money" Nullable="false" />
           <Property Name="ID_Estado" Type="int" Nullable="false" />
-          <Property Name="Marca" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Contacto" Type="varchar" MaxLength="9" Nullable="false" />
         </EntityType>
         <EntityType Name="PedidosDetalhes">
           <Key>
@@ -453,10 +454,11 @@
           <Property Name="CodigoPostal" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PreçoTotal" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="ID_Estado" Type="Int32" Nullable="false" />
-          <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="EstadoDoPedido" Relationship="Self.FK_Pedidos_EstadoDoPedido" FromRole="Pedidos" ToRole="EstadoDoPedido" />
           <NavigationProperty Name="Utilizadores" Relationship="Self.FK_Pedidos_Utilizadores" FromRole="Pedidos" ToRole="Utilizadores" />
           <NavigationProperty Name="PedidosDetalhes" Relationship="GestãoRickyShopModel.FK_PedidosDetalhes_Pedidos" FromRole="Pedidos" ToRole="PedidosDetalhes" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Contacto" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Produto">
           <Key>
@@ -868,6 +870,8 @@
           <EntitySetMapping Name="Pedidos">
             <EntityTypeMapping TypeName="GestãoRickyShopModel.Pedidos">
               <MappingFragment StoreEntitySet="Pedidos">
+                <ScalarProperty Name="Contacto" ColumnName="Contacto" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="ID_Pedido" ColumnName="ID_Pedido" />
                 <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
                 <ScalarProperty Name="DataDoPedido" ColumnName="DataDoPedido" />
@@ -876,7 +880,6 @@
                 <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
                 <ScalarProperty Name="PreçoTotal" ColumnName="PreçoTotal" />
                 <ScalarProperty Name="ID_Estado" ColumnName="ID_Estado" />
-                <ScalarProperty Name="Marca" ColumnName="Marca" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

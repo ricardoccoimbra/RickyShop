@@ -63,7 +63,8 @@
     <Property Name="CodigoPostal" Type="varchar" MaxLength="8" Nullable="false" />
     <Property Name="PreçoTotal" Type="money" Nullable="false" />
     <Property Name="ID_Estado" Type="int" Nullable="false" />
-    <Property Name="Marca" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Contacto" Type="varchar" MaxLength="9" Nullable="false" />
   </EntityType>
   <EntityType Name="PedidosDetalhes">
     <Key>

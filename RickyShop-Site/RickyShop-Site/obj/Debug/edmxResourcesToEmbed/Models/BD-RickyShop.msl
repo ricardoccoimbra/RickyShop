@@ -61,6 +61,8 @@
     <EntitySetMapping Name="Pedidos">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.Pedidos">
         <MappingFragment StoreEntitySet="Pedidos">
+          <ScalarProperty Name="Contacto" ColumnName="Contacto" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="ID_Pedido" ColumnName="ID_Pedido" />
           <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
           <ScalarProperty Name="DataDoPedido" ColumnName="DataDoPedido" />
@@ -69,7 +71,6 @@
           <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
           <ScalarProperty Name="PreçoTotal" ColumnName="PreçoTotal" />
           <ScalarProperty Name="ID_Estado" ColumnName="ID_Estado" />
-          <ScalarProperty Name="Marca" ColumnName="Marca" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
