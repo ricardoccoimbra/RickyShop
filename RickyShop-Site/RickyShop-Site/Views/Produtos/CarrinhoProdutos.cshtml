@@ -5,7 +5,14 @@
     var u = RickyShop_Site.Models.Entities.db.Utilizadores.Where(s => s.ID_Utilizador == UserID).FirstOrDefault();
     foreach (var item in Model)
     {
-        total += Convert.ToDouble(item.PreçoPorQuantidade * item.Quantidade);
+        if (item.Desconto == null)
+        { total += Convert.ToDouble(item.PreçoPorQuantidade * item.Quantidade); }
+        else
+        {
+            double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * item.Desconto) / 100;
+            total += (Convert.ToDouble(item.PreçoPorQuantidade) - valDesconto) * item.Quantidade;
+
+        }
     }
 }
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -55,7 +62,7 @@
                                         }
                                         else
                                         {
-                                            double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * u.Desconto) / 100;
+                                            double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * item.Desconto) / 100;
                                             string preco = (Convert.ToDouble(item.PreçoPorQuantidade) - valDesconto).ToString("N2") + "€";
                                             @Html.DisplayFor(modelItem => preco)
                                         }

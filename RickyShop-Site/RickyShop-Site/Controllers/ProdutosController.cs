@@ -420,7 +420,8 @@ namespace RickyShop_Site.Controllers
 
         public ActionResult Teste()
         {
-            return View();
+            var prod = db.DadosCarrinhoProduto(2).ToList();
+            return View(prod);
         }
 
     }

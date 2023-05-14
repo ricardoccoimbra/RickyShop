@@ -735,9 +735,6 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <FunctionImport Name="DadosCarrinhoProduto" ReturnType="Collection(GestãoRickyShopModel.DadosCarrinhoProduto_Result)">
-          <Parameter Name="ID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="PedidosDetalhes" EntityType="GestãoRickyShopModel.PedidosDetalhes" />
           <AssociationSet Name="FK_PedidosDetalhes_Pedidos" Association="GestãoRickyShopModel.FK_PedidosDetalhes_Pedidos">
             <End Role="Pedidos" EntitySet="Pedidos" />
@@ -747,6 +744,9 @@
             <End Role="Produto" EntitySet="Produto" />
             <End Role="PedidosDetalhes" EntitySet="PedidosDetalhes" />
           </AssociationSet>
+          <FunctionImport Name="DadosCarrinhoProduto" ReturnType="Collection(GestãoRickyShopModel.DadosCarrinhoProduto_Result)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -758,15 +758,6 @@
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="DadosCarrinhoProduto_Result">
-          <Property Type="String" Name="Nome" Nullable="false" MaxLength="30" />
-          <Property Type="String" Name="ImagemPath" Nullable="false" MaxLength="250" />
-          <Property Type="Decimal" Name="PreçoPorQuantidade" Nullable="false" Precision="19" />
-          <Property Type="String" Name="Descrição" Nullable="false" MaxLength="1000" />
-          <Property Type="Int32" Name="Quantidade" Nullable="false" />
-          <Property Type="String" Name="Tamanho" Nullable="false" MaxLength="5" />
-          <Property Type="Int32" Name="ID_Produto" Nullable="false" />
         </ComplexType>
         <EntityType Name="PedidosDetalhes">
           <Key>
@@ -804,6 +795,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="DadosCarrinhoProduto_Result">
+          <Property Type="String" Name="Nome" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="ImagemPath" Nullable="false" MaxLength="250" />
+          <Property Type="Decimal" Name="PreçoPorQuantidade" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Descrição" Nullable="false" MaxLength="1000" />
+          <Property Type="Int32" Name="Quantidade" Nullable="false" />
+          <Property Type="String" Name="Tamanho" Nullable="false" MaxLength="5" />
+          <Property Type="Int32" Name="ID_Produto" Nullable="false" />
+          <Property Type="Int32" Name="Desconto" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -971,19 +972,6 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="GestãoRickyShopModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="GestãoRickyShopModel.Store.sp_upgraddiagrams" />
-          <FunctionImportMapping FunctionImportName="DadosCarrinhoProduto" FunctionName="GestãoRickyShopModel.Store.DadosCarrinhoProduto">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GestãoRickyShopModel.DadosCarrinhoProduto_Result">
-                <ScalarProperty Name="Nome" ColumnName="Nome" />
-                <ScalarProperty Name="ImagemPath" ColumnName="ImagemPath" />
-                <ScalarProperty Name="PreçoPorQuantidade" ColumnName="PreçoPorQuantidade" />
-                <ScalarProperty Name="Descrição" ColumnName="Descrição" />
-                <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
-                <ScalarProperty Name="Tamanho" ColumnName="Tamanho" />
-                <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="PedidosDetalhes">
             <EntityTypeMapping TypeName="GestãoRickyShopModel.PedidosDetalhes">
               <MappingFragment StoreEntitySet="PedidosDetalhes">
@@ -995,6 +983,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DadosCarrinhoProduto" FunctionName="GestãoRickyShopModel.Store.DadosCarrinhoProduto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GestãoRickyShopModel.DadosCarrinhoProduto_Result">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="ImagemPath" ColumnName="ImagemPath" />
+                <ScalarProperty Name="PreçoPorQuantidade" ColumnName="PreçoPorQuantidade" />
+                <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+                <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
+                <ScalarProperty Name="Tamanho" ColumnName="Tamanho" />
+                <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
+                <ScalarProperty Name="Desconto" ColumnName="Desconto" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

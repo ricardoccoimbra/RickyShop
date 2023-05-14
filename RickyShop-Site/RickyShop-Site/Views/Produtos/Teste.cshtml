@@ -50,31 +50,40 @@
                                 {
                                     <tr style=" border-bottom: 1px solid #ddd;">
                                         <td class="col-md-7">@Html.DisplayFor(model => item.Nome)</td>
-                                        @if(item.)
                                         <td class="col-md-4"><i class="fas fa-rupee-sign" area-hidden="true"></i> @Html.DisplayFor(model => item.Quantidade) </td>
-                                        <td class="col-md-4"><i class="fas fa-rupee-sign" area-hidden="true"></i> @Html.DisplayFor(model => item.PreçoPorQuantidade) </td>
-                                        <td class="col-md-4"><i class="fas fa-rupee-sign" area-hidden="true"></i> @Html.DisplayFor(model => total) </td>
+
+                                        @if (item.Desconto == null)
+                                        {
+                                            <td class="col-md-4"><i class="fas fa-rupee-sign" area-hidden="true"></i> @Html.DisplayFor(model => item.PreçoPorQuantidade)€ </td>
+                                            <td class="col-md-4">
+                                                <i class="fas fa-rupee-sign" area-hidden="true"></i>
+                                                @{
+                                                    string s = (item.Quantidade * item.PreçoPorQuantidade).ToString("N2") + "€";
+                                                    @Html.DisplayFor(model => s)
+                                                }
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="col-md-4">
+                                                <i class="fas fa-rupee-sign" area-hidden="true"></i>
+                                                @{
+                                                    double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * item.Desconto) / 100;
+                                                    string preco = (Convert.ToDouble(item.PreçoPorQuantidade) - valDesconto).ToString("N2");
+                                                    @Html.DisplayFor(modelItem => preco)
+                                                }€
+                                            </td>
+                                            <td class="col-md-4">
+                                                <i class="fas fa-rupee-sign" area-hidden="true"></i>
+                                                @{
+                                                    string s = (Convert.ToDecimal(preco) * item.Quantidade).ToString("N2") + "€";
+                                                    @Html.DisplayFor(model => s)
+                                                }
+                                            </td>
+
+                                        }
                                     </tr>
                                 }
-
-                                <tr style=" border-bottom: 1px solid #ddd;">
-                                    <td class="col-md-7">Samsung Galaxy 8 64 GB</td>
-                                    <td class="col-md-4"><i class="fas fa-rupee-sign" area-hidden="true"></i> 2 </td>
-                                    <td class="col-md-4"><i class="fas fa-rupee-sign" area-hidden="true"></i> 50,000 </td>
-                                    <td class="col-md-4"><i class="fas fa-rupee-sign" area-hidden="true"></i> 100,000 </td>
-                                </tr>
-                                <tr style=" border-bottom: 1px solid #ddd;">
-                                    <td class="col-md-9">JBL Bluetooth Speaker</td>
-                                    <td class="col-md-3"><i class="fas fa-rupee-sign" area-hidden="true"></i> 5,200 </td>
-                                </tr>
-                                <tr style=" border-bottom: 1px solid #ddd;">
-                                    <td class="col-md-9">Apple Iphone 6s 16GB</td>
-                                    <td class="col-md-3"><i class="fas fa-rupee-sign" area-hidden="true"></i> 25,000 </td>
-                                </tr>
-                                <tr style=" border-bottom: 1px solid #ddd;">
-                                    <td class="col-md-9">MI Smartwatch 2</td>
-                                    <td class="col-md-3"><i class="fas fa-rupee-sign" area-hidden="true"></i> 2,200 </td>
-                                </tr>
                                 <tr>
                                     <td class="text-right">
                                         <p>

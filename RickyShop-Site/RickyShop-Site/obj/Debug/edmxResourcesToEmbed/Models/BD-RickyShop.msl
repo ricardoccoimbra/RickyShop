@@ -162,19 +162,6 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="GestãoRickyShopModel.Store.sp_renamediagram" />
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="GestãoRickyShopModel.Store.sp_upgraddiagrams" />
-    <FunctionImportMapping FunctionImportName="DadosCarrinhoProduto" FunctionName="GestãoRickyShopModel.Store.DadosCarrinhoProduto">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="GestãoRickyShopModel.DadosCarrinhoProduto_Result">
-          <ScalarProperty Name="Nome" ColumnName="Nome" />
-          <ScalarProperty Name="ImagemPath" ColumnName="ImagemPath" />
-          <ScalarProperty Name="PreçoPorQuantidade" ColumnName="PreçoPorQuantidade" />
-          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
-          <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
-          <ScalarProperty Name="Tamanho" ColumnName="Tamanho" />
-          <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <EntitySetMapping Name="PedidosDetalhes">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.PedidosDetalhes">
         <MappingFragment StoreEntitySet="PedidosDetalhes">
@@ -186,5 +173,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="DadosCarrinhoProduto" FunctionName="GestãoRickyShopModel.Store.DadosCarrinhoProduto">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GestãoRickyShopModel.DadosCarrinhoProduto_Result">
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="ImagemPath" ColumnName="ImagemPath" />
+          <ScalarProperty Name="PreçoPorQuantidade" ColumnName="PreçoPorQuantidade" />
+          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+          <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
+          <ScalarProperty Name="Tamanho" ColumnName="Tamanho" />
+          <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
+          <ScalarProperty Name="Desconto" ColumnName="Desconto" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>
