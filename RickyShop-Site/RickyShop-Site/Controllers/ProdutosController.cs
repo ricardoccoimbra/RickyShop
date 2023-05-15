@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using PagedList;
 using System.Security.Permissions;
 using Microsoft.Ajax.Utilities;
+using System.Text.RegularExpressions;
 
 namespace RickyShop_Site.Controllers
 {
@@ -418,10 +419,23 @@ namespace RickyShop_Site.Controllers
         #endregion
 
 
-        public ActionResult Teste()
+        public ActionResult FecharCompra(string locEntrega, string codPostal)
         {
-            var prod = db.DadosCarrinhoProduto(2).ToList();
-            return View(prod);
+            int UserID = Convert.ToInt32(Session["UserID"]);
+            Regex regex = new Regex(@"^\d{4}(-\d{3})?$");
+            if(regex.IsMatch(codPostal) == true && locEntrega != "")
+            {
+                //Fechar compra, mas verificar se o user tem saldo, se não tiver saldo mostrar mensagem de aviso
+                var prod = db.DadosCarrinhoProduto(UserID).ToList();
+                return View(prod);
+            }
+            else
+            {
+                //Ou o codigo postal está inválido ou não meteu nada no local de entrega
+                var prod = db.DadosCarrinhoProduto(2).ToList();
+                return View(prod);
+            }
+            
         }
 
     }

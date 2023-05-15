@@ -1,0 +1,10 @@
+Como fazer o fecho da compra:
+
+
+Se clicar só no botão checkout ele faz a compra através do saldo do utilizador.
+Se clicar no logo do paypal ele faz a compra com paypal (a ser testado)
+
+Checkout -> Fatura / Conclui ou Altera Dados de envio -> Concluiu vejo se tem saldo, se tiver envia para o email a fatura da compra. 
+Checkout com paypal -> Fatura / Conclui ou Altera Dados de envio -> Concluiu vejo se tem saldo, se tiver envia para o email a fatura da compra. 
+
+

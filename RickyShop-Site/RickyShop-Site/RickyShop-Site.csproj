@@ -137,6 +137,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProdutosController.cs" />
     <Compile Include="Controllers\ResetPassController.cs" />
+    <Compile Include="Controllers\UtilizadorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -176,6 +177,9 @@
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MarcaProduto.cs">
+      <DependentUpon>BD-RickyShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MovimentacaoSaldo.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Pedidos.cs">
@@ -375,6 +379,7 @@
     <Content Include="Content\StyleListaProdutos.css" />
     <Content Include="Content\StyleLogin.css" />
     <Content Include="Content\StyleNavBar.css" />
+    <Content Include="Content\StylePerfil.css" />
     <Content Include="Content\StylePopUp.css" />
     <Content Include="Content\StyleRegistar.css" />
     <Content Include="Content\StyleProdutosDetalhados.css" />
@@ -439,6 +444,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Imagens\Carimbo.png" />
+    <Content Include="Imagens\Logo.png" />
     <Content Include="Imagens\AirForce1.jpg" />
     <Content Include="Imagens\Captura de ecrã 2023-03-31 141642.png" />
     <Content Include="Imagens\EmailPassword.png" />
@@ -542,7 +549,8 @@
     <Content Include="Views\ResetPass\TemplateEmail.cshtml" />
     <Content Include="Views\Produtos\ListaProdutos.cshtml" />
     <Content Include="Views\Produtos\CarrinhoProdutos.cshtml" />
-    <Content Include="Views\Produtos\Teste.cshtml" />
+    <Content Include="Views\Produtos\FecharCompra.cshtml" />
+    <Content Include="Views\Utilizador\Perfil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

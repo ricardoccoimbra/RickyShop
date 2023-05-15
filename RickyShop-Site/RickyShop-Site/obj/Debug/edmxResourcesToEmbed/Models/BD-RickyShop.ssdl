@@ -51,6 +51,16 @@
     <Property Name="ID_Marca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Marca" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
+  <EntityType Name="MovimentacaoSaldo">
+    <Key>
+      <PropertyRef Name="ID_Movimentacao" />
+    </Key>
+    <Property Name="ID_Movimentacao" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Utilizador" Type="int" Nullable="false" />
+    <Property Name="Quantidade" Type="money" Nullable="false" />
+    <Property Name="Tipo" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="15" Nullable="false" />
+  </EntityType>
   <EntityType Name="Pedidos">
     <Key>
       <PropertyRef Name="ID_Pedido" />
@@ -59,7 +69,7 @@
     <Property Name="ID_Utilizador" Type="int" Nullable="false" />
     <Property Name="DataDoPedido" Type="datetime" Nullable="false" />
     <Property Name="DataDeEntrega" Type="datetime" Nullable="false" />
-    <Property Name="LocalDeEntrega" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="MoradaEntrega" Type="varchar" MaxLength="200" Nullable="false" />
     <Property Name="CodigoPostal" Type="varchar" MaxLength="8" Nullable="false" />
     <Property Name="PreçoTotal" Type="money" Nullable="false" />
     <Property Name="ID_Estado" Type="int" Nullable="false" />
@@ -134,6 +144,8 @@
     <Property Name="Contacto" Type="varchar" MaxLength="9" Nullable="false" />
     <Property Name="DataDeAdesao" Type="datetime" Nullable="false" />
     <Property Name="Desconto" Type="int" />
+    <Property Name="Morada" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="CodigoPostal" Type="varchar" MaxLength="8" Nullable="false" />
   </EntityType>
   <Association Name="FK_Carrinho_Produto">
     <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
@@ -167,6 +179,18 @@
         <PropertyRef Name="ID_Utilizador" />
       </Principal>
       <Dependent Role="Logs">
+        <PropertyRef Name="ID_Utilizador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MovimentacaoSaldo_Utilizadores">
+    <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+    <End Role="MovimentacaoSaldo" Type="Self.MovimentacaoSaldo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizadores">
+        <PropertyRef Name="ID_Utilizador" />
+      </Principal>
+      <Dependent Role="MovimentacaoSaldo">
         <PropertyRef Name="ID_Utilizador" />
       </Dependent>
     </ReferentialConstraint>
@@ -320,6 +344,7 @@
     <EntitySet Name="EstadoDoPedido" EntityType="Self.EstadoDoPedido" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MarcaProduto" EntityType="Self.MarcaProduto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MovimentacaoSaldo" EntityType="Self.MovimentacaoSaldo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PedidosDetalhes" EntityType="Self.PedidosDetalhes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Produto" EntityType="Self.Produto" Schema="dbo" store:Type="Tables" />
@@ -338,6 +363,10 @@
     <AssociationSet Name="FK_Logs_Utilizadores" Association="Self.FK_Logs_Utilizadores">
       <End Role="Utilizadores" EntitySet="Utilizadores" />
       <End Role="Logs" EntitySet="Logs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MovimentacaoSaldo_Utilizadores" Association="Self.FK_MovimentacaoSaldo_Utilizadores">
+      <End Role="Utilizadores" EntitySet="Utilizadores" />
+      <End Role="MovimentacaoSaldo" EntitySet="MovimentacaoSaldo" />
     </AssociationSet>
     <AssociationSet Name="FK_Pedidos_EstadoDoPedido" Association="Self.FK_Pedidos_EstadoDoPedido">
       <End Role="EstadoDoPedido" EntitySet="EstadoDoPedido" />

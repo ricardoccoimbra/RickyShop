@@ -24,12 +24,12 @@ namespace RickyShop_Site.Models
         public int ID_Utilizador { get; set; }
         public System.DateTime DataDoPedido { get; set; }
         public System.DateTime DataDeEntrega { get; set; }
-        public string LocalDeEntrega { get; set; }
         public string CodigoPostal { get; set; }
         public decimal PreçoTotal { get; set; }
         public int ID_Estado { get; set; }
         public string Email { get; set; }
         public string Contacto { get; set; }
+        public string MoradaEntrega { get; set; }
     
         public virtual EstadoDoPedido EstadoDoPedido { get; set; }
         public virtual Utilizadores Utilizadores { get; set; }

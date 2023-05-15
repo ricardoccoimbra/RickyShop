@@ -56,6 +56,16 @@
           <Property Name="ID_Marca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Marca" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="MovimentacaoSaldo">
+          <Key>
+            <PropertyRef Name="ID_Movimentacao" />
+          </Key>
+          <Property Name="ID_Movimentacao" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Utilizador" Type="int" Nullable="false" />
+          <Property Name="Quantidade" Type="money" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
         <EntityType Name="Pedidos">
           <Key>
             <PropertyRef Name="ID_Pedido" />
@@ -64,7 +74,7 @@
           <Property Name="ID_Utilizador" Type="int" Nullable="false" />
           <Property Name="DataDoPedido" Type="datetime" Nullable="false" />
           <Property Name="DataDeEntrega" Type="datetime" Nullable="false" />
-          <Property Name="LocalDeEntrega" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="MoradaEntrega" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="CodigoPostal" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="PreçoTotal" Type="money" Nullable="false" />
           <Property Name="ID_Estado" Type="int" Nullable="false" />
@@ -139,6 +149,8 @@
           <Property Name="Contacto" Type="varchar" MaxLength="9" Nullable="false" />
           <Property Name="DataDeAdesao" Type="datetime" Nullable="false" />
           <Property Name="Desconto" Type="int" />
+          <Property Name="Morada" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="CodigoPostal" Type="varchar" MaxLength="8" Nullable="false" />
         </EntityType>
         <Association Name="FK_Carrinho_Produto">
           <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
@@ -172,6 +184,18 @@
               <PropertyRef Name="ID_Utilizador" />
             </Principal>
             <Dependent Role="Logs">
+              <PropertyRef Name="ID_Utilizador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovimentacaoSaldo_Utilizadores">
+          <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+          <End Role="MovimentacaoSaldo" Type="Self.MovimentacaoSaldo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilizadores">
+              <PropertyRef Name="ID_Utilizador" />
+            </Principal>
+            <Dependent Role="MovimentacaoSaldo">
               <PropertyRef Name="ID_Utilizador" />
             </Dependent>
           </ReferentialConstraint>
@@ -325,6 +349,7 @@
           <EntitySet Name="EstadoDoPedido" EntityType="Self.EstadoDoPedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MarcaProduto" EntityType="Self.MarcaProduto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MovimentacaoSaldo" EntityType="Self.MovimentacaoSaldo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pedidos" EntityType="Self.Pedidos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PedidosDetalhes" EntityType="Self.PedidosDetalhes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Produto" EntityType="Self.Produto" Schema="dbo" store:Type="Tables" />
@@ -343,6 +368,10 @@
           <AssociationSet Name="FK_Logs_Utilizadores" Association="Self.FK_Logs_Utilizadores">
             <End Role="Utilizadores" EntitySet="Utilizadores" />
             <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovimentacaoSaldo_Utilizadores" Association="Self.FK_MovimentacaoSaldo_Utilizadores">
+            <End Role="Utilizadores" EntitySet="Utilizadores" />
+            <End Role="MovimentacaoSaldo" EntitySet="MovimentacaoSaldo" />
           </AssociationSet>
           <AssociationSet Name="FK_Pedidos_EstadoDoPedido" Association="Self.FK_Pedidos_EstadoDoPedido">
             <End Role="EstadoDoPedido" EntitySet="EstadoDoPedido" />
@@ -450,7 +479,6 @@
           <Property Name="ID_Utilizador" Type="Int32" Nullable="false" />
           <Property Name="DataDoPedido" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DataDeEntrega" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LocalDeEntrega" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CodigoPostal" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PreçoTotal" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="ID_Estado" Type="Int32" Nullable="false" />
@@ -459,6 +487,7 @@
           <NavigationProperty Name="PedidosDetalhes" Relationship="GestãoRickyShopModel.FK_PedidosDetalhes_Pedidos" FromRole="Pedidos" ToRole="PedidosDetalhes" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Contacto" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="MoradaEntrega" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Produto">
           <Key>
@@ -531,6 +560,9 @@
           <NavigationProperty Name="Pedidos" Relationship="Self.FK_Pedidos_Utilizadores" FromRole="Utilizadores" ToRole="Pedidos" />
           <NavigationProperty Name="ProdutosFavoritos" Relationship="Self.FK_ProdutosFavoritos_Utilizadores" FromRole="Utilizadores" ToRole="ProdutosFavoritos" />
           <NavigationProperty Name="Token" Relationship="Self.FK_Token_Utilizadores" FromRole="Utilizadores" ToRole="Token" />
+          <Property Name="Morada" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoPostal" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MovimentacaoSaldo" Relationship="GestãoRickyShopModel.FK_MovimentacaoSaldo_Utilizadores" FromRole="Utilizadores" ToRole="MovimentacaoSaldo" />
         </EntityType>
         <Association Name="FK_Carrinho_Produto">
           <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
@@ -745,8 +777,13 @@
             <End Role="PedidosDetalhes" EntitySet="PedidosDetalhes" />
           </AssociationSet>
           <FunctionImport Name="DadosCarrinhoProduto" ReturnType="Collection(GestãoRickyShopModel.DadosCarrinhoProduto_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="MovimentacaoSaldo" EntityType="GestãoRickyShopModel.MovimentacaoSaldo" />
+          <AssociationSet Name="FK_MovimentacaoSaldo_Utilizadores" Association="GestãoRickyShopModel.FK_MovimentacaoSaldo_Utilizadores">
+            <End Role="Utilizadores" EntitySet="Utilizadores" />
+            <End Role="MovimentacaoSaldo" EntitySet="MovimentacaoSaldo" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -805,6 +842,29 @@
           <Property Type="Int32" Name="ID_Produto" Nullable="false" />
           <Property Type="Int32" Name="Desconto" Nullable="true" />
         </ComplexType>
+        <EntityType Name="MovimentacaoSaldo">
+          <Key>
+            <PropertyRef Name="ID_Movimentacao" />
+          </Key>
+          <Property Name="ID_Movimentacao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Utilizador" Type="Int32" Nullable="false" />
+          <Property Name="Quantidade" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Utilizadores" Relationship="GestãoRickyShopModel.FK_MovimentacaoSaldo_Utilizadores" FromRole="MovimentacaoSaldo" ToRole="Utilizadores" />
+        </EntityType>
+        <Association Name="FK_MovimentacaoSaldo_Utilizadores">
+          <End Type="GestãoRickyShopModel.Utilizadores" Role="Utilizadores" Multiplicity="1" />
+          <End Type="GestãoRickyShopModel.MovimentacaoSaldo" Role="MovimentacaoSaldo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilizadores">
+              <PropertyRef Name="ID_Utilizador" />
+            </Principal>
+            <Dependent Role="MovimentacaoSaldo">
+              <PropertyRef Name="ID_Utilizador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -871,13 +931,13 @@
           <EntitySetMapping Name="Pedidos">
             <EntityTypeMapping TypeName="GestãoRickyShopModel.Pedidos">
               <MappingFragment StoreEntitySet="Pedidos">
+                <ScalarProperty Name="MoradaEntrega" ColumnName="MoradaEntrega" />
                 <ScalarProperty Name="Contacto" ColumnName="Contacto" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="ID_Pedido" ColumnName="ID_Pedido" />
                 <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
                 <ScalarProperty Name="DataDoPedido" ColumnName="DataDoPedido" />
                 <ScalarProperty Name="DataDeEntrega" ColumnName="DataDeEntrega" />
-                <ScalarProperty Name="LocalDeEntrega" ColumnName="LocalDeEntrega" />
                 <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
                 <ScalarProperty Name="PreçoTotal" ColumnName="PreçoTotal" />
                 <ScalarProperty Name="ID_Estado" ColumnName="ID_Estado" />
@@ -935,6 +995,8 @@
           <EntitySetMapping Name="Utilizadores">
             <EntityTypeMapping TypeName="GestãoRickyShopModel.Utilizadores">
               <MappingFragment StoreEntitySet="Utilizadores">
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="Morada" ColumnName="Morada" />
                 <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
                 <ScalarProperty Name="PrimeiroNome" ColumnName="PrimeiroNome" />
                 <ScalarProperty Name="SegundoNome" ColumnName="SegundoNome" />
@@ -997,6 +1059,17 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="MovimentacaoSaldo">
+            <EntityTypeMapping TypeName="GestãoRickyShopModel.MovimentacaoSaldo">
+              <MappingFragment StoreEntitySet="MovimentacaoSaldo">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
+                <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
+                <ScalarProperty Name="ID_Movimentacao" ColumnName="ID_Movimentacao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

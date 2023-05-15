@@ -61,13 +61,13 @@
     <EntitySetMapping Name="Pedidos">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.Pedidos">
         <MappingFragment StoreEntitySet="Pedidos">
+          <ScalarProperty Name="MoradaEntrega" ColumnName="MoradaEntrega" />
           <ScalarProperty Name="Contacto" ColumnName="Contacto" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="ID_Pedido" ColumnName="ID_Pedido" />
           <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
           <ScalarProperty Name="DataDoPedido" ColumnName="DataDoPedido" />
           <ScalarProperty Name="DataDeEntrega" ColumnName="DataDeEntrega" />
-          <ScalarProperty Name="LocalDeEntrega" ColumnName="LocalDeEntrega" />
           <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
           <ScalarProperty Name="PreçoTotal" ColumnName="PreçoTotal" />
           <ScalarProperty Name="ID_Estado" ColumnName="ID_Estado" />
@@ -125,6 +125,8 @@
     <EntitySetMapping Name="Utilizadores">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.Utilizadores">
         <MappingFragment StoreEntitySet="Utilizadores">
+          <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+          <ScalarProperty Name="Morada" ColumnName="Morada" />
           <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
           <ScalarProperty Name="PrimeiroNome" ColumnName="PrimeiroNome" />
           <ScalarProperty Name="SegundoNome" ColumnName="SegundoNome" />
@@ -187,5 +189,16 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="MovimentacaoSaldo">
+      <EntityTypeMapping TypeName="GestãoRickyShopModel.MovimentacaoSaldo">
+        <MappingFragment StoreEntitySet="MovimentacaoSaldo">
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
+          <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
+          <ScalarProperty Name="ID_Movimentacao" ColumnName="ID_Movimentacao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
