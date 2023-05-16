@@ -3,6 +3,7 @@
     var total = 0.0;
     int UserID = Convert.ToInt32(Session["UserID"]);
     var u = RickyShop_Site.Models.Entities.db.Utilizadores.Where(s => s.ID_Utilizador == UserID).FirstOrDefault();
+    int ultmPed = RickyShop_Site.Models.Entities.db.Pedidos.ToList().Last(s => s.ID_Utilizador == UserID).ID_Pedido;
     foreach (var item in Model)
     {
         if (item.Desconto == null)
@@ -166,12 +167,15 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>@(u.PrimeiroNome + " " + u.SegundoNome)</td>
-                                    <td>@u.Morada</td>
-                                    <td>@u.CodigoPostal</td>
-                                    <td>@u.Email</td>
-                                    <td>@u.Contacto</td>
-                                    <td>@u.NIF</td>
+                                    @foreach (var item in RickyShop_Site.Models.Entities.db.Pedidos.Where(s => s.ID_Pedido == ultmPed))
+                                    {
+                                        <td>@(u.PrimeiroNome + " " + u.SegundoNome)</td>
+                                        <td>@item.MoradaEntrega</td>
+                                        <td>@item.CodigoPostal</td>
+                                        <td>@u.Email</td>
+                                        <td>@u.Contacto</td>
+                                        <td>@u.NIF</td>
+                                    }
                                 </tr>
                         </table>
                     </div>
@@ -181,7 +185,9 @@
                             <p><b>Data do Pedido:</b> @DateTime.Now.Date.ToString("dd/MM/yyyy")</p>
                             <p><b>Data Prevista de Entrega:</b> @DateTime.Now.AddDays(7).Date.ToString("dd/MM/yyyy")</p>
                             <br />
-                            <img src="~/Imagens/Carimbo.png" style="width:100px" />
+                            <div class="row text-right">
+                                <img src="~/Imagens/Carimbo.png" style="width:100px" />
+                            </div>
                         </div>
                     </div>
                 </div>

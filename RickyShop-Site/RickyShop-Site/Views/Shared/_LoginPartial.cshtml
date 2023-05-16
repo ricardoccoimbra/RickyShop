@@ -3,7 +3,7 @@
     @if (Session["UserID"] != null)
     {
         int id = Convert.ToInt32(Session["UserID"]);
-        string nome = RickyShop_Site.Models.Entities.db.Utilizadores.Where(s => s.ID_Utilizador == id).FirstOrDefault().PrimeiroNome + " " +RickyShop_Site.Models.Entities.db.Utilizadores.Where(s => s.ID_Utilizador == id).FirstOrDefault().SegundoNome;
+        string nome = RickyShop_Site.Models.Entities.db.Utilizadores.Where(s => s.ID_Utilizador == id).FirstOrDefault().PrimeiroNome + " " + RickyShop_Site.Models.Entities.db.Utilizadores.Where(s => s.ID_Utilizador == id).FirstOrDefault().SegundoNome;
         <li> <a href="#" style="width:30px; height:50px" onclick="location.href = '@Url.Action("CarrinhoProdutos", "Produtos", new { id = Convert.ToInt32(Session["UserID"]) })'" class="glyphicon glyphicon-shopping-cart"></a></li>
         <li> <a href="#" style="width:30px; height:50px" onclick="location.href = '@Url.Action("CarrinhoProdutos", "Produtos", new { id = Convert.ToInt32(Session["UserID"]) })'" class="glyphicon glyphicon-time"></a></li>
         <li> <a href="#" style="width:30px; height:50px" onclick="location.href = '@Url.Action("CarrinhoProdutos", "Produtos", new { id = Convert.ToInt32(Session["UserID"]) })'" class="glyphicon glyphicon-heart"></a></li>
@@ -12,7 +12,8 @@
         <li class="dropdown">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle user-action" style="background-color: #195712"> @nome <b class="caret"></b></a>
             <ul class="dropdown-menu">
-                <li><a href="#"><i class="fa fa-user-o"></i> Profile</a></li>
+                <li><a href="#" onclick="location.href = '@Url.Action("Perfil", "Utilizador", new { id = Convert.ToInt32(Session["UserID"]) })'"><i class="glyphicon glyphicon-user"></i> Perfil</a></li>
+                <li><a href="#" onclick="location.href = '@Url.Action("CarrinhoProdutos", "Produtos", new { id = Convert.ToInt32(Session["UserID"]) })'"><i class="glyphicon glyphicon-shopping-cart"></i> Carrinho</a></li>
                 <li><a href="#"><i class="fa fa-calendar-o"></i> Calendar</a></li>
                 <li><a href="#"><i class="fa fa-sliders"></i> Settings</a></li>
                 <li class="divider"></li>

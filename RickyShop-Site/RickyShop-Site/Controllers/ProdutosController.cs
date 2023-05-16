@@ -8,6 +8,8 @@ using PagedList;
 using System.Security.Permissions;
 using Microsoft.Ajax.Utilities;
 using System.Text.RegularExpressions;
+using System.Data.Entity.ModelConfiguration.Configuration;
+using System.Threading.Tasks;
 
 namespace RickyShop_Site.Controllers
 {
@@ -419,7 +421,7 @@ namespace RickyShop_Site.Controllers
         #endregion
 
 
-        public ActionResult FecharCompra(string locEntrega, string codPostal, DadosCarrinhoProduto_Result c)
+        public ActionResult FecharCompra(string locEntrega, string codPostal)
         {
             List<DadosCarrinhoProduto_Result> prod = new List<DadosCarrinhoProduto_Result>();
             int UserID = Convert.ToInt32(Session["UserID"]);
@@ -442,7 +444,6 @@ namespace RickyShop_Site.Controllers
                 p.Contacto = u.Contacto;
                 db.Pedidos.Add(p);
                 db.SaveChanges();
-
             }
             else
             {
@@ -452,22 +453,24 @@ namespace RickyShop_Site.Controllers
             }
 
 
-            int d = db.Pedidos.ToList().Last(s => s.ID_Utilizador == 2).ID_Pedido;
+            int ultmPed = db.Pedidos.ToList().Last(s => s.ID_Utilizador == UserID).ID_Pedido;
             //Criar função para devolver o total
 
-            PedidosDetalhes pd = new PedidosDetalhes();
+
+            List<PedidosDetalhes> dLista = new List<PedidosDetalhes>();
             foreach (var item in db.DadosCarrinhoProduto(UserID))
             {
-                pd.ID_Pedido = d;
+                PedidosDetalhes pd = new PedidosDetalhes();
+                pd.ID_Pedido = ultmPed;
                 pd.ID_Produto = item.ID_Produto;
                 pd.Quantidade = item.Quantidade;
                 pd.Preco = item.PreçoPorQuantidade;
 
-                db.PedidosDetalhes.;
-                db.SaveChanges();
-
+                dLista.Add(pd);
             }
 
+            db.PedidosDetalhes.AddRange(dLista);
+            db.SaveChanges();
             prod = db.DadosCarrinhoProduto(UserID).ToList();
             return View(prod);
         }
