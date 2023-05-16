@@ -165,5 +165,26 @@ namespace RickyShop_Site.Models
                 }
             }
         }
+
+        public static decimal PrecoTotal(int id)
+        {
+            
+            decimal total = 0;
+
+            foreach (var item in db.DadosCarrinhoProduto(id))
+            {
+                if(item.Desconto == null) 
+                {
+                    total += item.PreçoPorQuantidade;
+                }
+                else
+                {
+                    double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * item.Desconto) / 100;
+                    total += item.PreçoPorQuantidade - Convert.ToDecimal(valDesconto);
+                }
+            }
+
+            return total;
+        }
     }
 }

@@ -385,7 +385,7 @@ namespace RickyShop_Site.Controllers
         public ActionResult EliminarProdCarrinho(int id)
         {
             int UserID = Convert.ToInt32(Session["UserID"]);
-            var p = db.Carrinho.Where(s =>  s.ID_Utilizador == UserID && s.ID_Produto == id).FirstOrDefault();
+            var p = db.Carrinho.Where(s => s.ID_Utilizador == UserID && s.ID_Produto == id).FirstOrDefault();
             db.Carrinho.Remove(p);
             db.SaveChangesAsync();
 
@@ -419,23 +419,57 @@ namespace RickyShop_Site.Controllers
         #endregion
 
 
-        public ActionResult FecharCompra(string locEntrega, string codPostal)
+        public ActionResult FecharCompra(string locEntrega, string codPostal, DadosCarrinhoProduto_Result c)
         {
+            List<DadosCarrinhoProduto_Result> prod = new List<DadosCarrinhoProduto_Result>();
             int UserID = Convert.ToInt32(Session["UserID"]);
             Regex regex = new Regex(@"^\d{4}(-\d{3})?$");
-            if(regex.IsMatch(codPostal) == true && locEntrega != "")
+
+            if (regex.IsMatch(codPostal) == true && locEntrega != "")
             {
+                var u = db.Utilizadores.Where(s => s.ID_Utilizador == UserID).FirstOrDefault();
                 //Fechar compra, mas verificar se o user tem saldo, se não tiver saldo mostrar mensagem de aviso
-                var prod = db.DadosCarrinhoProduto(UserID).ToList();
-                return View(prod);
+
+                Pedidos p = new Pedidos();
+                p.ID_Utilizador = UserID;
+                p.DataDoPedido = DateTime.Now;
+                p.DataDeEntrega = DateTime.Now.AddDays(7);
+                p.MoradaEntrega = locEntrega;
+                p.CodigoPostal = codPostal;
+                p.PreçoTotal = Generic.PrecoTotal(UserID);
+                p.ID_Estado = 0;
+                p.Email = u.Email;
+                p.Contacto = u.Contacto;
+                db.Pedidos.Add(p);
+                db.SaveChanges();
+
             }
             else
             {
                 //Ou o codigo postal está inválido ou não meteu nada no local de entrega
-                var prod = db.DadosCarrinhoProduto(2).ToList();
+                prod = db.DadosCarrinhoProduto(2).ToList();
                 return View(prod);
             }
-            
+
+
+            int d = db.Pedidos.ToList().Last(s => s.ID_Utilizador == 2).ID_Pedido;
+            //Criar função para devolver o total
+
+            PedidosDetalhes pd = new PedidosDetalhes();
+            foreach (var item in db.DadosCarrinhoProduto(UserID))
+            {
+                pd.ID_Pedido = d;
+                pd.ID_Produto = item.ID_Produto;
+                pd.Quantidade = item.Quantidade;
+                pd.Preco = item.PreçoPorQuantidade;
+
+                db.PedidosDetalhes.;
+                db.SaveChanges();
+
+            }
+
+            prod = db.DadosCarrinhoProduto(UserID).ToList();
+            return View(prod);
         }
 
     }

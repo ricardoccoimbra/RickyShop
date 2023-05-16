@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RickyShop_Site.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,14 @@ namespace RickyShop_Site.Controllers
 {
     public class UtilizadorController : Controller
     {
+        GestãoRickyShopEntities db = new GestãoRickyShopEntities();
+
+
         // GET: Utilizador
         public ActionResult Perfil()
         {
-            return View();
+            var u = db.Utilizadores.Where(s => s.ID_Utilizador == 2).FirstOrDefault();
+            return View(u);
         }
     }
 }

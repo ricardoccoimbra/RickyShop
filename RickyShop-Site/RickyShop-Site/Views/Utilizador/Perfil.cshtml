@@ -1,4 +1,7 @@
-﻿<link href="~/Content/StylePerfil.css" rel="stylesheet" />
+﻿@model RickyShop_Site.Models.Utilizadores
+
+
+<link href="~/Content/StylePerfil.css" rel="stylesheet" />
 
 <div class="container">
     <div class="row gutters-sm">
@@ -22,31 +25,52 @@
                 </div>
                 <div class="card-body tab-content">
                     <div class="tab-pane active" id="profile">
-                        <h6>YOUR PROFILE INFORMATION</h6>
+                        <h6>INFORMAÇÕES DO PERFIL</h6>
                         <hr>
                         <form>
-                            <div class="form-group">
-                                <label for="fullName">Full Name</label>
-                                <input type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your fullname" value="Kenneth Valdez">
-                                <small id="fullNameHelp" class="form-text text-muted">Your name may appear around here where you are mentioned. You can change or remove it at any time.</small>
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <label for="fullName">Primeiro Nome</label>
+                                    @Html.EditorFor(model => model.PrimeiroNome, new { htmlAttributes = new { @class = "form-control", placeholder = "Primeiro Nome", @readonly = "readonly" } })
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="fullName">Segundo Nome</label>
+                                    @Html.EditorFor(model => model.SegundoNome, new { htmlAttributes = new { @class = "form-control", placeholder = "Apelido", @readonly = "readonly" } })
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="bio">Your Bio</label>
-                                <textarea class="form-control autosize" id="bio" placeholder="Write something about you" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 62px;">A front-end developer that focus more on user interface design, a web interface wizard, a connector of awesomeness.</textarea>
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <label for="fullName">Data de Nascimento</label>
+                                    <input type="text" class="form-control datepicker" id="DataNascimento" name="DataNascimento" readonly="readonly" value="@Model.DataDeNascimento.ToString("dd/MM/yyyy")" />
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="fullName">NIF</label>
+                                    @Html.EditorFor(model => model.NIF, new { htmlAttributes = new { @class = "form-control", placeholder = "NIF", @readonly = "readonly" } })
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="url">URL</label>
-                                <input type="text" class="form-control" id="url" placeholder="Enter your website address" value="http://benije.ke/pozzivkij">
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <label for="fullName">Email</label>
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email", @readonly = "readonly" } })
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="fullName">Contacto</label>
+                                    @Html.EditorFor(model => model.Contacto, new { htmlAttributes = new { @class = "form-control", placeholder = "Contacto" } })
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="location">Location</label>
-                                <input type="text" class="form-control" id="location" placeholder="Enter your location" value="Bay Area, San Francisco, CA">
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <label for="fullName">Morada</label>
+                                    @Html.EditorFor(model => model.Morada, new { htmlAttributes = new { @class = "form-control", placeholder = "Morada" } })
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="fullName">Código-Postal</label>
+                                    @Html.EditorFor(model => model.CodigoPostal, new { htmlAttributes = new { @class = "form-control", placeholder = "Código-Postal" } })
+                                </div>
                             </div>
-                            <div class="form-group small text-muted">
-                                All of the fields on this page are optional and can be deleted at any time, and by filling them out, you're giving us consent to share this data wherever your user profile appears.
-                            </div>
-                            <button type="button" class="btn btn-primary">Update Profile</button>
-                            <button type="reset" class="btn btn-light">Reset Changes</button>
+
+                            <button type="button" class="btn btn-primary">Atualizar Perfil</button>
+                            <button type="reset" class="btn btn-light">Limpar Modificações</button>
                         </form>
                     </div>
                     <div class="tab-pane" id="account">
@@ -94,19 +118,18 @@
 
 
                             @*<div class="form-group">
-            <label class="d-block mb-0">Payment Method</label>
-            <div class="small text-muted mb-3">You have not added a payment method</div>
-            <button class="btn btn-info" type="button">Add Payment Method</button>
-        </div>
-        <div class="form-group mb-0">
-            <label class="d-block">Payment History</label>
-            <div class="border border-gray-500 bg-gray-200 p-3 text-center font-size-sm">You have not made any payment.</div>
-        </div>*@
+                                    <label class="d-block mb-0">Payment Method</label>
+                                    <div class="small text-muted mb-3">You have not added a payment method</div>
+                                    <button class="btn btn-info" type="button">Add Payment Method</button>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <label class="d-block">Payment History</label>
+                                    <div class="border border-gray-500 bg-gray-200 p-3 text-center font-size-sm">You have not made any payment.</div>
+                                </div>*@
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
