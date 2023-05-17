@@ -59,7 +59,6 @@ namespace RickyShop_Site.Models
         public string PassWord { get; set; }
 
         [Display(Name = "Password")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Campo Obrigatório")]
         [DataType(DataType.Password)]
         public string ConfirmarPassWord { get; set; }
 

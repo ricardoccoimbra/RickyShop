@@ -2,7 +2,6 @@
 
 
 <link href="~/Content/StylePerfil.css" rel="stylesheet" />
-
 <div class="container">
     <div class="row gutters-sm">
         <div class="col-md-8">
@@ -27,15 +26,16 @@
                     <div class="tab-pane active" id="profile">
                         <h6>INFORMAÇÕES DO PERFIL</h6>
                         <hr>
-                        <form>
+                        <form action="~/Utilizador/AtualizarPerfil/">
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label for="fullName">Primeiro Nome</label>
-                                    @Html.EditorFor(model => model.PrimeiroNome, new { htmlAttributes = new { @class = "form-control", placeholder = "Primeiro Nome", @readonly = "readonly" } })
+                                    <input type="text" class="form-control" name="primeiroNome" placeholder="Alfredo" value="@Model.PrimeiroNome" readonly="readonly">
+
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label for="fullName">Segundo Nome</label>
-                                    @Html.EditorFor(model => model.SegundoNome, new { htmlAttributes = new { @class = "form-control", placeholder = "Apelido", @readonly = "readonly" } })
+                                    <input type="text" class="form-control" name="SegundoNome" placeholder="Mendes" value="@Model.SegundoNome" readonly="readonly">
                                 </div>
                             </div>
                             <div class="row">
@@ -45,31 +45,31 @@
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label for="fullName">NIF</label>
-                                    @Html.EditorFor(model => model.NIF, new { htmlAttributes = new { @class = "form-control", placeholder = "NIF", @readonly = "readonly" } })
+                                    <input type="text" class="form-control" name="nif" placeholder="123456789" value="@Model.NIF" readonly="readonly">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label for="fullName">Email</label>
-                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email", @readonly = "readonly" } })
+                                    <input type="text" class="form-control" name="email" placeholder="exemplo@yyy.com" value="@Model.Email" readonly="readonly">
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label for="fullName">Contacto</label>
-                                    @Html.EditorFor(model => model.Contacto, new { htmlAttributes = new { @class = "form-control", placeholder = "Contacto" } })
+                                    <input type="text" class="form-control" name="contacto" placeholder="123456789" value="@Model.Contacto">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label for="fullName">Morada</label>
-                                    @Html.EditorFor(model => model.Morada, new { htmlAttributes = new { @class = "form-control", placeholder = "Morada" } })
+                                    <input type="text" class="form-control" name="morada" placeholder="Rua xxx, nºx, Porta x" value="@Model.Morada">
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label for="fullName">Código-Postal</label>
-                                    @Html.EditorFor(model => model.CodigoPostal, new { htmlAttributes = new { @class = "form-control", placeholder = "Código-Postal" } })
+                                    <input type="text" class="form-control" name="codPostal" placeholder="xxxx-xxx" value="@Model.CodigoPostal">
                                 </div>
                             </div>
 
-                            <button type="button" class="btn btn-primary">Atualizar Perfil</button>
+                            <button type="submit" class="btn btn-primary">Atualizar Perfil</button>
                             <button type="reset" class="btn btn-light">Limpar Modificações</button>
                         </form>
                     </div>
@@ -93,14 +93,14 @@
                     <div class="tab-pane" id="security">
                         <h6>CONFIGURAÇÕES DE SEGURANÇA</h6>
                         <hr>
-                        <form>
+                        <form action="~/Utilizador/AlterarPassword/">
                             <div class="form-group">
                                 <label class="d-block">Alterar Password</label>
-                                <input type="password" class="form-control" placeholder="Enter password antiga"> <br />
-                                <input type="password" class="form-control" placeholder="Nova password"><br />
-                                <input type="password" class="form-control" placeholder="Confirmar nova password"><br />
+                                <input type="password" class="form-control" placeholder="Enter password Atual" name="password"> <br />
+                                <input type="password" class="form-control" placeholder="Nova password" name="NovaPassword"><br />
+                                <input type="password" class="form-control" placeholder="Confirmar nova password" name="ConfNovaPassword"><br />
                             </div>
-                            <button class="btn btn-info" type="button">Alterar Password</button>
+                            <button class="btn btn-info" type="submit">Alterar Password</button>
                         </form>
                     </div>
                     <div class="tab-pane" id="billing">
@@ -112,23 +112,55 @@
                                 <h1>100€</h1>
                             </div>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <button class="btn btn-info" type="button" style="border-color: #f5f5f5">Adicionar Saldo</button>
+                                <button class="btn btn-info" type="button" style="border-color: #f5f5f5" data-toggle="modal" data-target="#ModalAddSaldo">Depositar Saldo</button>
                                 <button class="btn btn-info" type="button" style="border-color: #f5f5f5">Rever Movimentações</button>
                             </div>
 
-
-                            @*<div class="form-group">
-                                    <label class="d-block mb-0">Payment Method</label>
-                                    <div class="small text-muted mb-3">You have not added a payment method</div>
-                                    <button class="btn btn-info" type="button">Add Payment Method</button>
-                                </div>
-                                <div class="form-group mb-0">
-                                    <label class="d-block">Payment History</label>
-                                    <div class="border border-gray-500 bg-gray-200 p-3 text-center font-size-sm">You have not made any payment.</div>
-                                </div>*@
                         </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal para mostrar dados de envio do pedido -->
+<div class="modal fade" id="ModalAddSaldo" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Depositar Saldo</h3>
+            </div>
+            <div class="modal-body">
+                <form action="~/Produtos/FecharCompra/">
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <label class="control-label">Nome do Titular</label>
+                            <input class="form-control" size="4" type="text" placeholder="Maria Odete">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label class="control-label">Número do Cartão</label>
+                            <input autocomplete="off" class="form-control" size="20" type="text" placeholder="1234 5678 0000 1234">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <label class="control-label">Código CVV</label>
+                            <input autocomplete="off" class="form-control" placeholder="ex. 311" size="4" type="text">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label class="control-label">Data de Validade</label>
+                            <input class="form-control" placeholder="MM/YY" size="4" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success center-block" role="button" onclick="">Concluir</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

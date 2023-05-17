@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
@@ -168,12 +169,12 @@ namespace RickyShop_Site.Models
 
         public static decimal PrecoTotal(int id)
         {
-            
+
             decimal total = 0;
 
             foreach (var item in db.DadosCarrinhoProduto(id))
             {
-                if(item.Desconto == null) 
+                if (item.Desconto == null)
                 {
                     total += item.PreçoPorQuantidade;
                 }
@@ -185,6 +186,38 @@ namespace RickyShop_Site.Models
             }
 
             return total;
+        }
+
+        public static bool CompararPassHash(string pass1, string pass2)
+        {
+            SHA256 sha256Hash = SHA256.Create();
+            byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(pass1));
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                builder.Append(bytes[i].ToString("x2"));
+            }
+            pass1 = builder.ToString();
+
+
+            if (pass1 == pass2)
+                return true;
+            else
+                return false;
+        }
+
+        public static string CriarPassHash(string pass)
+        {
+            SHA256 sha256Hash = SHA256.Create();
+            byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(pass));
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                builder.Append(bytes[i].ToString("x2"));
+            }
+            pass = builder.ToString();
+
+            return pass;
         }
     }
 }

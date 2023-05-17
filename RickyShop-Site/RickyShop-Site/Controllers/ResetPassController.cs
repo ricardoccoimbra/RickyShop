@@ -200,18 +200,10 @@ namespace RickyShop_Site.Controllers
         {
             int UserID = Convert.ToInt32(Session["UserID"]);
             var user = db.Utilizadores.FirstOrDefault(s => s.ID_Utilizador == UserID);
-            if (u.ConfirmarPassWord == u.PassWord)
+            if (true == Generic.CompararPassHash(u.PassWord, user.PassWord))
             {
 
-                SHA256 sha256Hash = SHA256.Create();
-
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(u.PassWord));
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                u.PassWord = builder.ToString();
+                u.PassWord = Generic.CriarPassHash(u.PassWord);
 
                 user.PassWord = u.PassWord;
                 db.SaveChangesAsync();

@@ -69,16 +69,7 @@ namespace RickyShop_Site.Controllers
                         u.DataDeAdesao = DateTime.Now;
                         u.DataDeNascimento = dataNascimento;
                         u.Desconto = 10;
-
-                        SHA256 sha256Hash = SHA256.Create();
-
-                        byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(u.PassWord));
-                        StringBuilder builder = new StringBuilder();
-                        for (int i = 0; i < bytes.Length; i++)
-                        {
-                            builder.Append(bytes[i].ToString("x2"));
-                        }
-                        u.PassWord = builder.ToString();
+                        u.PassWord = Generic.CriarPassHash(u.PassWord);
 
                         db.Utilizadores.Add(u);
 
@@ -120,19 +111,12 @@ namespace RickyShop_Site.Controllers
 
                 if (user != null)
                 {
-                    SHA256 sha256Hash = SHA256.Create();
 
-                    byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(u.PassWord));
-                    StringBuilder builder = new StringBuilder();
-                    for (int i = 0; i < bytes.Length; i++)
-                    {
-                        builder.Append(bytes[i].ToString("x2"));
-                    }
-                    u.PassWord = builder.ToString();
+                   
 
 
                     // Compara as senhas encriptadas
-                    if (user.PassWord == u.PassWord)
+                    if (true == Generic.CompararPassHash(u.PassWord, user.PassWord))
                     {
 
                         Session["UserID"] = user.ID_Utilizador;
