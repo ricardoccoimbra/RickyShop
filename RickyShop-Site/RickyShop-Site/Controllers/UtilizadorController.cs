@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
@@ -69,5 +70,32 @@ namespace RickyShop_Site.Controllers
             return RedirectToAction("Perfil", "Utilizador", user.ID_Utilizador);
 
         }
+        public ActionResult DepositarSaldo(string nomeTitular, string NumCartao, string CVV, string Validade, int Saldo)
+        {
+            Regex regexCartao = new Regex(@"^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})$");
+            Regex regexValidade = new Regex(@"^(0[1-9]|1[0-2])\/(2[3-9]|[3-9][0-9])$");
+            Regex regexCVV = new Regex(@"^[0-9]{3}$");
+
+            int UserID = Convert.ToInt32(Session["UserID"]);
+
+            if (regexCartao.IsMatch(NumCartao) && regexCVV.IsMatch(CVV) && regexValidade.IsMatch(Validade) && nomeTitular != "")
+            {
+                MovimentacaoSaldo mv = new MovimentacaoSaldo();
+                mv.NumeroCartao = NumCartao;
+                mv.Estado = "Pendente";
+                mv.ID_Utilizador = UserID;
+                mv.Tipo = "+";
+                mv.Quantidade = Saldo;
+
+                db.MovimentacaoSaldo.Add(mv);
+                db.SaveChangesAsync();
+
+                return RedirectToAction("Perfil", "Utilizador", UserID);
+            }
+
+            return RedirectToAction("Perfil", "Utilizador", UserID);
+
+        }
+
     }
 }

@@ -340,24 +340,35 @@ namespace RickyShop_Site.Controllers
             Response.Write($"<script>alert('Não existe nenhum produto pesquisado!')</script>");
             return RedirectToAction("Inicio", "Home");
         }
+        public ActionResult ProdutosFavoritos()
+        {
+            var p = db.DadosProdutosFavoritos(2);
+            return View(p.ToList());
+        }
         #endregion
 
-        public ActionResult ProdFavorito(Carrinho c, int idP, int idC)
+        public ActionResult AddProdFavoritos(int idP, int idC)
         {
+            ProdutosFavoritos f = new ProdutosFavoritos();
             int userID = Convert.ToInt32(Session["UserID"]);
-            if (db.Carrinho.Count(s => s.ID_Produto == idP && s.ID_Utilizador == userID) == 0)
+            if (db.ProdutosFavoritos.Count(s => s.ID_Produto == idP && s.ID_Utilizador == userID) == 0)
             {
                 var p = db.Produto.Where(s => s.ID_Produto == idP).FirstOrDefault();
 
-                c.ID_Produto = idP;
-                c.PrecoProduto = p.PreçoPorQuantidade;
-                c.ID_Utilizador = userID;
-                c.Quantidade = 1;
-                c.Tamanho = "M";
-                db.Carrinho.Add(c);
+                f.ID_Produto = idP;
+                f.ID_Utilizador = userID;
+                db.ProdutosFavoritos.Add(f);
                 db.SaveChangesAsync();
             }
             return RedirectToAction("ListaProdutos", new { id = idC });
+        }
+
+        public ActionResult ApagarProdFavorito(int idProd)
+        {
+            var p = db.ProdutosFavoritos.Where(s => s.ID_Produto == idProd && s.ID_Utilizador == 2).FirstOrDefault();
+            db.ProdutosFavoritos.Remove(p);
+            db.SaveChangesAsync();
+            return RedirectToAction("ProdutosFavoritos", "Produtos");
         }
 
         #region Carrinho
@@ -469,9 +480,14 @@ namespace RickyShop_Site.Controllers
                 dLista.Add(pd);
             }
 
+
+
             db.PedidosDetalhes.AddRange(dLista);
-            db.SaveChanges();
             prod = db.DadosCarrinhoProduto(UserID).ToList();
+
+            var c = db.Carrinho.Where(s => s.ID_Utilizador == UserID).ToList();
+            db.Carrinho.RemoveRange(c);
+            db.SaveChanges();
             return View(prod);
         }
 

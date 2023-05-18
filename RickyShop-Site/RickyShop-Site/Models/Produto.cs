@@ -11,7 +11,7 @@ namespace RickyShop_Site.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Produto
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +21,7 @@ namespace RickyShop_Site.Models
             this.ProdutosFavoritos = new HashSet<ProdutosFavoritos>();
             this.PedidosDetalhes = new HashSet<PedidosDetalhes>();
         }
-    
+
         public int ID_Produto { get; set; }
         public string Nome { get; set; }
         public decimal PreçoPorQuantidade { get; set; }

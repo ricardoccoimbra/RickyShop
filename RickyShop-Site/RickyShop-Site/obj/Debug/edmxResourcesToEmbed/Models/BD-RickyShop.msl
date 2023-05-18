@@ -192,6 +192,7 @@
     <EntitySetMapping Name="MovimentacaoSaldo">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.MovimentacaoSaldo">
         <MappingFragment StoreEntitySet="MovimentacaoSaldo">
+          <ScalarProperty Name="NumeroCartao" ColumnName="NumeroCartao" />
           <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="Tipo" ColumnName="Tipo" />
           <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
@@ -200,5 +201,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="DadosProdutosFavoritos" FunctionName="GestãoRickyShopModel.Store.DadosProdutosFavoritos">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GestãoRickyShopModel.DadosProdutosFavoritos_Result">
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="ImagemPath" ColumnName="ImagemPath" />
+          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+          <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
+          <ScalarProperty Name="Desconto" ColumnName="Desconto" />
+          <ScalarProperty Name="PreçoPorQuantidade" ColumnName="PreçoPorQuantidade" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

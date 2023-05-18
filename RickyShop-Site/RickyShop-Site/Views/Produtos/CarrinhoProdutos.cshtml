@@ -24,165 +24,174 @@
 
 
 
-
-<div class="container">
-    <div class="col-xs-8">
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <div class="panel-title">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <h5><span class="glyphicon glyphicon-shopping-cart"></span> Carrinho Produtos</h5>
+@if (Model.Count() != 0)
+{
+    <div class="container">
+        <div class="col-xs-8">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <h5><span class="glyphicon glyphicon-shopping-cart"></span> Carrinho Produtos</h5>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel-body">
-                @foreach (var item in Model)
-                {
-                    <div class="row cart-product">
-                        <div class="col-xs-2">
-                            <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" class="img-responsive" />
-                        </div>
-                        <div class="col-xs-4">
-                            <h4 class="product-name">
-                                <strong>
-                                    @Html.DisplayFor(modelItem => item.Nome)
-                                </strong>
-                            </h4><h4><small>@Html.DisplayFor(modelItem => item.Descrição)</small></h4>
-                        </div>
-                        <div class="col-xs-6">
-                            <div class="col-xs-6 text-right ">
-                                <label style="font-size:20px">
-                                    <strong class="cart-product-price">
-                                        @if (u.Desconto == null)
-                                        {
-                                            @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)<i>€</i>
-
-                                        }
-                                        else
-                                        {
-                                            double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * item.Desconto) / 100;
-                                            string preco = (Convert.ToDouble(item.PreçoPorQuantidade) - valDesconto).ToString("N2") + "€";
-                                            @Html.DisplayFor(modelItem => preco)
-                                        }
+                <div class="panel-body">
+                    @foreach (var item in Model)
+                    {
+                        <div class="row cart-product">
+                            <div class="col-xs-2">
+                                <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" class="img-responsive" />
+                            </div>
+                            <div class="col-xs-4">
+                                <h4 class="product-name">
+                                    <strong>
+                                        @Html.DisplayFor(modelItem => item.Nome)
                                     </strong>
-                                </label>
+                                </h4><h4><small>@Html.DisplayFor(modelItem => item.Descrição)</small></h4>
                             </div>
-                            <div style="display: flex;">
-                                <input type="text" class="form-control input-sm product-qtd-input" value="@item.Quantidade" style="width: 40px; border-radius: 1px; text-align: center;" readonly="readonly">
-                                <button type="button" style="width: 30px; border-radius: 1px;" onclick="location.href = '@Url.Action("SomaProd", "Produtos", new { @id = item.ID_Produto })'">
-                                    @*Mudar a SP e adicionar ID do produto*@
-                                    <i class="glyphicon  glyphicon-plus"></i>
-                                </button>
-                                <button type="button" style="width: 30px; border-radius: 1px;" onclick="location.href = '@Url.Action("DiminuiProd", "Produtos", new { @id = item.ID_Produto })'">
-                                    <i class="glyphicon  glyphicon-minus"></i>
-                                </button>
+                            <div class="col-xs-6">
+                                <div class="col-xs-6 text-right ">
+                                    <label style="font-size:20px">
+                                        <strong class="cart-product-price">
+                                            @if (u.Desconto == null)
+                                            {
+                                                @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)<i>€</i>
 
-                                <button type="button" class="btn btn-link btn-xs remove-products" onclick="location.href = '@Url.Action("EliminarProdCarrinho", "Produtos", new { @id = item.ID_Produto })'">
-                                    <span class="glyphicon glyphicon-trash "> </span>
-                                </button>
+                                            }
+                                            else
+                                            {
+                                                double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * item.Desconto) / 100;
+                                                string preco = (Convert.ToDouble(item.PreçoPorQuantidade) - valDesconto).ToString("N2") + "€";
+                                                @Html.DisplayFor(modelItem => preco)
+                                            }
+                                        </strong>
+                                    </label>
+                                </div>
+                                <div style="display: flex;">
+                                    <input type="text" class="form-control input-sm product-qtd-input" value="@item.Quantidade" style="width: 40px; border-radius: 1px; text-align: center;" readonly="readonly">
+                                    <button type="button" style="width: 30px; border-radius: 1px;" onclick="location.href = '@Url.Action("SomaProd", "Produtos", new { @id = item.ID_Produto })'">
+                                        @*Mudar a SP e adicionar ID do produto*@
+                                        <i class="glyphicon  glyphicon-plus"></i>
+                                    </button>
+                                    <button type="button" style="width: 30px; border-radius: 1px;" onclick="location.href = '@Url.Action("DiminuiProd", "Produtos", new { @id = item.ID_Produto })'">
+                                        <i class="glyphicon  glyphicon-minus"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-link btn-xs remove-products" onclick="location.href = '@Url.Action("EliminarProdCarrinho", "Produtos", new { @id = item.ID_Produto })'">
+                                        <span class="glyphicon glyphicon-trash "> </span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <hr>
-                }
+                        <hr>
+                    }
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="col-md-4" style="background: #195712; border-radius: 5px; color:white">
-        <div class="card text-white rounded-3">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5 style="text-align: center;font-size: 25px;" class="">SUMÁRIO</h5>
-                </div>
-
-                <br />
-                <div class="d-flex justify-content-between">
-                    <div style="font-size:15px">Subtotal: @total€ </div>
-                </div>
-
-                <div class="d-flex justify-content-between">
-                    <div style="font-size:15px">Envio: Grátis</div>
-                </div>
 
 
-                @{
-                    if (u.Desconto != null)
+        <div class="col-md-4" style="background: #195712; border-radius: 5px; color:white">
+            <div class="card text-white rounded-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 style="text-align: center;font-size: 25px;" class="">SUMÁRIO</h5>
+                    </div>
+
+                    <br />
+                    <div class="d-flex justify-content-between">
+                        <div style="font-size:15px">Subtotal: @total€ </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <div style="font-size:15px">Envio: Grátis</div>
+                    </div>
+
+
+                    @{
+                        if (u.Desconto != null)
+                        {
+                            <div class="d-flex justify-content-between">
+                                <div style="font-size:15px">
+                                    Desconto: @u.Desconto%
+                                </div>
+                            </div>
+                        }
+                    }
+
+
+                    <hr class="my-4">
+                    @if (u.Desconto != null)
                     {
                         <div class="d-flex justify-content-between">
-                            <div style="font-size:15px">
-                                Desconto: @u.Desconto%
+                            <div style="font-size:20px">
+                                <b>
+                                    TOTAL:
+                                    @{
+                                        double valDesconto = Convert.ToDouble(total * u.Desconto) / 100;
+                                        total = Convert.ToDouble(total) - valDesconto;
+                                    }
+                                    @total.ToString("N2")€
+                                </b>
                             </div>
                         </div>
                     }
-                }
-
-
-                <hr class="my-4">
-                @if (u.Desconto != null)
-                {
-                    <div class="d-flex justify-content-between">
-                        <div style="font-size:20px">
-                            <b>
-                                TOTAL:
-                                @{
-                                    double valDesconto = Convert.ToDouble(total * u.Desconto) / 100;
-                                    total = Convert.ToDouble(total) - valDesconto;
-                                }
-                                @total.ToString("N2")€
-                            </b>
+                    else
+                    {
+                        <div class="d-flex justify-content-between">
+                            <div style="font-size:20px"><b>TOTAL: @total€</b></div>
                         </div>
-                    </div>
-                }
-                else
-                {
+                    }
+
+                    <br />
+                    <br />
+
+                    <button class="btn btn-primary d-flex center-block" type="button" style="background-color: grey; border-color: white;" data-toggle="modal" data-target="#squarespaceModal">
+                        <div class="d-flex justify-content-between">
+                            <span>@total€</span>
+                            <span>Checkout</span>
+                        </div>
+                    </button>
+
+                    <br />
+
                     <div class="d-flex justify-content-between">
-                        <div style="font-size:20px"><b>TOTAL: @total€</b></div>
+                        <div><b>Tipos de Pagamento</b></div>
                     </div>
-                }
 
-                <br />
-                <br />
-
-                <button class="btn btn-primary d-flex center-block" type="button" style="background-color: grey; border-color: white;" data-toggle="modal" data-target="#squarespaceModal">
-                    <div class="d-flex justify-content-between">
-                        <span>@total€</span>
-                        <span>Checkout</span>
+                    <div class="card-body">
+                        <img class="me-2" style="height:28px; width:45px"
+                             src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+                             data-toggle="tooltip" data-placement="top" title="Visa" />
+                        <img class="me-2" style="height:28px; width:45px"
+                             src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+                             data-toggle="tooltip" data-placement="top" title="MasterCard" />
+                        <img class="me-2" style="height:30px; width:45px; background-color:white; border-radius:2px"
+                             src="https://icount.co.uk/wp-content/uploads/paypal-784404_1280.png"
+                             data-toggle="tooltip" data-placement="top" title="PayPal" />
+                        <img class="me-2" style="height: 28px; width: 45px; border-radius: 2px"
+                             src="https://png.pngtree.com/png-vector/20220608/ourmid/pngtree-money-banknotes-banknotes-vector-png-image_4926085.png"
+                             data-toggle="tooltip" data-placement="top" title="Saldo" />
+                        <img class="me-2" style="height: 28px; width: 45px; border-radius: 2px; background:white"
+                             src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Logo_MBWay.svg"
+                             data-toggle="tooltip" data-placement="top" title="Saldo" />
                     </div>
-                </button>
-
-                <br />
-
-                <div class="d-flex justify-content-between">
-                    <div><b>Tipos de Pagamento</b></div>
+                    <br />
                 </div>
-
-                <div class="card-body">
-                    <img class="me-2" style="height:28px; width:45px"
-                         src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
-                         data-toggle="tooltip" data-placement="top" title="Visa" />
-                    <img class="me-2" style="height:28px; width:45px"
-                         src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
-                         data-toggle="tooltip" data-placement="top" title="MasterCard" />
-                    <img class="me-2" style="height:30px; width:45px; background-color:white; border-radius:2px" 
-                         src="https://icount.co.uk/wp-content/uploads/paypal-784404_1280.png"
-                         data-toggle="tooltip" data-placement="top" title="PayPal" />
-                    <img class="me-2" style="height: 28px; width: 45px; border-radius: 2px"
-                         src="https://png.pngtree.com/png-vector/20220608/ourmid/pngtree-money-banknotes-banknotes-vector-png-image_4926085.png"
-                         data-toggle="tooltip" data-placement="top" title="Saldo" />
-                    <img class="me-2" style="height: 28px; width: 45px; border-radius: 2px; background:white"
-                         src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Logo_MBWay.svg"
-                         data-toggle="tooltip" data-placement="top" title="Saldo" />
-                </div>
-                <br />
             </div>
+
         </div>
-
     </div>
-</div>
 
+}
+else
+{
+    <p class="alert-danger text-center" style="font-size:40px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; border-radius:15px; margin-top:3%">
+        <b>UPS, NÃO TEM NENHUM PRODUTO NO CARRINHO</b>
+    </p>
+}
 
 <!-- Modal para mostrar dados de envio do pedido -->
 <div class="modal fade" id="squarespaceModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">

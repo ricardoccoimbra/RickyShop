@@ -153,5 +153,14 @@ namespace RickyShop_Site.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DadosCarrinhoProduto_Result>("DadosCarrinhoProduto", iDParameter);
         }
+    
+        public virtual ObjectResult<DadosProdutosFavoritos_Result> DadosProdutosFavoritos(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DadosProdutosFavoritos_Result>("DadosProdutosFavoritos", iDParameter);
+        }
     }
 }

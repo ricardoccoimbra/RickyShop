@@ -60,6 +60,7 @@
     <Property Name="Quantidade" Type="money" Nullable="false" />
     <Property Name="Tipo" Type="varchar" MaxLength="1" Nullable="false" />
     <Property Name="Estado" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="NumeroCartao" Type="varchar" MaxLength="16" />
   </EntityType>
   <EntityType Name="Pedidos">
     <Key>
@@ -304,6 +305,9 @@
     </ReferentialConstraint>
   </Association>
   <Function Name="DadosCarrinhoProduto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="DadosProdutosFavoritos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ID" Type="int" Mode="In" />
   </Function>
   <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />

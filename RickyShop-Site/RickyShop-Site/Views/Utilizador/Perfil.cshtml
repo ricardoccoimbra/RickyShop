@@ -1,6 +1,8 @@
 ﻿@model RickyShop_Site.Models.Utilizadores
 
 
+
+
 <link href="~/Content/StylePerfil.css" rel="stylesheet" />
 <div class="container">
     <div class="row gutters-sm">
@@ -113,7 +115,7 @@
                             </div>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <button class="btn btn-info" type="button" style="border-color: #f5f5f5" data-toggle="modal" data-target="#ModalAddSaldo">Depositar Saldo</button>
-                                <button class="btn btn-info" type="button" style="border-color: #f5f5f5">Rever Movimentações</button>
+                                <button class="btn btn-info" type="button" style="border-color: #f5f5f5" data-toggle="modal" data-target="#ModalMovConta">Rever Movimentações</button>
                             </div>
 
                         </form>
@@ -125,8 +127,7 @@
 </div>
 
 
-
-<!-- Modal para mostrar dados de envio do pedido -->
+<!-- Modal para Adicionar saldo -->
 <div class="modal fade" id="ModalAddSaldo" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -135,28 +136,34 @@
                 <h3 class="modal-title" id="lineModalLabel">Depositar Saldo</h3>
             </div>
             <div class="modal-body">
-                <form action="~/Produtos/FecharCompra/">
+                <form action="~/Utilizador/DepositarSaldo/">
                     <div class="row">
                         <div class="col-sm-6 form-group">
                             <label class="control-label">Nome do Titular</label>
-                            <input class="form-control" size="4" type="text" placeholder="Maria Odete">
+                            <input class="form-control" type="text" placeholder="Maria Odete" name="nomeTitular">
                         </div>
                         <div class="col-sm-6 form-group">
                             <label class="control-label">Número do Cartão</label>
-                            <input autocomplete="off" class="form-control" size="20" type="text" placeholder="1234 5678 0000 1234">
+                            <input class="form-control" type="text" placeholder="1234 5678 0000 1234" name="numCartao" maxlength="16">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-sm-6 form-group">
                             <label class="control-label">Código CVV</label>
-                            <input autocomplete="off" class="form-control" placeholder="ex. 311" size="4" type="text">
+                            <input class="form-control" placeholder="ex. 311" type="text" name="CVV" maxlength="3">
                         </div>
                         <div class="col-sm-6 form-group">
                             <label class="control-label">Data de Validade</label>
-                            <input class="form-control" placeholder="MM/YY" size="4" type="text">
+                            <input class="form-control" placeholder="MM/YY" type="text" name="Validade" maxlength="5">
                         </div>
                     </div>
+
+                    <div class="row">
+                        <input class="form-control center-block" placeholder="Montante - €" type="number" max="250" min="1" name="Saldo" style="margin-bottom:10px">
+
+                    </div>
+
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success center-block" role="button" onclick="">Concluir</button>
                     </div>
@@ -165,3 +172,71 @@
         </div>
     </div>
 </div>
+
+<!-- Modal para Mostrar Movimentações de Conta -->
+<div class="modal fade" id="ModalMovConta" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Movimentações de Conta</h3>
+            </div>
+            <div class="modal-body">
+                <form action="~/Produtos/FecharCompra/">
+                    <table id="minhaTabela" class="table table-striped table-condensed" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tipo</th>
+                                <th>Quantidade</th>
+                                <th>Número do Cartão</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in RickyShop_Site.Models.Entities.db.MovimentacaoSaldo.Where(s => s.ID_Utilizador == Model.ID_Utilizador))
+                            {
+                                <tr>
+                                    <td>@item.ID_Movimentacao</td>
+                                    <td>@item.Tipo</td>
+                                    <td>@item.Quantidade.ToString("0")€</td>
+
+                                    @{
+                                        string numeroCartao = @item.NumeroCartao; // Exemplo de número de cartão de crédito
+                                        string cartaoEscondido = new string('*', numeroCartao.Length - 3) + numeroCartao.Substring(numeroCartao.Length - 3);
+                                    }
+
+                                    <td>@cartaoEscondido</td>
+                                    <td>@item.Estado</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success center-block" role="button" onclick="">Concluir</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
+<script src="~/Scripts/jQuery.js"></script>
+<script src="~/Scripts/jQueryJava.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#minhaTabela').DataTable();
+    });
+
+    let table = new DataTable('#minhaTabela', {
+        // options
+    });
+</script>
+

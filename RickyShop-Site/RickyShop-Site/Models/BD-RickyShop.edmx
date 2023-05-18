@@ -65,6 +65,7 @@
           <Property Name="Quantidade" Type="money" Nullable="false" />
           <Property Name="Tipo" Type="varchar" MaxLength="1" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="NumeroCartao" Type="varchar" MaxLength="16" />
         </EntityType>
         <EntityType Name="Pedidos">
           <Key>
@@ -309,6 +310,9 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="DadosCarrinhoProduto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DadosProdutosFavoritos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
         </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
@@ -784,6 +788,9 @@
             <End Role="Utilizadores" EntitySet="Utilizadores" />
             <End Role="MovimentacaoSaldo" EntitySet="MovimentacaoSaldo" />
           </AssociationSet>
+          <FunctionImport Name="DadosProdutosFavoritos" ReturnType="Collection(GestãoRickyShopModel.DadosProdutosFavoritos_Result)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -852,6 +859,7 @@
           <Property Name="Tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Utilizadores" Relationship="GestãoRickyShopModel.FK_MovimentacaoSaldo_Utilizadores" FromRole="MovimentacaoSaldo" ToRole="Utilizadores" />
+          <Property Name="NumeroCartao" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_MovimentacaoSaldo_Utilizadores">
           <End Type="GestãoRickyShopModel.Utilizadores" Role="Utilizadores" Multiplicity="1" />
@@ -865,6 +873,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="DadosProdutosFavoritos_Result">
+          <Property Type="String" Name="Nome" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="ImagemPath" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="Descrição" Nullable="false" MaxLength="1000" />
+          <Property Type="Int32" Name="ID_Produto" Nullable="false" />
+          <Property Type="Int32" Name="Desconto" Nullable="true" />
+          <Property Type="Decimal" Name="PreçoPorQuantidade" Nullable="false" Precision="19" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1062,6 +1078,7 @@
           <EntitySetMapping Name="MovimentacaoSaldo">
             <EntityTypeMapping TypeName="GestãoRickyShopModel.MovimentacaoSaldo">
               <MappingFragment StoreEntitySet="MovimentacaoSaldo">
+                <ScalarProperty Name="NumeroCartao" ColumnName="NumeroCartao" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
                 <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
@@ -1070,6 +1087,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DadosProdutosFavoritos" FunctionName="GestãoRickyShopModel.Store.DadosProdutosFavoritos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GestãoRickyShopModel.DadosProdutosFavoritos_Result">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="ImagemPath" ColumnName="ImagemPath" />
+                <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+                <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
+                <ScalarProperty Name="Desconto" ColumnName="Desconto" />
+                <ScalarProperty Name="PreçoPorQuantidade" ColumnName="PreçoPorQuantidade" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

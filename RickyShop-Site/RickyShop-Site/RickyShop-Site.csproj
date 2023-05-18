@@ -168,6 +168,9 @@
     <Compile Include="Models\DadosCarrinhoProduto_Result.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DadosProdutosFavoritos_Result.cs">
+      <DependentUpon>BD-RickyShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Entities.cs" />
     <Compile Include="Models\EstadoDoPedido.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
@@ -368,6 +371,7 @@
     <Content Include="Content\components\visibility.min.js" />
     <Content Include="Content\components\visit.js" />
     <Content Include="Content\components\visit.min.js" />
+    <Content Include="Content\jQuery.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\semantic.css" />
     <Content Include="Content\semantic.min.css" />
@@ -381,6 +385,7 @@
     <Content Include="Content\StyleNavBar.css" />
     <Content Include="Content\StylePerfil.css" />
     <Content Include="Content\StylePopUp.css" />
+    <Content Include="Content\StyleProdutosFavoritos.css" />
     <Content Include="Content\StyleRegistar.css" />
     <Content Include="Content\StyleProdutosDetalhados.css" />
     <Content Include="Content\Teste.css" />
@@ -476,6 +481,8 @@
     <Content Include="Promocoes\6.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jQuery.js" />
+    <Content Include="Scripts\jQueryJava.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\semantic.js" />
     <Content Include="Scripts\semantic.min.js" />
@@ -551,6 +558,7 @@
     <Content Include="Views\Produtos\CarrinhoProdutos.cshtml" />
     <Content Include="Views\Produtos\FecharCompra.cshtml" />
     <Content Include="Views\Utilizador\Perfil.cshtml" />
+    <Content Include="Views\Produtos\ProdutosFavoritos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
