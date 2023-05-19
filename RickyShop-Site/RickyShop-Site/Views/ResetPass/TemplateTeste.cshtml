@@ -1,0 +1,200 @@
+﻿@model List<RickyShop_Site.Models.DadosCarrinhoProduto_Result>
+@{
+    var total = 0.0;
+    int UserID = Convert.ToInt32(Session["UserID"]);
+    var u = RickyShop_Site.Models.Entities.db.Utilizadores.Where(s => s.ID_Utilizador == UserID).FirstOrDefault();
+    int ultmPed = RickyShop_Site.Models.Entities.db.Pedidos.ToList().Last(s => s.ID_Utilizador == UserID).ID_Pedido;
+    foreach (var item in Model)
+    {
+        if (item.Desconto == null)
+        { total += Convert.ToDouble(item.PreçoPorQuantidade * item.Quantidade); }
+        else
+        {
+            double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * item.Desconto) / 100;
+            total += (Convert.ToDouble(item.PreçoPorQuantidade) - valDesconto) * item.Quantidade;
+
+        }
+    }
+}
+
+<link href="~/Content/Teste.css" rel="stylesheet" />
+
+
+<div class="container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 body-main">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="img" alt="Invoce Template" src="https://upload.wikimedia.org/wikipedia/commons/d/df/Shopping_cart_icon.svg" style="color: #195712" />
+                        </div>
+                        <div class="col-md-8 text-right">
+                            <h4 style="color: #195712;"><strong>RickyShop</strong></h4>
+                            <p>nº4 1frt ,Odivelas Arroja</p>
+                            <p>2675-573</p>
+                            <p>suporterickyshop@hotmail.com</p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+
+                            <h2>Fatura</h2>
+                            <h5>04854654101</h5>
+                        </div>
+                    </div>
+                    <br />
+                    <div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th><h5>Descrição</h5></th>
+                                    <th><h5>Quantidade</h5></th>
+                                    <th><h5>Preço</h5></th>
+                                    <th><h5>Total</h5></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr style=" border-bottom: 1px solid #ddd;">
+                                        <td class="col-md-7">@Html.DisplayFor(model => item.Nome)</td>
+                                        <td class="col-md-4"><i class="fas fa-rupee-sign" area-hidden="true"></i> @Html.DisplayFor(model => item.Quantidade) </td>
+
+                                        @if (item.Desconto == null)
+                                        {
+                                            <td class="col-md-4"><i class="fas fa-rupee-sign" area-hidden="true"></i> @Html.DisplayFor(model => item.PreçoPorQuantidade)€ </td>
+                                            <td class="col-md-4">
+                                                <i class="fas fa-rupee-sign" area-hidden="true"></i>
+                                                @{
+                                                    string s = (item.Quantidade * item.PreçoPorQuantidade).ToString("N2") + "€";
+                                                    @Html.DisplayFor(model => s)
+                                                }
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="col-md-4">
+                                                <i class="fas fa-rupee-sign" area-hidden="true"></i>
+                                                @{
+                                                    double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * item.Desconto) / 100;
+                                                    string preco = (Convert.ToDouble(item.PreçoPorQuantidade) - valDesconto).ToString("N2");
+                                                    @Html.DisplayFor(modelItem => preco)
+                                                }€
+                                            </td>
+                                            <td class="col-md-4">
+                                                <i class="fas fa-rupee-sign" area-hidden="true"></i>
+                                                @{
+                                                    string s = (Convert.ToDecimal(preco) * item.Quantidade).ToString("N2") + "€";
+                                                    @Html.DisplayFor(model => s)
+                                                }
+                                            </td>
+
+                                        }
+                                    </tr>
+                                }
+                                <tr>
+                                    <td style="border-bottom: 1px solid #ddd;"></td>
+                                    <td class="text-right" style="border-bottom: 1px solid #ddd;">
+                                        <p>
+                                            <strong>Subtotal:</strong>
+                                        </p>
+                                        <p>
+                                            <strong>Envio:</strong>
+                                        </p>
+                                        <p>
+                                            <strong>Desconto: </strong>
+                                        </p>
+                                    </td>
+                                    <td style="border-bottom: 1px solid #ddd;"></td>
+                                    <td class="text-right" style="border-bottom: 1px solid #ddd;">
+                                        <p>
+                                            <strong><i class="fas fa-rupee-sign" area-hidden="true"></i> @total€ </strong>
+                                        </p>
+                                        <p>
+                                            <strong><i class="fas fa-rupee-sign" area-hidden="true"></i>Grátis</strong>
+                                        </p>
+                                        <p>
+                                            <strong><i class="fas fa-rupee-sign" area-hidden="true"></i> @u.Desconto%</strong>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right"><h4><strong>Total:</strong></h4></td>
+                                    <td class="text-left">
+                                        <h4>
+                                            <strong>
+                                                <i class="fas fa-rupee-sign" area-hidden="true"></i>
+                                                @if (u.Desconto != null)
+                                                {
+                                                    <b>
+                                                        @{
+                                                            double valDesconto = Convert.ToDouble(total * u.Desconto) / 100;
+                                                            total = Convert.ToDouble(total) - valDesconto;
+                                                        }
+                                                        @total.ToString("N2")€
+                                                    </b>
+                                                }
+                                                else
+                                                {
+                                                    <b>@total€</b>
+                                                }
+                                            </strong>
+                                        </h4>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <h4>Dados de Envio</h4>
+                        </div>
+
+                        <table class="table table-condensed table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Morada</th>
+                                    <th>Código-Postal</th>
+                                    <th>Email</th>
+                                    <th>Contacto</th>
+                                    <th>NIF</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @foreach (var item in RickyShop_Site.Models.Entities.db.Pedidos.Where(s => s.ID_Pedido == ultmPed))
+                                    {
+                                        <td>@(u.PrimeiroNome + " " + u.SegundoNome)</td>
+                                        <td>@item.MoradaEntrega</td>
+                                        <td>@item.CodigoPostal</td>
+                                        <td>@u.Email</td>
+                                        <td>@u.Contacto</td>
+                                        <td>@u.NIF</td>
+                                    }
+                                </tr>
+                        </table>
+                    </div>
+                    <hr />
+                    <div>
+                        <div class="col-md-12">
+                            <p><b>Data do Pedido:</b> @DateTime.Now.Date.ToString("dd/MM/yyyy")</p>
+                            <p><b>Data Prevista de Entrega:</b> @DateTime.Now.AddDays(7).Date.ToString("dd/MM/yyyy")</p>
+                            <br />
+                            <div class="row text-right">
+                                <img src="~/Imagens/Carimbo.png" style="width:100px" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" class="btn btn-success center-block" onclick="location.href = '@Url.Action("Inicio", "Home")'">Voltar as Compras</button>
+

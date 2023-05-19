@@ -10,6 +10,7 @@ using Microsoft.Ajax.Utilities;
 using System.Text.RegularExpressions;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace RickyShop_Site.Controllers
 {
@@ -450,16 +451,18 @@ namespace RickyShop_Site.Controllers
                 p.MoradaEntrega = locEntrega;
                 p.CodigoPostal = codPostal;
                 p.PreçoTotal = Generic.PrecoTotal(UserID);
+
                 p.ID_Estado = 0;
                 p.Email = u.Email;
                 p.Contacto = u.Contacto;
                 db.Pedidos.Add(p);
+                u.Desconto = null;
                 db.SaveChanges();
             }
             else
             {
                 //Ou o codigo postal está inválido ou não meteu nada no local de entrega
-                prod = db.DadosCarrinhoProduto(2).ToList();
+                prod = db.DadosCarrinhoProduto(UserID).ToList();
                 return View(prod);
             }
 
@@ -475,7 +478,14 @@ namespace RickyShop_Site.Controllers
                 pd.ID_Pedido = ultmPed;
                 pd.ID_Produto = item.ID_Produto;
                 pd.Quantidade = item.Quantidade;
-                pd.Preco = item.PreçoPorQuantidade;
+                if (item.Desconto == null)
+                    pd.Preco = item.PreçoPorQuantidade;
+                else
+                {
+                    decimal valDesconto = Convert.ToDecimal(item.PreçoPorQuantidade * item.Desconto) / 100;
+                    decimal preco = item.PreçoPorQuantidade - valDesconto;
+                    pd.Preco = preco;
+                }
 
                 dLista.Add(pd);
             }
@@ -487,8 +497,26 @@ namespace RickyShop_Site.Controllers
 
             var c = db.Carrinho.Where(s => s.ID_Utilizador == UserID).ToList();
             db.Carrinho.RemoveRange(c);
-            db.SaveChanges();
+            db.SaveChangesAsync();
             return View(prod);
+        }
+
+
+
+        public ActionResult HistoricoCompras(int id)
+        {
+            var prod = db.Pedidos.Where(s => s.ID_Utilizador == id).ToList();
+
+            return View(prod);
+        }
+
+        public ActionResult Details(int id)
+        {
+            // Faça qualquer processamento necessário com o ID
+
+            // Retorne a exibição do modal
+            var p = db.PedidosDetalhes.Where(s => s.ID_Pedido == id).ToList();
+            return PartialView("Details", p);
         }
 
     }

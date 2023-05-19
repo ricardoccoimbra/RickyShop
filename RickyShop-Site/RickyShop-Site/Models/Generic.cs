@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Web;
 
 namespace RickyShop_Site.Models
@@ -169,22 +170,27 @@ namespace RickyShop_Site.Models
 
         public static decimal PrecoTotal(int id)
         {
-
+            var u = db.Utilizadores.FirstOrDefault(s => s.ID_Utilizador == id);
             decimal total = 0;
 
             foreach (var item in db.DadosCarrinhoProduto(id))
             {
                 if (item.Desconto == null)
                 {
-                    total += item.PreçoPorQuantidade;
+                    total += item.PreçoPorQuantidade * item.Quantidade;
                 }
                 else
                 {
                     double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * item.Desconto) / 100;
-                    total += item.PreçoPorQuantidade - Convert.ToDecimal(valDesconto);
+                    total += (item.PreçoPorQuantidade - Convert.ToDecimal(valDesconto)) * item.Quantidade;
                 }
             }
 
+            if(u.Desconto != null)
+            {
+                decimal valDesconto = Convert.ToDecimal(total * u.Desconto) / 100;
+                total -= valDesconto;
+            }
             return total;
         }
 
