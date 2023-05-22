@@ -37,10 +37,10 @@
                         <p class="text-center lead">Faça login para realizar compras</p>
                         <form>
                             <label class="font-500">Email</label>
-                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control input-lg", placeholder = "Email", autofocus = true } })
+                            <input type="text" class="form-control input-lg" , placeholder="Email" name="Email"/>
                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                             <br /><label class="font-500">Password</label>
-                            @Html.EditorFor(model => model.PassWord, new { htmlAttributes = new { @class = "form-control input-lg", placeholder = "Password", type = "password" } })
+                            <input type="password" class="form-control input-lg" , placeholder="Password" name="password"/>
                             @Html.ValidationMessageFor(model => model.PassWord, "", new { @class = "text-danger" })
                             <p class="m-0 py-4">@Html.ActionLink("Esqueceste da Password?", "EnvioToken", "ResetPass") </p>
                             <button class="btn btn-primary btn-lg w-100 shadow-lg" style="background: #a2db3b; border-color: #a2db3b; ">Entrar</button>

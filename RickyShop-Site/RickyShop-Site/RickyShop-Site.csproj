@@ -137,6 +137,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProdutosController.cs" />
     <Compile Include="Controllers\ResetPassController.cs" />
@@ -570,6 +571,7 @@
     <Content Include="Views\Produtos\HistoricoCompras.cshtml" />
     <Content Include="Views\Produtos\Details.cshtml" />
     <Content Include="Views\ResetPass\TemplateTeste.cshtml" />
+    <Content Include="Views\Admin\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

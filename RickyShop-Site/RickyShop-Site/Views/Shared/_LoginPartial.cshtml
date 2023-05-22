@@ -20,10 +20,9 @@
             </ul>
         </li>
 
-
     }
 
-    @if (Session["UserID"] == null)
+    @if (Session["UserID"] == null && Session["Admin"] == null)
     {
         <li>
             @Html.ActionLink("Iniciar Sessão", "Login", "Home", routeValues: null, htmlAttributes: new { id = "loginLink" })
