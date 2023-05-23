@@ -432,7 +432,6 @@ namespace RickyShop_Site.Controllers
         }
         #endregion
 
-
         public ActionResult FecharCompra(string locEntrega, string codPostal)
         {
             List<DadosCarrinhoProduto_Result> prod = new List<DadosCarrinhoProduto_Result>();
@@ -500,9 +499,6 @@ namespace RickyShop_Site.Controllers
             db.SaveChangesAsync();
             return View(prod);
         }
-
-
-
         public ActionResult HistoricoCompras(int id)
         {
             var prod = db.Pedidos.Where(s => s.ID_Utilizador == id).ToList();
@@ -519,5 +515,11 @@ namespace RickyShop_Site.Controllers
             return PartialView("Details", p);
         }
 
+
+        public ActionResult AlterarProduto(string nomeProduto, string nomeCategoria, int preco, int qtdStock, string path, int desconto, bool? publicado, string marca, string descricao, bool? destaque)
+        {
+            return View("Details");
+
+        }
     }
 }

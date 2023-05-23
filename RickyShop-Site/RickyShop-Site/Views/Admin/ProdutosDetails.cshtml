@@ -1,0 +1,95 @@
+﻿@model List<RickyShop_Site.Models.Produto>
+
+@{
+    bool destaque = false;
+    bool publicado = false;
+
+    if (Model.FirstOrDefault().Destaque == 1)
+    {
+        destaque = true;
+    }
+
+    if (Model.FirstOrDefault().Descontinuado == 1)
+    {
+        publicado = true;
+    }
+}
+<form action="~/Produtos/AlterarProduto/">
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Nome do Produto</label>
+                <input class="form-control" type="text" name="nomeProduto" value="@item.Nome">
+            </div>
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Categoria</label>
+                <input class="form-control" type="text" name="nomeCategoria" value="@RickyShop_Site.Models.Entities.db.Categoria.FirstOrDefault(s => s.ID_Categoria == item.ID_Categoria).NomeCategoria">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Preço por Quantidade</label>
+                <input class="form-control" type="number" name="preco" value="@item.PreçoPorQuantidade.ToString("N2")">
+            </div>
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Quantidade Stock</label>
+                <input class="form-control" type="number" name="qtdStock" value="@item.QuantidadeStock">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Path Imagem</label>
+                <input class="form-control" type="text" name="path" value="@item.ImagemPath">
+            </div>
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Desconto</label>
+                <input class="form-control" type="number" name="desconto"
+                       value="
+                   @if (item.Desconto == null)
+                   {
+                       @("0")
+                   }
+                   else
+                   {
+                       @item.Desconto
+                   }" min="0" max="99">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Publicado</label>
+                @if (publicado == true)
+                {<input class="form-control" type="checkbox" name="publicado" id="publicado" value="on" checked>}
+                else
+                {<input class="form-control" type="checkbox" name="publicado" id="publicado" value="on">}
+            </div>
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Marca</label>
+                <input class="form-control" type="text" name="marca" value="@RickyShop_Site.Models.Entities.db.MarcaProduto.FirstOrDefault(s => s.ID_Marca == item.ID_Marca).Marca">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label class="form-label" for="textAreaExample">Descrição</label>
+                <textarea class="form-control" name="descricao" rows="4" maxlength="1000">@item.Descrição</textarea>
+            </div>
+            <div class="col-sm-6 form-group">
+
+                <label class="control-label">Destaque</label>
+                @if (destaque == true)
+                {<input class="form-control" type="checkbox" name="destaque" id="destaque" value="on" checked>}
+                else
+                {<input class="form-control" type="checkbox" name="destaque" id="destaque" value="on">}
+
+            </div>
+        </div>
+    }
+
+    <div class="modal-footer">
+        <button class="btn btn-success center-block" type="submit">Atualizar</button>
+    </div>
+
+</form>
+
+
