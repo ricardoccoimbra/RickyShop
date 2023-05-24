@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Threading.Tasks;
 using System.IO;
+using System.Web.UI.WebControls;
 
 namespace RickyShop_Site.Controllers
 {
@@ -519,7 +520,33 @@ namespace RickyShop_Site.Controllers
         public ActionResult AlterarProduto(string nomeProduto, string nomeCategoria, int preco, int qtdStock, string path, int desconto, bool? publicado, string marca, string descricao, bool? destaque)
         {
             return View("Details");
+        }
 
+        public ActionResult CriarProduto(string nomeProduto, int categoria, int preco, int qtdStock, string path, int desconto, int marca, string descricao)
+        {
+            string caminhoCompleto = Path.Combine(Server.MapPath("~/Produtos/"), path);
+            FileInfo f = new FileInfo(caminhoCompleto);
+            if (f.Exists == true)
+            {
+                if(nomeProduto != "" && descricao != "")
+                {
+                    if(db.Produto.Count(s => s.ImagemPath == "/Produtos/" + path || s.Nome == nomeProduto) == 0)
+                    {
+
+                    }
+                    else 
+                    {
+                    
+                    
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("O arquivo existe na pasta.");
+            }
+
+            return View("Details");
         }
     }
 }

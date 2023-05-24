@@ -1,0 +1,62 @@
+﻿@model RickyShop_Site.Models.Produto
+
+
+<form action="~/Produtos/CriarProduto/">
+    <div class="row">
+        <div class="col-sm-6 form-group">
+            <label class="control-label">Nome do Produto</label>
+            <input class="form-control" type="text" name="nomeProduto">
+        </div>
+        <div class="col-sm-6 form-group">
+            <label class="control-label">Categoria</label>
+            <select name="categoria" class="form-control">
+                @foreach (var item in RickyShop_Site.Models.Entities.db.Categoria)
+                {
+                    <option value="@item.ID_Categoria">@item.NomeCategoria</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 form-group">
+            <label class="control-label">Preço por Quantidade</label>
+            <input class="form-control" type="number" name="preco" min="1">
+        </div>
+        <div class="col-sm-6 form-group">
+            <label class="control-label">Quantidade Stock</label>
+            <input class="form-control" type="number" name="qtdStock" min="1">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 form-group">
+            <label class="control-label">Path Imagem</label>
+            <input class="form-control" type="file" name="path">
+        </div>
+        <div class="col-sm-6 form-group">
+            <label class="control-label">Desconto</label>
+            <input class="form-control" type="number" name="desconto" min="0" max="99">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 form-group">
+            <label class="form-label" for="textAreaExample">Descrição</label>
+            <textarea class="form-control" name="descricao" rows="4" maxlength="1000"></textarea>
+        </div>
+        <div class="col-sm-6 form-group">
+            <label class="control-label">Marca</label>
+            <select name="marca" class="form-control">
+                @foreach (var item in RickyShop_Site.Models.Entities.db.MarcaProduto)
+                {
+                    <option value="@item.ID_Marca">@item.Marca</option>
+                }
+            </select>
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <button class="btn btn-success center-block" type="submit">Criar</button>
+    </div>
+
+</form>
+

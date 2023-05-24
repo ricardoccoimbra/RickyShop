@@ -2,16 +2,18 @@
 @model  PagedList.PagedList<RickyShop_Site.Models.Produto>
 
 <h2>Produtos</h2>
-<form action ="/Admin/Produtos/">
-    <div style="display:flex">
-        <select class="form-control" name="marca">
-            @foreach (var item in RickyShop_Site.Models.Entities.db.MarcaProduto)
-            {
-                <option value="@item.ID_Marca">@item.Marca</option>
-            }
-        </select>
-        <button type="submit" class="btn"><i class="glyphicon glyphicon-search"></i></button>
-    </div>
+<body>
+    <form action="/Admin/FiltroProdutos/">
+        <div style="display:flex">
+            <select class="form-control" name="marca">
+                <option value="-1">Todos</option>
+                @foreach (var item in RickyShop_Site.Models.Entities.db.MarcaProduto)
+                {
+                    <option value="@item.ID_Marca">@item.Marca</option>
+                }
+            </select>
+            <button type="submit" class="btn" style="margin-left:5px"><i class="glyphicon glyphicon-search"></i></button>
+        </div>
     </form>
     <table class="table table-condensed" style="width:100%">
         <thead>
@@ -19,14 +21,14 @@
                 <th>#</th>
                 <th>Produto</th>
                 <th>Preço</th>
-                <th>Categoria</th>
-                <th>Qtd. Stock</th>
-                <th>Path Imagem</th>
-                <th>Descrição</th>
                 <th>Desconto</th>
+                <th>Qtd. Stock</th>
+                <th data-toggle="tooltip" data-placement="top" title="Pasta do Projeto = '~'">Path Imagem</th>
+                <th>Descrição</th>
+                <th>Categoria</th>
                 <th>Marca</th>
                 <th>Genero</th>
-                <th>Descontinuo</th>
+                <th>Publicado</th>
                 <th>Destaque</th>
             </tr>
         </thead>
@@ -37,81 +39,137 @@
                     <td><a href="#" data-value="@item.ID_Produto" class="btn btn-default ProdutoDetails">@item.ID_Produto</a></td>
                     <td>@item.Nome</td>
                     <td>@item.PreçoPorQuantidade.ToString("N2")€</td>
-                    <td>@RickyShop_Site.Models.Entities.db.Categoria.FirstOrDefault(s => s.ID_Categoria == item.ID_Categoria).NomeCategoria</td>
-                    <td>@item.QuantidadeStock</td>
-                    <td>@item.ImagemPath</td>
-                    <td>@item.Descrição.Substring(0, 30)...</td>
                     <td>
                         @if (item.Desconto != null)
                         {
-                            @item.Desconto
+                            @(item.Desconto + "%")
                         }
                         else
                         {
                             @("Sem desconto")
                         }
-
                     </td>
+                    <td>@item.QuantidadeStock</td>
+                    <td>~@item.ImagemPath</td>
+                    <td>@item.Descrição.Substring(0, 30)...</td>
+                    <td>@RickyShop_Site.Models.Entities.db.Categoria.FirstOrDefault(s => s.ID_Categoria == item.ID_Categoria).NomeCategoria</td>
                     <td>@RickyShop_Site.Models.Entities.db.MarcaProduto.FirstOrDefault(s => s.ID_Marca == item.ID_Marca).Marca</td>
                     <td>@item.Genero</td>
-                    <td>@item.Descontinuado</td>
-                    <td>@item.Destaque</td>
+                    <td>
+                        @if (item.Descontinuado == 1)
+                        {
+                            @("Publicado")
+                        }
+                        else
+                        {
+                            @("Descontinuado")
+                        }
+                    </td>
+                    <td>
+                        @if (item.Destaque == 1)
+                        {
+                            @("Destacado")
+                        }
+                        else
+                        {
+                            @("Não Destacado")
+                        }
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
 
-    <script src="~/Scripts/jQuery.js"></script>
-    <script src="~/Scripts/jQueryJava.js"></script>
-
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#minhaTabela').DataTable();
-        });
-
-        let table = new DataTable('#minhaTabela', {
-            // options
-        });
-    </script>
-
-
-
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <!-- Conteúdo do modal -->
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                    <h3 class="modal-title" id="lineModalLabel">Detalhes do Produto</h3>
-                </div>
-                <div class="modal-body">
-                    <div id="conteudoModal">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".ProdutoDetails").click(function () {
-                var id = $(this).data("value");
-                $("#conteudoModal").load("/Admin/ProdutosDetails/" + id, function () {
-                    $("#myModal").modal("show");
-                });
-            });
-
-        });
-    </script>
 
     <div class="footer-section">
         Página @Model.PageNumber de @Model.PageCount
         @Html.PagedListPager(Model, page => Url.Action("Produtos", new { pagina = page }))
     </div>
+
+
+    <div style="display:flex">
+        <button type="submit" class="btn btn-success AddProduto" style="margin-left:5px" data-placement="top" title="Adicionar Produto"><i class="glyphicon glyphicon-plus"></i></button>
+        <button type="submit" class="btn btn-primary" style="margin-left:5px" data-placement="top" title="Adicionar Imagem"><i class="glyphicon glyphicon-picture"></i></button>
+        <button type="submit" class="btn btn-info" style="margin-left:5px" data-placement="top" title="Exportar Excel"><i class="glyphicon glyphicon-download-alt"></i></button>
+    </div>
+</body>
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
+<script src="~/Scripts/jQuery.js"></script>
+<script src="~/Scripts/jQueryJava.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#minhaTabela').DataTable();
+    });
+
+    let table = new DataTable('#minhaTabela', {
+        // options
+    });
+</script>
+
+
+@*Modal Detalhes do Produto*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Conteúdo do modal -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Detalhes do Produto</h3>
+            </div>
+            <div class="modal-body">
+                <div id="conteudoModal">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".ProdutoDetails").click(function () {
+            var id = $(this).data("value");
+            $("#conteudoModal").load("/Admin/ProdutosDetails/" + id, function () {
+                $("#myModal").modal("show");
+            });
+        });
+
+    });
+</script>
+
+
+<div class="modal fade" id="ModalAddProd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Conteúdo do modal -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Criar Produto</h3>
+            </div>
+            <div class="modal-body">
+                <div id="conteudoModalAddProd">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".AddProduto").click(function () {
+            var id = $(this).data("value");
+            $("#conteudoModalAddProd").load("/Admin/CriarProduto", function () {
+                $("#ModalAddProd").modal("show");
+            });
+        });
+
+    });
+</script>

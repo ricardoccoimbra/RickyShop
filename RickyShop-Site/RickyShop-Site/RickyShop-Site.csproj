@@ -494,18 +494,18 @@
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\semantic.js" />
     <Content Include="Scripts\semantic.min.js" />
-    <Content Include="Tenis\1.jpg" />
-    <Content Include="Tenis\10.jpg" />
-    <Content Include="Tenis\11.jpg" />
-    <Content Include="Tenis\12.jpg" />
-    <Content Include="Tenis\2.jpg" />
-    <Content Include="Tenis\3.jpg" />
-    <Content Include="Tenis\4.jpg" />
-    <Content Include="Tenis\5.jpg" />
-    <Content Include="Tenis\6.jpg" />
-    <Content Include="Tenis\7.jpg" />
-    <Content Include="Tenis\8.jpg" />
-    <Content Include="Tenis\9.jpg" />
+    <Content Include="Ténis\1.jpg" />
+    <Content Include="Ténis\10.jpg" />
+    <Content Include="Ténis\11.jpg" />
+    <Content Include="Ténis\12.jpg" />
+    <Content Include="Ténis\2.jpg" />
+    <Content Include="Ténis\3.jpg" />
+    <Content Include="Ténis\4.jpg" />
+    <Content Include="Ténis\5.jpg" />
+    <Content Include="Ténis\6.jpg" />
+    <Content Include="Ténis\7.jpg" />
+    <Content Include="Ténis\8.jpg" />
+    <Content Include="Ténis\9.jpg" />
     <EntityDeploy Include="Models\BD-RickyShop.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BD-RickyShop.Designer.cs</LastGenOutput>
@@ -574,6 +574,7 @@
     <Content Include="Views\Admin\Home.cshtml" />
     <Content Include="Views\Admin\Produtos.cshtml" />
     <Content Include="Views\Admin\ProdutosDetails.cshtml" />
+    <Content Include="Views\Admin\CriarProduto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

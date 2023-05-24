@@ -1,0 +1,14 @@
+
+1º Mostrar todos os produtos / Editar Produtos
+2º Adicionar Produtos, exportar os produtos todos ficheiro excel / Adicionar imagem
+3º Gráfico de produtos mais vendidos / Gráfico dos produtos mais metidos nos pedidos
+
+-- Verificar se ele selecionar o destaque se já existe mais de 3 produtos, se existir dá erro -- 
+-- Verificar se ele dá o produto como não publicado mas está no destaque -- 
+
+
+
+2 Aba - Marcas
+1º Mostra todas as marcas
+2º Adicionar marca
+3º Gráfico de quantos produtos existe por marca / Qual a marca com os produtos mais vendidos
