@@ -225,5 +225,6 @@ namespace RickyShop_Site.Models
 
             return pass;
         }
+
     }
 }

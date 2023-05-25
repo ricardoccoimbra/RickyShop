@@ -373,6 +373,8 @@
     <FunctionImport Name="DadosProdutosFavoritos" ReturnType="Collection(GestãoRickyShopModel.DadosProdutosFavoritos_Result)">
       <Parameter Name="ID" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="TOP5_MarcasMaisVendidas" ReturnType="Collection(GestãoRickyShopModel.TOP5_MarcasMaisVendidas_Result)" />
+    <FunctionImport Name="TOP5_ProdMaisVendidos" ReturnType="Collection(GestãoRickyShopModel.TOP5_ProdMaisVendidos_Result)" />
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -462,5 +464,13 @@
     <Property Type="Int32" Name="ID_Produto" Nullable="false" />
     <Property Type="Int32" Name="Desconto" Nullable="true" />
     <Property Type="Decimal" Name="PreçoPorQuantidade" Nullable="false" Precision="19" />
+  </ComplexType>
+  <ComplexType Name="TOP5_MarcasMaisVendidas_Result">
+    <Property Type="String" Name="Marca" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="total_vendido" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="TOP5_ProdMaisVendidos_Result">
+    <Property Type="String" Name="Nome" Nullable="false" MaxLength="30" />
+    <Property Type="Int32" Name="total_vendido" Nullable="true" />
   </ComplexType>
 </Schema>

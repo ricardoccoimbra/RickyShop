@@ -346,6 +346,8 @@
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="TOP5_MarcasMaisVendidas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="TOP5_ProdMaisVendidos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="GestãoRickyShopModelStoreContainer">
           <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carrinho" EntityType="Self.Carrinho" Schema="dbo" store:Type="Tables" />
@@ -789,8 +791,10 @@
             <End Role="MovimentacaoSaldo" EntitySet="MovimentacaoSaldo" />
           </AssociationSet>
           <FunctionImport Name="DadosProdutosFavoritos" ReturnType="Collection(GestãoRickyShopModel.DadosProdutosFavoritos_Result)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="TOP5_MarcasMaisVendidas" ReturnType="Collection(GestãoRickyShopModel.TOP5_MarcasMaisVendidas_Result)" />
+          <FunctionImport Name="TOP5_ProdMaisVendidos" ReturnType="Collection(GestãoRickyShopModel.TOP5_ProdMaisVendidos_Result)" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -880,6 +884,14 @@
           <Property Type="Int32" Name="ID_Produto" Nullable="false" />
           <Property Type="Int32" Name="Desconto" Nullable="true" />
           <Property Type="Decimal" Name="PreçoPorQuantidade" Nullable="false" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="TOP5_MarcasMaisVendidas_Result">
+          <Property Type="String" Name="Marca" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="total_vendido" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="TOP5_ProdMaisVendidos_Result">
+          <Property Type="String" Name="Nome" Nullable="false" MaxLength="30" />
+          <Property Type="Int32" Name="total_vendido" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1096,6 +1108,22 @@
                 <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
                 <ScalarProperty Name="Desconto" ColumnName="Desconto" />
                 <ScalarProperty Name="PreçoPorQuantidade" ColumnName="PreçoPorQuantidade" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="TOP5_MarcasMaisVendidas" FunctionName="GestãoRickyShopModel.Store.TOP5_MarcasMaisVendidas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GestãoRickyShopModel.TOP5_MarcasMaisVendidas_Result">
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="total_vendido" ColumnName="total_vendido" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="TOP5_ProdMaisVendidos" FunctionName="GestãoRickyShopModel.Store.TOP5_ProdMaisVendidos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GestãoRickyShopModel.TOP5_ProdMaisVendidos_Result">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="total_vendido" ColumnName="total_vendido" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

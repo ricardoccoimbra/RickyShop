@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-sm-6 form-group">
             <label class="control-label">Nome do Produto</label>
-            <input class="form-control" type="text" name="nomeProduto">
+            <input class="form-control" type="text" name="nomeProduto" required>
         </div>
         <div class="col-sm-6 form-group">
             <label class="control-label">Categoria</label>
@@ -20,27 +20,27 @@
     <div class="row">
         <div class="col-sm-6 form-group">
             <label class="control-label">Preço por Quantidade</label>
-            <input class="form-control" type="number" name="preco" min="1">
+            <input class="form-control" type="number" name="preco" min="1" required>
         </div>
         <div class="col-sm-6 form-group">
             <label class="control-label">Quantidade Stock</label>
-            <input class="form-control" type="number" name="qtdStock" min="1">
+            <input class="form-control" type="number" name="qtdStock" min="1" required>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-6 form-group">
             <label class="control-label">Path Imagem</label>
-            <input class="form-control" type="file" name="path">
+            <input class="form-control" type="file" name="path" required>
         </div>
         <div class="col-sm-6 form-group">
             <label class="control-label">Desconto</label>
-            <input class="form-control" type="number" name="desconto" min="0" max="99">
+            <input class="form-control" type="number" name="desconto" min="0" max="99" required>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-6 form-group">
             <label class="form-label" for="textAreaExample">Descrição</label>
-            <textarea class="form-control" name="descricao" rows="4" maxlength="1000"></textarea>
+            <textarea class="form-control" name="descricao" rows="4" maxlength="1000" required></textarea>
         </div>
         <div class="col-sm-6 form-group">
             <label class="control-label">Marca</label>

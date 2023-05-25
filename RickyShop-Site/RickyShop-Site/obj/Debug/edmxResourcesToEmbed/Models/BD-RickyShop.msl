@@ -213,5 +213,21 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="TOP5_MarcasMaisVendidas" FunctionName="GestãoRickyShopModel.Store.TOP5_MarcasMaisVendidas">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GestãoRickyShopModel.TOP5_MarcasMaisVendidas_Result">
+          <ScalarProperty Name="Marca" ColumnName="Marca" />
+          <ScalarProperty Name="total_vendido" ColumnName="total_vendido" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="TOP5_ProdMaisVendidos" FunctionName="GestãoRickyShopModel.Store.TOP5_ProdMaisVendidos">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GestãoRickyShopModel.TOP5_ProdMaisVendidos_Result">
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="total_vendido" ColumnName="total_vendido" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

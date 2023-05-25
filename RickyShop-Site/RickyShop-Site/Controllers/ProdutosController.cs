@@ -528,16 +528,32 @@ namespace RickyShop_Site.Controllers
             FileInfo f = new FileInfo(caminhoCompleto);
             if (f.Exists == true)
             {
-                if(nomeProduto != "" && descricao != "")
+                if (nomeProduto != "" && descricao != "")
                 {
-                    if(db.Produto.Count(s => s.ImagemPath == "/Produtos/" + path || s.Nome == nomeProduto) == 0)
+                    if (db.Produto.Count(s => s.ImagemPath == "/Produtos/" + path || s.Nome == nomeProduto) == 0)
+                    {
+                        Produto produto = new Produto();
+                        produto.Nome = nomeProduto;
+                        produto.ID_Categoria = categoria;
+                        produto.PreçoPorQuantidade = preco;
+                        produto.QuantidadeStock = qtdStock;
+                        produto.ImagemPath = "/Produto/" + path;
+                        produto.ID_Marca = marca;
+                        produto.Descrição = descricao;
+                        
+                        if (desconto == 0) { produto.Desconto = null; }
+                        else { produto.Desconto = desconto; }
+
+                        produto.Descontinuado = 1;
+                        produto.Destaque = 0;
+
+                        db.Produto.Add(produto);
+                        db.SaveChangesAsync();
+                    }
+                    else
                     {
 
-                    }
-                    else 
-                    {
-                    
-                    
+
                     }
                 }
             }
