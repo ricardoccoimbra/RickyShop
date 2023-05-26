@@ -28,18 +28,18 @@ namespace RickyShop_Site.Controllers
             int numeroPagina = pagina ?? 1;
 
             if (Session["FiltroProd"] == null)
-            { p = db.Produto.ToList().ToPagedList(numeroPagina, tamanhoPagina); }
+            { p = db.Produto.Where(s => s.MarcaProduto.Estado == 1).ToList().ToPagedList(numeroPagina, tamanhoPagina); }
             else
             {
                 int marca = Convert.ToInt32(Session["FiltroProd"]);
                 if (marca != -1)
                     p = db.Produto.Where(s => s.ID_Marca == marca).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                 else
-                    p = db.Produto.ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                    p = db.Produto.Where(s => s.MarcaProduto.Estado == 1).ToList().ToPagedList(numeroPagina, tamanhoPagina);
             }
             return View(p);
         }
-        public ActionResult ProdutosDetails(int id)
+        public ActionResult ViewProdutosDetails(int id)
         {
             // Retorne a exibição do modal
             var p = db.Produto.Where(s => s.ID_Produto == id).ToList();
@@ -137,7 +137,6 @@ namespace RickyShop_Site.Controllers
             Session["FiltroProd"] = marca;
             return RedirectToAction("Produtos", "Admin");
         }
-
         public ActionResult ChartProdutoMaisVendido()
         {
             // Obtenha os dados do gráfico do seu modelo ou de qualquer outra fonte de dados
@@ -170,25 +169,24 @@ namespace RickyShop_Site.Controllers
 
             return Json(chartData, JsonRequestBehavior.AllowGet);
         }
-
         public ActionResult ChartMarcaMaisVendida()
         {
             // Obtenha os dados do gráfico do seu modelo ou de qualquer outra fonte de dados
 
-            string[] nomes = new string[5];
+            string[] marcas = new string[5];
             int[] quantidade = new int[5];
 
             int cnt = 0;
-            foreach (var item in db.TOP5_ProdMaisVendidos())
+            foreach (var item in db.TOP5_MarcasMaisVendidas())
             {
-                nomes[cnt] = item.Nome;
+                marcas[cnt] = item.Marca;
                 quantidade[cnt] = Convert.ToInt32(item.total_vendido);
                 cnt++;
             }
 
             var chartData = new
             {
-                labels = nomes,
+                labels = marcas,
                 datasets = new[]
                 {
             new
@@ -202,6 +200,108 @@ namespace RickyShop_Site.Controllers
             };
 
             return Json(chartData, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult EstadoMarca(int idM, string tipo)
+        {
+            var m = db.MarcaProduto.Where(s => s.ID_Marca == idM).FirstOrDefault();
+
+            if (tipo == "des")
+            {
+                m.Estado = 0;
+                Entities.db.MarcaProduto.Where(s => s.ID_Marca == idM).FirstOrDefault().Estado = 0;
+
+                foreach (var item in db.Produto.Where(s => s.ID_Marca == m.ID_Marca))
+                {
+                    Entities.db.Produto.Where(s => s.ID_Marca == m.ID_Marca).FirstOrDefault().Descontinuado = 0;
+                    item.Descontinuado = 0;
+                }
+
+            }
+            else
+            {
+                m.Estado = 1;
+                Entities.db.MarcaProduto.Where(s => s.ID_Marca == idM).FirstOrDefault().Estado = 1;
+
+                foreach (var item in db.Produto.Where(s => s.ID_Marca == m.ID_Marca))
+                {
+                    Entities.db.Produto.Where(s => s.ID_Marca == m.ID_Marca).FirstOrDefault().Descontinuado = 1;
+                    item.Descontinuado = 1;
+                }
+            }
+
+            db.SaveChanges();
+            Entities.db.SaveChanges();
+            return RedirectToAction("Produtos", "Admin");
+        }
+        public ActionResult CriarProduto(string nomeProduto, int categoria, int preco, int qtdStock, string path, int desconto, int marca, string descricao)
+        {
+            string caminhoCompleto = Path.Combine(Server.MapPath("~/Produtos/"), path);
+            FileInfo f = new FileInfo(caminhoCompleto);
+            if (f.Exists == true)
+            {
+                if (nomeProduto != "" && descricao != "")
+                {
+                    if (db.Produto.Count(s => s.ImagemPath == "/Produtos/" + path || s.Nome == nomeProduto) == 0)
+                    {
+                        Produto produto = new Produto();
+                        produto.Nome = nomeProduto;
+                        produto.ID_Categoria = categoria;
+                        produto.PreçoPorQuantidade = preco;
+                        produto.QuantidadeStock = qtdStock;
+                        produto.ImagemPath = "/Produto/" + path;
+                        produto.ID_Marca = marca;
+                        produto.Descrição = descricao;
+
+                        if (desconto == 0) { produto.Desconto = null; }
+                        else { produto.Desconto = desconto; }
+
+                        produto.Descontinuado = 1;
+                        produto.Destaque = 0;
+
+                        db.Produto.Add(produto);
+                        db.SaveChangesAsync();
+                    }
+                    else
+                    {
+
+
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("O arquivo existe na pasta.");
+            }
+
+            return View("Details");
+        }
+        public ActionResult AlterarProduto(string nomeProduto, string nomeCategoria, int preco, int qtdStock, string path, int desconto, bool? publicado, string marca, string descricao, bool? destaque)
+        {
+            //Alterar dados do Produto
+            return View("Details");
+        }
+        public ActionResult CriarMarca(string marca)
+        {
+            if (db.MarcaProduto.Count(s => s.Marca.ToLower() == marca.ToLower()) == 0)
+            {
+                MarcaProduto m = new MarcaProduto();
+                m.Marca = marca;
+                db.MarcaProduto.Add(m);
+                db.SaveChanges();
+            }
+            else
+            {
+                Response.Write($"<script>alert('Já existe uma marca com esse nome!')</script>");
+            }
+            return null;
+        }
+        public ActionResult ViewAddProduto()
+        {
+            return PartialView("CriarProduto");
+        }
+        public ActionResult ViewAddMarca()
+        {
+            return PartialView("CriarMarca");
         }
     }
 }

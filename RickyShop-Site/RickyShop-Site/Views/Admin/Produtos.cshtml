@@ -9,7 +9,10 @@
                 <option value="-1">Todos</option>
                 @foreach (var item in RickyShop_Site.Models.Entities.db.MarcaProduto)
                 {
-                    <option value="@item.ID_Marca">@item.Marca</option>
+                    if (item.Estado == 1)
+                    {
+                        <option value="@item.ID_Marca">@item.Marca</option>
+                    }
                 }
             </select>
             <button type="submit" class="btn" style="margin-left:5px"><i class="glyphicon glyphicon-search"></i></button>
@@ -106,6 +109,46 @@
             <canvas id="chartMarca"></canvas>
         </div>
     </div>
+
+    <hr />
+
+    <h2>Marcas</h2>
+
+    <table class="table table-hover table-condensed table-responsive" style="width:100%">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Marca</th>
+                <th>Qtd. Produtos</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in RickyShop_Site.Models.Entities.db.MarcaProduto)
+            {
+                <tr>
+                    <td>@item.ID_Marca</td>
+                    <td>@item.Marca</td>
+                    <td>@RickyShop_Site.Models.Entities.db.Produto.Count(s => s.ID_Marca == item.ID_Marca)</td>
+                    <td style="display:flex">
+                        @if (item.Estado == 1)
+                        {<button class="btn btn-danger" style="width: 100px;" onclick="location.href = '@Url.Action("EstadoMarca", "Admin", new { idM = item.ID_Marca, tipo = "des" })'">Desativar</button>}
+                        else
+                        {<button class="btn btn-success" style="width: 100px;" onclick="location.href = '@Url.Action("EstadoMarca", "Admin", new { idM = item.ID_Marca, tipo = "ati" })'">Ativar</button>}
+
+                        @if (RickyShop_Site.Models.Entities.db.Produto.Count(s => s.ID_Marca == item.ID_Marca) == 0)
+                        {
+                            <button class="btn btn-danger" style="width: 100px; margin-left:5px" onclick="location.href = '@Url.Action("RemoverMarca", "Admin", new { idM = item.ID_Marca })'">Remover</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div style="display:flex">
+        <button type="submit" class="btn btn-success AddMarca" style="margin-left:5px" data-placement="top" title="Adicionar Marca"><i class="glyphicon glyphicon-plus"></i></button>
+    </div>
 </body>
 
 
@@ -116,17 +159,6 @@
 
 <script src="~/Scripts/jQuery.js"></script>
 <script src="~/Scripts/jQueryJava.js"></script>
-
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#minhaTabela').DataTable();
-    });
-
-    let table = new DataTable('#minhaTabela', {
-        // options
-    });
-</script>
 
 
 @*Modal Detalhes do Produto*@
@@ -150,7 +182,7 @@
     $(document).ready(function () {
         $(".ProdutoDetails").click(function () {
             var id = $(this).data("value");
-            $("#conteudoModal").load("/Admin/ProdutosDetails/" + id, function () {
+            $("#conteudoModal").load("/Admin/ViewProdutosDetails/" + id, function () {
                 $("#myModal").modal("show");
             });
         });
@@ -179,7 +211,7 @@
     $(document).ready(function () {
         $(".AddProduto").click(function () {
             var id = $(this).data("value");
-            $("#conteudoModalAddProd").load("/Admin/CriarProduto", function () {
+            $("#conteudoModalAddProd").load("/Admin/ViewAddProduto", function () {
                 $("#ModalAddProd").modal("show");
             });
         });
@@ -187,9 +219,36 @@
     });
 </script>
 
+@*Modal Adicionar Marca*@
+<div class="modal fade" id="ModalAddMarca" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Conteúdo do modal -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Criar Marca</h3>
+            </div>
+            <div class="modal-body">
+                <div id="conteudoModalAddMarca">
 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".AddMarca").click(function () {
+            var id = $(this).data("value");
+            $("#conteudoModalAddMarca").load("/Admin/ViewAddMarca", function () {
+                $("#ModalAddMarca").modal("show");
+            });
+        });
 
-<!-- Modal para mostrar dados de envio do pedido -->
+    });
+</script>
+
+<!-- Modal Adicionar Imagem -->
 <div class="modal fade" id="AddImagem" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -239,7 +298,6 @@
         });
     });
 </script>
-
 <script>
     $(document).ready(function () {
         $.ajax({

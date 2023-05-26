@@ -50,6 +50,7 @@
     </Key>
     <Property Name="ID_Marca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Marca" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Estado" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="MovimentacaoSaldo">
     <Key>

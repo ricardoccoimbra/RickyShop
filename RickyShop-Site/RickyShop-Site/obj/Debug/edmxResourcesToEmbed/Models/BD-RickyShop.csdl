@@ -56,6 +56,7 @@
     <Property Name="ID_Marca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Produto" Relationship="Self.FK_Produto_MarcaProduto" FromRole="MarcaProduto" ToRole="Produto" />
+    <Property Name="Estado" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="Pedidos">
     <Key>

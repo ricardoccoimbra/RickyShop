@@ -55,6 +55,7 @@
           </Key>
           <Property Name="ID_Marca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Marca" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="MovimentacaoSaldo">
           <Key>
@@ -476,6 +477,7 @@
           <Property Name="ID_Marca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Produto" Relationship="Self.FK_Produto_MarcaProduto" FromRole="MarcaProduto" ToRole="Produto" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Pedidos">
           <Key>
@@ -951,6 +953,7 @@
           <EntitySetMapping Name="MarcaProduto">
             <EntityTypeMapping TypeName="GestãoRickyShopModel.MarcaProduto">
               <MappingFragment StoreEntitySet="MarcaProduto">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="ID_Marca" ColumnName="ID_Marca" />
                 <ScalarProperty Name="Marca" ColumnName="Marca" />
               </MappingFragment>

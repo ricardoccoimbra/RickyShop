@@ -53,6 +53,7 @@
     <EntitySetMapping Name="MarcaProduto">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.MarcaProduto">
         <MappingFragment StoreEntitySet="MarcaProduto">
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="ID_Marca" ColumnName="ID_Marca" />
           <ScalarProperty Name="Marca" ColumnName="Marca" />
         </MappingFragment>

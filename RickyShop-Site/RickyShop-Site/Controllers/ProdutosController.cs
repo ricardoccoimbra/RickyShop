@@ -364,7 +364,6 @@ namespace RickyShop_Site.Controllers
             }
             return RedirectToAction("ListaProdutos", new { id = idC });
         }
-
         public ActionResult ApagarProdFavorito(int idProd)
         {
             var p = db.ProdutosFavoritos.Where(s => s.ID_Produto == idProd && s.ID_Utilizador == 2).FirstOrDefault();
@@ -514,55 +513,6 @@ namespace RickyShop_Site.Controllers
             // Retorne a exibição do modal
             var p = db.PedidosDetalhes.Where(s => s.ID_Pedido == id).ToList();
             return PartialView("Details", p);
-        }
-
-
-        public ActionResult AlterarProduto(string nomeProduto, string nomeCategoria, int preco, int qtdStock, string path, int desconto, bool? publicado, string marca, string descricao, bool? destaque)
-        {
-            return View("Details");
-        }
-
-        public ActionResult CriarProduto(string nomeProduto, int categoria, int preco, int qtdStock, string path, int desconto, int marca, string descricao)
-        {
-            string caminhoCompleto = Path.Combine(Server.MapPath("~/Produtos/"), path);
-            FileInfo f = new FileInfo(caminhoCompleto);
-            if (f.Exists == true)
-            {
-                if (nomeProduto != "" && descricao != "")
-                {
-                    if (db.Produto.Count(s => s.ImagemPath == "/Produtos/" + path || s.Nome == nomeProduto) == 0)
-                    {
-                        Produto produto = new Produto();
-                        produto.Nome = nomeProduto;
-                        produto.ID_Categoria = categoria;
-                        produto.PreçoPorQuantidade = preco;
-                        produto.QuantidadeStock = qtdStock;
-                        produto.ImagemPath = "/Produto/" + path;
-                        produto.ID_Marca = marca;
-                        produto.Descrição = descricao;
-                        
-                        if (desconto == 0) { produto.Desconto = null; }
-                        else { produto.Desconto = desconto; }
-
-                        produto.Descontinuado = 1;
-                        produto.Destaque = 0;
-
-                        db.Produto.Add(produto);
-                        db.SaveChangesAsync();
-                    }
-                    else
-                    {
-
-
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine("O arquivo existe na pasta.");
-            }
-
-            return View("Details");
         }
     }
 }

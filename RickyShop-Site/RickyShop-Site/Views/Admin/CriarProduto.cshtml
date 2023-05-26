@@ -47,7 +47,10 @@
             <select name="marca" class="form-control">
                 @foreach (var item in RickyShop_Site.Models.Entities.db.MarcaProduto)
                 {
-                    <option value="@item.ID_Marca">@item.Marca</option>
+                    if (item.Estado == 1)
+                    {
+                        <option value="@item.ID_Marca">@item.Marca</option>
+                    }
                 }
             </select>
         </div>
