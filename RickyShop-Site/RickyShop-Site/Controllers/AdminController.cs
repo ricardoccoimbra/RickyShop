@@ -275,8 +275,54 @@ namespace RickyShop_Site.Controllers
 
             return View("Details");
         }
-        public ActionResult AlterarProduto(string nomeProduto, string nomeCategoria, int preco, int qtdStock, string path, int desconto, bool? publicado, string marca, string descricao, bool? destaque)
+
+        public ActionResult AlterarProduto(string nomeProduto, string nomeCategoria, int preco, int qtdStock, string file, int desconto, bool? publicado, string marca, string descricao, bool? destaque)
         {
+            if (file != "")
+            {
+                string caminhoCompleto = Path.Combine(Server.MapPath("~/Produtos/"), file);
+                FileInfo f = new FileInfo(caminhoCompleto);
+                if (f.Exists == true)
+                {
+                    if (nomeProduto != "" && descricao != "")
+                    {
+                        if (db.Produto.Count(s => s.ImagemPath == "/Produtos/" + file || s.Nome == nomeProduto) == 0)
+                        {
+                            //Produto produto = new Produto();
+                            //produto.Nome = nomeProduto;
+                            //produto.ID_Categoria = categoria;
+                            //produto.PreçoPorQuantidade = preco;
+                            //produto.QuantidadeStock = qtdStock;
+                            //produto.ImagemPath = "/Produto/" + path;
+                            //produto.ID_Marca = marca;
+                            //produto.Descrição = descricao;
+
+                            //if (desconto == 0) { produto.Desconto = null; }
+                            //else { produto.Desconto = desconto; }
+
+                            //produto.Descontinuado = 1;
+                            //produto.Destaque = 0;
+
+                            //db.Produto.Add(produto);
+                            //db.SaveChangesAsync();
+                        }
+                        else
+                        {
+
+
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("O arquivo existe na pasta.");
+                }
+            }
+            else
+            {
+
+            }
+
             //Alterar dados do Produto
             return View("Details");
         }
