@@ -186,7 +186,7 @@ namespace RickyShop_Site.Models
                 }
             }
 
-            if(u.Desconto != null)
+            if (u.Desconto != null)
             {
                 decimal valDesconto = Convert.ToDecimal(total * u.Desconto) / 100;
                 total -= valDesconto;
@@ -226,5 +226,48 @@ namespace RickyShop_Site.Models
             return pass;
         }
 
+        public static bool AtualizarProd(int id, string nomeProduto, int nomeCategoria, int preco, int qtdStock, string file, int desconto, bool? publicado, int marca, string descricao, bool? destaque)
+        {
+            Produto p = db.Produto.Where(s => s.ID_Produto == id).FirstOrDefault();
+            if (file != "")
+            {
+                return true;
+            }
+            else
+            {
+                string pathImagem = "/Produtos/" + id + ".jpg";
+                p.ImagemPath = pathImagem;
+                p.ID_Marca = marca;
+                p.ID_Categoria = nomeCategoria;
+                p.QuantidadeStock = qtdStock;
+
+                if (db.Produto.ToList().Where(s => s.ID_Produto != id).Count(s => s.Nome == nomeProduto) == 0)
+                    p.Nome = nomeProduto; // Ver se o nome do produto ja existe
+                else
+                    return false;
+
+                p.Desconto = desconto;
+                p.PreçoPorQuantidade = preco;
+                p.Descrição = descricao;
+
+                if (destaque == true)
+                { 
+                   if(db.Produto.ToList().Where(s => s.ID_Produto != id).Count(s => s.Destaque == 1) != 3) 
+                    {
+                        p.Destaque = 1;
+                        p.Descontinuado = 1;
+                    }
+                }
+
+                if(publicado == null && destaque == null)
+                {
+                    p.Descontinuado = 0;
+                }
+
+
+                db.SaveChangesAsync();
+                return true;
+            }
+        }
     }
 }
