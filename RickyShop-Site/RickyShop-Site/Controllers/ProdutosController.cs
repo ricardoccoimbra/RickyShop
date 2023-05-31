@@ -505,7 +505,6 @@ namespace RickyShop_Site.Controllers
 
             return View(prod);
         }
-
         public ActionResult Details(int id)
         {
             // Faça qualquer processamento necessário com o ID

@@ -307,5 +307,15 @@ namespace RickyShop_Site.Controllers
         {
             return PartialView("CriarMarca");
         }
+
+        public ActionResult Utilizadores(int? pagina)
+        {
+            int tamanhoPagina = 10;
+            int numeroPagina = pagina ?? 1;
+
+            var u = db.Utilizadores.ToList().ToPagedList(numeroPagina, tamanhoPagina);
+
+            return View(u);
+        }
     }
 }

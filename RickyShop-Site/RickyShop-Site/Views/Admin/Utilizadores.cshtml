@@ -1,0 +1,281 @@
+﻿@using PagedList.Mvc;
+@model  PagedList.PagedList<RickyShop_Site.Models.Utilizadores>
+
+<h2>Produtos</h2>
+<body>
+    <table class="table table-condensed" style="width:100%">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Data de Nascimento</th>
+                <th>NIF</th>
+                <th>Email</th>
+                <th>Contacto</th>
+                <th>Data de Adesão</th>
+                <th>Desconto</th>
+                <th>Morada</th>
+                <th>Código-Postal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><a href="#" data-value="@item.ID_Utilizador" class="ProdutoDetails">@item.ID_Utilizador</a></td>
+                    <td>@(item.PrimeiroNome + " " +item.SegundoNome)</td>
+                    <td>@item.DataDeNascimento.ToString("dd/MM/yyyy")</td>
+                    <td>@item.NIF</td>
+                    <td>@item.Email</td>
+                    <td>@item.Contacto</td>
+                    <td>@item.DataDeAdesao.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        @if (item.Desconto != null)
+                        {
+                            @(item.Desconto + "%")
+                        }
+                        else
+                        {
+                            @("Sem desconto")
+                        }
+                    </td>
+                    <td>@item.Morada</td>
+                    <td>@item.CodigoPostal</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+    <div class="footer-section">
+        Página @Model.PageNumber de @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Produtos", new { pagina = page }))
+    </div>
+
+
+    <div style="display:flex">
+        <button type="submit" class="btn btn-success AddProduto" style="margin-left:5px" data-placement="top" title="Adicionar Produto"><i class="glyphicon glyphicon-plus"></i></button>
+        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#AddImagem" style="margin-left:5px" data-placement="top" title="Adicionar Imagem"><i class="glyphicon glyphicon-picture"></i></button>
+        <button type="submit" class="btn btn-info" style="margin-left:5px" data-placement="top" title="Exportar Excel" onclick="location.href = '@Url.Action("ExportarExcel", "Admin")'"><i class="glyphicon glyphicon-download-alt"></i></button>
+    </div>
+
+    <hr />
+
+    <div class="row" style="display:flex; margin-bottom: 10%">
+        <div style="width:500px; height:500px">
+            <h1>Top 5 Produtos Mais Vendidos</h1>
+            <canvas id="chartProdutos"></canvas>
+        </div>
+        <div style="width:500px; height:500px; margin-left: 15%">
+            <h1>Top 5 Marcas Mais Vendidas</h1>
+            <canvas id="chartMarca"></canvas>
+        </div>
+    </div>
+
+    <hr />
+
+    <h2>Marcas</h2>
+
+    <table class="table table-hover table-condensed table-responsive" style="width:100%">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Marca</th>
+                <th>Qtd. Produtos</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in RickyShop_Site.Models.Entities.db.MarcaProduto)
+            {
+                <tr>
+                    <td>@item.ID_Marca</td>
+                    <td>@item.Marca</td>
+                    <td>@RickyShop_Site.Models.Entities.db.Produto.Count(s => s.ID_Marca == item.ID_Marca)</td>
+                    <td style="display:flex">
+                        @if (item.Estado == 1)
+                        {<button class="btn btn-danger" style="width: 100px;" onclick="location.href = '@Url.Action("EstadoMarca", "Admin", new { idM = item.ID_Marca, tipo = "des" })'">Desativar</button>}
+                        else
+                        {<button class="btn btn-success" style="width: 100px;" onclick="location.href = '@Url.Action("EstadoMarca", "Admin", new { idM = item.ID_Marca, tipo = "ati" })'">Ativar</button>}
+
+                        @if (RickyShop_Site.Models.Entities.db.Produto.Count(s => s.ID_Marca == item.ID_Marca) == 0)
+                        {
+                            <button class="btn btn-danger" style="width: 100px; margin-left:5px" onclick="location.href = '@Url.Action("RemoverMarca", "Admin", new { idM = item.ID_Marca })'">Remover</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div style="display:flex">
+        <button type="submit" class="btn btn-success AddMarca" style="margin-left:5px" data-placement="top" title="Adicionar Marca"><i class="glyphicon glyphicon-plus"></i></button>
+    </div>
+</body>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
+<script src="~/Scripts/jQuery.js"></script>
+<script src="~/Scripts/jQueryJava.js"></script>
+
+
+@*Modal Detalhes do Produto*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Conteúdo do modal -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Detalhes do Produto</h3>
+            </div>
+            <div class="modal-body">
+                <div id="conteudoModal">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".ProdutoDetails").click(function () {
+            var id = $(this).data("value");
+            $("#conteudoModal").load("/Admin/ViewProdutosDetails/" + id, function () {
+                $("#myModal").modal("show");
+            });
+        });
+
+    });
+</script>
+
+@*Modal Adicionar Produtos e Script*@
+<div class="modal fade" id="ModalAddProd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Conteúdo do modal -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Criar Produto</h3>
+            </div>
+            <div class="modal-body">
+                <div id="conteudoModalAddProd">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".AddProduto").click(function () {
+            var id = $(this).data("value");
+            $("#conteudoModalAddProd").load("/Admin/ViewAddProduto", function () {
+                $("#ModalAddProd").modal("show");
+            });
+        });
+
+    });
+</script>
+
+@*Modal Adicionar Marca*@
+<div class="modal fade" id="ModalAddMarca" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Conteúdo do modal -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Criar Marca</h3>
+            </div>
+            <div class="modal-body">
+                <div id="conteudoModalAddMarca">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".AddMarca").click(function () {
+            var id = $(this).data("value");
+            $("#conteudoModalAddMarca").load("/Admin/ViewAddMarca", function () {
+                $("#ModalAddMarca").modal("show");
+            });
+        });
+
+    });
+</script>
+
+<!-- Modal Adicionar Imagem -->
+<div class="modal fade" id="AddImagem" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Dados de Envio do Pedido</h3>
+            </div>
+            <div class="modal-body">
+                <!-- content goes here -->
+                <form method="post" enctype="multipart/form-data" action="~/Admin/AddImagem/">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label>Imagem do Produto</label>
+                            <input type="file" name="file" required />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success center-block">Adicionar</button>
+                        </div>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*Gráficos*@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("ChartProdutoMaisVendido", "Admin")',
+            method: 'GET',
+            success: function (data) {
+                var ctx = document.getElementById('chartProdutos').getContext('2d');
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: data,
+                    options: {
+                        responsive: true,
+                    }
+                });
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("ChartMarcaMaisVendida", "Admin")',
+            method: 'GET',
+            success: function (data) {
+                var ctx = document.getElementById('chartMarca').getContext('2d');
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: data,
+                    options: {
+                        responsive: true,
+                    }
+                });
+            }
+        });
+    });
+</script>

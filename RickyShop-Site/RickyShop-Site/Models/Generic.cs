@@ -251,15 +251,17 @@ namespace RickyShop_Site.Models
                 p.Descrição = descricao;
 
                 if (destaque == true)
-                { 
-                   if(db.Produto.ToList().Where(s => s.ID_Produto != id).Count(s => s.Destaque == 1) != 3) 
+                {
+                    if (db.Produto.ToList().Where(s => s.ID_Produto != id).Count(s => s.Destaque == 1) != 3)
                     {
                         p.Destaque = 1;
                         p.Descontinuado = 1;
                     }
                 }
+                else
+                p.Destaque = 0;
 
-                if(publicado == null && destaque == null)
+                if (publicado == null && destaque == null)
                 {
                     p.Descontinuado = 0;
                 }
