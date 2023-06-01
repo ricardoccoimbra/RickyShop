@@ -317,5 +317,11 @@ namespace RickyShop_Site.Controllers
 
             return View(u);
         }
+        public ActionResult ViewUtilizadoresDetails(int id)
+        {
+            // Retorne a exibição do modal
+            var u = db.Utilizadores.Where(s => s.ID_Utilizador == id).ToList();
+            return PartialView("UtilizadoresDetails", u);
+        }
     }
 }

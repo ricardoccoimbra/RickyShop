@@ -1,0 +1,100 @@
+﻿@model List<RickyShop_Site.Models.Utilizadores>
+
+<form action="~/Admin/AlterarProduto/" method="post">
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label class="control-label">ID</label>
+                <input class="form-control" type="text" name="id" value="@item.ID_Produto" readonly="readonly">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Nome do Produto</label>
+                <input class="form-control" type="text" name="nomeProduto" value="@item.Nome" required>
+            </div>
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Categoria</label>
+                <select name="nomeCategoria" class="form-control" required>
+                    @foreach (var cat in RickyShop_Site.Models.Entities.db.Categoria)
+                    {
+                        <option value="@cat.ID_Categoria">@cat.NomeCategoria</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Preço por Quantidade</label>
+                <input class="form-control" type="number" name="preco" value="@item.PreçoPorQuantidade.ToString("N2")" required>
+            </div>
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Quantidade Stock</label>
+                <input class="form-control" type="number" name="qtdStock" value="@item.QuantidadeStock" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Path Imagem</label>
+                <input class="form-control" type="file" name="file" value="@("~" + item.ImagemPath)">
+            </div>
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Desconto</label>
+                <input class="form-control" type="number" name="desconto"
+                       value="
+                   @if (item.Desconto == null)
+                   {
+                       @("0")
+                   }
+                   else
+                   {
+                       @item.Desconto
+                   }" min="0" max="99" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Publicado</label>
+                @if (publicado == true)
+                {<input class="form-control" type="checkbox" name="publicado" id="publicado" value="true" checked>}
+                else
+                {<input class="form-control" type="checkbox" name="publicado" id="publicado" value="true">}
+            </div>
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Marca</label>
+                <select name="marca" class="form-control" required>
+                    @foreach (var marca in RickyShop_Site.Models.Entities.db.MarcaProduto)
+                    {
+                        if (marca.Estado == 1)
+                        {
+                            <option value="@marca.ID_Marca">@marca.Marca</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label class="form-label" for="textAreaExample">Descrição</label>
+                <textarea class="form-control" name="descricao" rows="4" maxlength="1000" required>@item.Descrição</textarea>
+            </div>
+            <div class="col-sm-6 form-group">
+
+                <label class="control-label">Destaque</label>
+                @if (destaque == true)
+                {<input class="form-control" type="checkbox" name="destaque" id="destaque" value="true" checked>}
+                else
+                {<input class="form-control" type="checkbox" name="destaque" id="destaque" value="true">}
+
+            </div>
+        </div>
+    }
+
+    <div class="modal-footer">
+        <button class="btn btn-success center-block" type="submit">Atualizar</button>
+    </div>
+
+</form>
+
+

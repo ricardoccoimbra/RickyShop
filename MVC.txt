@@ -12,3 +12,10 @@ FLOWBITE
 BASE DE DADOS
 VISUAL STUDIO
 GITHUB
+
+C#
+Classes
+Funções
+Regex
+Ciclos 
+Arrays

@@ -597,6 +597,7 @@
     <Content Include="Views\Admin\CriarProduto.cshtml" />
     <Content Include="Views\Admin\CriarMarca.cshtml" />
     <Content Include="Views\Admin\Utilizadores.cshtml" />
+    <Content Include="Views\Admin\UtilizadoresDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
