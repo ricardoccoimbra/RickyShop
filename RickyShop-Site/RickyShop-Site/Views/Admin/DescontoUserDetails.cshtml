@@ -1,0 +1,34 @@
+﻿@model List<RickyShop_Site.Models.Utilizadores>
+
+
+<form action="~/Admin/AtribuirDesconto/" method="post">
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="col-sm-6 form-group">
+                <label class="control-label">Desconto</label>
+                @if (item.Desconto != null)
+                {
+                    <div class="input-group">
+                        <input class="form-control" type="number" value="@item.Desconto">
+                        <span class="input-group-addon" id="basic-addon2">%</span>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="input-group">
+                        <input type="number" class="form-control" placeholder="Desconto" name="valDesconto" min="1" max="99">
+                        <span class="input-group-addon" id="basic-addon2">%</span>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-success center-block" type="submit" name="id" value="@item.ID_Utilizador">Atualizar</button>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</form>
+
+

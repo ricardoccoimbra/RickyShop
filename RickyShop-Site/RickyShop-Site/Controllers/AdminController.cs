@@ -307,7 +307,6 @@ namespace RickyShop_Site.Controllers
         {
             return PartialView("CriarMarca");
         }
-
         public ActionResult Utilizadores(int? pagina)
         {
             int tamanhoPagina = 10;
@@ -317,11 +316,21 @@ namespace RickyShop_Site.Controllers
 
             return View(u);
         }
-        public ActionResult ViewUtilizadoresDetails(int id)
+        public ActionResult ViewDescontoUserDetails(int id)
         {
             // Retorne a exibição do modal
             var u = db.Utilizadores.Where(s => s.ID_Utilizador == id).ToList();
-            return PartialView("UtilizadoresDetails", u);
+            return PartialView("DescontoUserDetails", u);
+        }
+
+        public ActionResult AtribuirDesconto(int id, int valDesconto)
+        {
+            var u = db.Utilizadores.Where(s => s.ID_Utilizador == id).FirstOrDefault();
+
+            u.Desconto = valDesconto;
+            db.SaveChangesAsync();
+
+            return RedirectToAction("ViewDescontoUserDetails", new {id});
         }
     }
 }

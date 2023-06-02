@@ -16,13 +16,14 @@
                 <th>Desconto</th>
                 <th>Morada</th>
                 <th>Código-Postal</th>
+                <th>Pedidos</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td><a href="#" data-value="@item.ID_Utilizador" class="ProdutoDetails">@item.ID_Utilizador</a></td>
+                    <td><a href="#" data-value="@item.ID_Utilizador" class="DescontoUserDetails">@item.ID_Utilizador</a></td>
                     <td>@(item.PrimeiroNome + " " +item.SegundoNome)</td>
                     <td>@item.DataDeNascimento.ToString("dd/MM/yyyy")</td>
                     <td>@item.NIF</td>
@@ -41,6 +42,7 @@
                     </td>
                     <td>@item.Morada</td>
                     <td>@item.CodigoPostal</td>
+                    <td><a href="#" data-value="@item.ID_Utilizador" class="MovimentacoesDetails">@RickyShop_Site.Models.Entities.db.MovimentacaoSaldo.Where(s => s.ID_Utilizador == item.ID_Utilizador && s.Tipo == "+").Count()</a></td>
                 </tr>
             }
         </tbody>
@@ -124,17 +126,17 @@
 <script src="~/Scripts/jQueryJava.js"></script>
 
 
-@*Modal Detalhes do Produto*@
+@*Modal Adicionar Desconto*@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <!-- Conteúdo do modal -->
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                <h3 class="modal-title" id="lineModalLabel">Detalhes do Produto</h3>
+                <h3 class="modal-title" id="lineModalLabel">Adicionar Desconto</h3>
             </div>
             <div class="modal-body">
-                <div id="conteudoModal">
+                <div id="conteudoModalDesconto">
 
                 </div>
             </div>
@@ -143,9 +145,9 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        $(".ProdutoDetails").click(function () {
+        $(".DescontoUserDetails").click(function () {
             var id = $(this).data("value");
-            $("#conteudoModal").load("/Admin/ViewProdutosDetails/" + id, function () {
+            $("#conteudoModalDesconto").load("/Admin/ViewDescontoUserDetails/" + id, function () {
                 $("#myModal").modal("show");
             });
         });
