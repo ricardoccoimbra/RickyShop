@@ -55,19 +55,12 @@
         @Html.PagedListPager(Model, page => Url.Action("Produtos", new { pagina = page }))
     </div>
 
-
-    <div style="display:flex">
-        <button type="submit" class="btn btn-success AddProduto" style="margin-left:5px" data-placement="top" title="Adicionar Produto"><i class="glyphicon glyphicon-plus"></i></button>
-        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#AddImagem" style="margin-left:5px" data-placement="top" title="Adicionar Imagem"><i class="glyphicon glyphicon-picture"></i></button>
-        <button type="submit" class="btn btn-info" style="margin-left:5px" data-placement="top" title="Exportar Excel" onclick="location.href = '@Url.Action("ExportarExcel", "Admin")'"><i class="glyphicon glyphicon-download-alt"></i></button>
-    </div>
-
     <hr />
 
     <div class="row" style="display:flex; margin-bottom: 10%">
         <div style="width:500px; height:500px">
-            <h1>Top 5 Produtos Mais Vendidos</h1>
-            <canvas id="chartProdutos"></canvas>
+            <h2>Estatística de Novos Utilizadores</h2>
+            <canvas id="chartNewUser"></canvas>
         </div>
         <div style="width:500px; height:500px; margin-left: 15%">
             <h1>Top 5 Marcas Mais Vendidas</h1>
@@ -77,43 +70,35 @@
 
     <hr />
 
-    <h2>Marcas</h2>
+    <h2>Log's</h2>
 
     <table class="table table-hover table-condensed table-responsive" style="width:100%">
         <thead>
             <tr>
                 <th>#</th>
-                <th>Marca</th>
-                <th>Qtd. Produtos</th>
-                <th>Estado</th>
+                <th>Utilizador</th>
+                <th>Erro Login</th>
+                <th>Login</th>
+                <th>Logoff</th>
+                <th>IP Login</th>
+                <th>Reportar</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in RickyShop_Site.Models.Entities.db.MarcaProduto)
+            @foreach (var item in RickyShop_Site.Models.Entities.db.Logs)
             {
                 <tr>
-                    <td>@item.ID_Marca</td>
-                    <td>@item.Marca</td>
-                    <td>@RickyShop_Site.Models.Entities.db.Produto.Count(s => s.ID_Marca == item.ID_Marca)</td>
-                    <td style="display:flex">
-                        @if (item.Estado == 1)
-                        {<button class="btn btn-danger" style="width: 100px;" onclick="location.href = '@Url.Action("EstadoMarca", "Admin", new { idM = item.ID_Marca, tipo = "des" })'">Desativar</button>}
-                        else
-                        {<button class="btn btn-success" style="width: 100px;" onclick="location.href = '@Url.Action("EstadoMarca", "Admin", new { idM = item.ID_Marca, tipo = "ati" })'">Ativar</button>}
-
-                        @if (RickyShop_Site.Models.Entities.db.Produto.Count(s => s.ID_Marca == item.ID_Marca) == 0)
-                        {
-                            <button class="btn btn-danger" style="width: 100px; margin-left:5px" onclick="location.href = '@Url.Action("RemoverMarca", "Admin", new { idM = item.ID_Marca })'">Remover</button>
-                        }
-                    </td>
+                    <td>@item.ID_Log</td>
+                    <td>@RickyShop_Site.Models.Entities.db.Utilizadores.Where(s => s.ID_Utilizador == item.ID_Utilizador).FirstOrDefault().PrimeiroNome</td>
+                    <td>@item.Erro_Login</td>
+                    <td>@item.Login</td>
+                    <td>@item.LogOff</td>
+                    <td>@item.IP_TentativaLogin</td>
+                    <td><button class="btn btn-danger">Reportar</button></td>
                 </tr>
             }
         </tbody>
     </table>
-
-    <div style="display:flex">
-        <button type="submit" class="btn btn-success AddMarca" style="margin-left:5px" data-placement="top" title="Adicionar Marca"><i class="glyphicon glyphicon-plus"></i></button>
-    </div>
 </body>
 
 
@@ -156,16 +141,16 @@
 </script>
 
 @*Modal Adicionar Produtos e Script*@
-<div class="modal fade" id="ModalAddProd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="ModalMovConta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <!-- Conteúdo do modal -->
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                <h3 class="modal-title" id="lineModalLabel">Criar Produto</h3>
+                <h3 class="modal-title" id="lineModalLabel">Movimentação de Conta</h3>
             </div>
             <div class="modal-body">
-                <div id="conteudoModalAddProd">
+                <div id="conteudoModalMovConta">
 
                 </div>
             </div>
@@ -174,10 +159,10 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        $(".AddProduto").click(function () {
+        $(".MovimentacoesDetails").click(function () {
             var id = $(this).data("value");
-            $("#conteudoModalAddProd").load("/Admin/ViewAddProduto", function () {
-                $("#ModalAddProd").modal("show");
+            $("#conteudoModalMovConta").load("/Admin/ViewMovConta/" + id, function () {
+                $("#ModalMovConta").modal("show");
             });
         });
 
@@ -248,12 +233,12 @@
 <script>
     $(document).ready(function () {
         $.ajax({
-            url: '@Url.Action("ChartProdutoMaisVendido", "Admin")',
+            url: '@Url.Action("ChartNewUser", "Admin")',
             method: 'GET',
             success: function (data) {
-                var ctx = document.getElementById('chartProdutos').getContext('2d');
+                var ctx = document.getElementById('chartNewUser').getContext('2d');
                 new Chart(ctx, {
-                    type: 'pie',
+                    type: 'line',
                     data: data,
                     options: {
                         responsive: true,

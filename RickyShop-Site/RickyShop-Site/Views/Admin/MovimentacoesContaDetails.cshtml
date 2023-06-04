@@ -1,0 +1,74 @@
+﻿@model List<RickyShop_Site.Models.MovimentacaoSaldo>
+
+<body>
+    @if (Model.Count() != 0)
+    {
+        <table id="myTable" class="display">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Montante</th>
+                    <th>Tipo</th>
+                    <th>Estado</th>
+                    <th>Número do Cartão</th>
+                    <th>Confirmação</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ID_Movimentacao</td>
+                        <td>@item.Quantidade.ToString("N")€</td>
+                        <td>@item.Tipo</td>
+                        <td>@item.Estado</td>
+
+                        @if (item.Tipo == "+")
+                        {
+                            string cartaoEscondido = new string('*', @item.NumeroCartao.Length - 3) + @item.NumeroCartao.Substring(@item.NumeroCartao.Length - 3);
+                            <td>@cartaoEscondido</td>
+                        }
+                        else
+                        {
+                            <td>-</td>
+                        }
+
+                        @if (item.Estado.ToLower() == "pendente")
+                        {
+                            <td style="display:flex"><button class="btn btn-success">Aceitar</button></td>
+                        }
+                        else
+                        {
+                            <td>-</td>
+                        }
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="alert-danger text-center" style="font-size: 20px; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; border-radius: 15px;">
+            <b>Nenhuma movimentação ocorrida!</b>
+        </p>
+    }
+
+</body>
+
+
+
+
+<link href="~/Content/jquery.dataTables.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.dataTables.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+
+    let table = new DataTable('#myTable', {
+        // options
+    });
+</script>

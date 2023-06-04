@@ -396,6 +396,7 @@
     <Content Include="Content\components\visit.js" />
     <Content Include="Content\components\visit.min.js" />
     <Content Include="Content\jQuery.css" />
+    <Content Include="Content\jquery.dataTables.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\semantic.css" />
     <Content Include="Content\semantic.min.css" />
@@ -509,6 +510,7 @@
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Scripts\jQuery.js" />
     <Content Include="Scripts\jQueryJava.js" />
     <Content Include="Scripts\npm.js" />
@@ -598,6 +600,7 @@
     <Content Include="Views\Admin\CriarMarca.cshtml" />
     <Content Include="Views\Admin\Utilizadores.cshtml" />
     <Content Include="Views\Admin\DescontoUserDetails.cshtml" />
+    <Content Include="Views\Admin\MovimentacoesContaDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

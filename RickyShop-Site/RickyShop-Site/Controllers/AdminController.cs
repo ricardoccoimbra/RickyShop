@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Web;
 using System.Web.Mvc;
 
@@ -322,7 +323,6 @@ namespace RickyShop_Site.Controllers
             var u = db.Utilizadores.Where(s => s.ID_Utilizador == id).ToList();
             return PartialView("DescontoUserDetails", u);
         }
-
         public ActionResult AtribuirDesconto(int id, int valDesconto)
         {
             var u = db.Utilizadores.Where(s => s.ID_Utilizador == id).FirstOrDefault();
@@ -330,7 +330,44 @@ namespace RickyShop_Site.Controllers
             u.Desconto = valDesconto;
             db.SaveChangesAsync();
 
-            return RedirectToAction("ViewDescontoUserDetails", new {id});
+            return RedirectToAction("Utilizadores");
+        }
+        public ActionResult ViewMovConta(int id)
+        {
+            // Retorne a exibição do modal
+            var u = db.MovimentacaoSaldo.Where(s => s.ID_Utilizador == id).ToList();
+            return PartialView("MovimentacoesContaDetails", u);
+        }
+        public ActionResult ChartNewUser()
+        {
+            // Obtenha os dados do gráfico do seu modelo ou de qualquer outra fonte de dados
+
+            
+            string[] meses = new string[] {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
+            int[] auxCont = new int[11];
+            int mes = 0;
+            foreach (var item in db.Utilizadores)
+            {
+                mes = item.DataDeAdesao.Month - 1;
+                auxCont[mes] += 1;
+            }
+
+            var chartData = new
+            {
+                labels = meses,
+                datasets = new[]
+                {
+            new
+            {
+                data = auxCont,
+                backgroundColor = "rgba(65, 255, 30, 0.5)",
+                borderColor = "rgba(65, 255, 30, 1)",
+                borderWidth = 1,
+            }
+        }
+            };
+
+            return Json(chartData, JsonRequestBehavior.AllowGet);
         }
     }
 }
