@@ -7,7 +7,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Net.Mime;
+using System.Net;
 using System.Reflection.Emit;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -368,6 +372,104 @@ namespace RickyShop_Site.Controllers
             };
 
             return Json(chartData, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ReportarAcesso(int id)
+        {
+            var l = db.Logs.Where(s => s.ID_Log == id).FirstOrDefault();
+            var u = db.Utilizadores.Where(s => s.ID_Utilizador == l.ID_Utilizador).FirstOrDefault();
+
+            string subject = "Reportar tentativa de Acesso";
+
+
+            //string body = "Olá, a seu token de recuperação é: " + tokenAleatorio +
+            //    "\r De seguida altere a sua password no site. \n Cumprimentos, ";
+
+            string path = Server.MapPath(@"~\Views\Admin\TemplateReporte.cshtml");
+
+            var conteudo = System.IO.File.ReadAllText(path);
+
+            conteudo = conteudo.Replace("[NomeCliente]", u.PrimeiroNome + " " + u.SegundoNome);
+            conteudo = conteudo.Replace("[IP]", l.IP_TentativaLogin.ToString());
+            conteudo = conteudo.Replace("[Data]", l.Erro_Login.ToString());
+
+            string body = conteudo;
+
+            //string body = "Olá, a seu token de recuperação é: " + tokenAleatorio +
+            //   "\r De seguida altere a sua password no site. \n Cumprimentos, ";
+
+            MailMessage objEmail = new MailMessage();
+
+            AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, new ContentType("text/html"));
+
+            objEmail.AlternateViews.Add(htmlView);
+
+            //rementente do email
+            //objEmail.From = new MailAddress("i200059@inete.net");
+            objEmail.From = new MailAddress("suporterickyshop@hotmail.com");
+
+            //email para resposta(quando o destinatário receber e clicar em responder, vai para:)
+            //objEmail.ReplyTo = new MailAddress("email@seusite.com.br");
+
+            //destinatário(s) do email(s). Obs. pode ser mais de um, pra isso basta repetir a linha
+            //abaixo com outro endereço
+            objEmail.To.Add(u.Email);
+
+            //se quiser enviar uma cópia oculta pra alguém, utilize a linha abaixo:
+            // objEmail.Bcc.Add("oculto@provedor.com.br");
+
+            //prioridade do email
+            objEmail.Priority = MailPriority.High;
+
+            //utilize true pra ativar html no conteúdo do email, ou false, para somente texto
+            objEmail.IsBodyHtml = true;
+
+            //Assunto do email
+            objEmail.Subject = subject;
+
+            //corpo do email a ser enviado
+            //objEmail.Body = "Conteúdo do email. Se ativar html, pode utilizar cores, fontes, etc.";
+            objEmail.Body = subject + "\r\r\r" + htmlView;
+            //codificação do assunto do email para que os caracteres acentuados serem reconhecidos.
+            objEmail.SubjectEncoding = Encoding.GetEncoding("ISO-8859-1");
+
+            //codificação do corpo do emailpara que os caracteres acentuados serem reconhecidos.
+            objEmail.BodyEncoding = Encoding.GetEncoding("ISO-8859-1");
+
+            //cria o objeto responsável pelo envio do email
+            SmtpClient objSmtp = new SmtpClient();
+
+            //endereço do servidor SMTP(para mais detalhes leia abaixo do código)
+            objSmtp.Host = "SMTP.office365.com";
+            objSmtp.Port = 587;
+
+            //para envio de email autenticado, coloque login e senha de seu servidor de email
+            //para detalhes leia abaixo do código
+            objSmtp.Credentials = new NetworkCredential("suporterickyshop@hotmail.com", "papRickyShop");
+            //objSmtp.Credentials = new NetworkCredential("i200059@inete.net", "Pitolini2005");
+
+            objSmtp.EnableSsl = true;
+
+            //envia o email
+            objSmtp.Send(objEmail);
+
+            //WebMail.EnableSsl = true;
+            //WebMail.SmtpServer = "smtp.mail.yahoo.com";
+            //WebMail.SmtpPort = 465;
+            //WebMail.UserName = "Ricardo Coimbra";
+            //WebMail.Password = "Pitolni08";
+            //WebMail.From = "cruzcoimbra08@yahoo.com";
+
+            db.SaveChangesAsync();
+
+
+            TempData["MensagemAviso"] = "true";
+            return RedirectToAction("Produtos");
+        }
+        public ActionResult AceitarMovimentacao(int id)
+        {
+            var m = db.MovimentacaoSaldo.Where(s => s.ID_Movimentacao == id).FirstOrDefault();
+
+            return View();
         }
     }
 }
