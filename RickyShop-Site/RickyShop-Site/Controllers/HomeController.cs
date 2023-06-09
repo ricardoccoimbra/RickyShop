@@ -69,6 +69,7 @@ namespace RickyShop_Site.Controllers
                         u.DataDeAdesao = DateTime.Now;
                         u.DataDeNascimento = dataNascimento;
                         u.Desconto = 10;
+                        u.Saldo = 0;
                         u.PassWord = Generic.CriarPassHash(u.PassWord);
 
                         db.Utilizadores.Add(u);
@@ -173,6 +174,7 @@ namespace RickyShop_Site.Controllers
             try
             {
                 Session.Remove("UserID");
+                Session.Remove("Admin");
 
                 return RedirectToAction("Inicio");
             }
@@ -192,8 +194,6 @@ namespace RickyShop_Site.Controllers
                 return View();
             }
         }
-
-
 
         public ActionResult Teste()
         {

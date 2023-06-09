@@ -9,9 +9,7 @@
                     <th>#</th>
                     <th>Montante</th>
                     <th>Tipo</th>
-                    <th>Estado</th>
                     <th>Número do Cartão</th>
-                    <th>Confirmação</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,21 +19,10 @@
                         <td>@item.ID_Movimentacao</td>
                         <td>@item.Quantidade.ToString("N")€</td>
                         <td>@item.Tipo</td>
-                        <td>@item.Estado</td>
-
                         @if (item.Tipo == "+")
                         {
                             string cartaoEscondido = new string('*', @item.NumeroCartao.Length - 3) + @item.NumeroCartao.Substring(@item.NumeroCartao.Length - 3);
                             <td>@cartaoEscondido</td>
-                        }
-                        else
-                        {
-                            <td>-</td>
-                        }
-
-                        @if (item.Estado.ToLower() == "pendente")
-                        {
-                            <td style="display:flex"><button class="btn btn-success">Aceitar</button></td>
                         }
                         else
                         {

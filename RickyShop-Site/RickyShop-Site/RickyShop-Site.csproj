@@ -602,6 +602,7 @@
     <Content Include="Views\Admin\DescontoUserDetails.cshtml" />
     <Content Include="Views\Admin\MovimentacoesContaDetails.cshtml" />
     <Content Include="Views\Admin\TemplateReporte.cshtml" />
+    <Content Include="Views\Admin\Pedidos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

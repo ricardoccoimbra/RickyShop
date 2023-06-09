@@ -60,7 +60,6 @@
     <Property Name="ID_Utilizador" Type="int" Nullable="false" />
     <Property Name="Quantidade" Type="money" Nullable="false" />
     <Property Name="Tipo" Type="varchar" MaxLength="1" Nullable="false" />
-    <Property Name="Estado" Type="varchar" MaxLength="15" Nullable="false" />
     <Property Name="NumeroCartao" Type="varchar" MaxLength="16" />
   </EntityType>
   <EntityType Name="Pedidos">
@@ -148,6 +147,7 @@
     <Property Name="Desconto" Type="int" />
     <Property Name="Morada" Type="varchar" MaxLength="200" Nullable="false" />
     <Property Name="CodigoPostal" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="Saldo" Type="money" Nullable="false" />
   </EntityType>
   <Association Name="FK_Carrinho_Produto">
     <End Role="Produto" Type="Self.Produto" Multiplicity="1" />

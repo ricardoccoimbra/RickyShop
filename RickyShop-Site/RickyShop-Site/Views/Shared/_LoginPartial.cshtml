@@ -22,6 +22,12 @@
 
     }
 
+    @if (Session["Admin"] != null)
+    {
+        <li>@Html.ActionLink("Terminar Sessão", "LogOff", "Home", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    }
+
+
     @if (Session["UserID"] == null && Session["Admin"] == null)
     {
         <li>

@@ -72,6 +72,7 @@ namespace RickyShop_Site.Models
 
         public string Morada { get; set; }
         public string CodigoPostal { get; set; }
+        public decimal Saldo { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Carrinho> Carrinho { get; set; }

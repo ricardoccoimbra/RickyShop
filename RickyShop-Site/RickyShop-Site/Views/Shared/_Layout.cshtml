@@ -59,24 +59,17 @@
             }
             else
             {
-                @Html.ActionLink("RickyShop", "Home", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("RickyShop", "Dashboard", "Admin", new { area = "" }, new { @class = "navbar-brand" })
 
                 <ul style="color:red" class="nav navbar-nav">
-                    <li> @Html.ActionLink("Dashboard", "ListaProdutos", "Produtos", new { id = 1 }, new { htmlAttributes = new { } }) </li>
-                    <li> @Html.ActionLink("Pedidos", "ListaProdutos", "Produtos", new { id = 2 }, new { htmlAttributes = new { } }) </li>
+                    <li> @Html.ActionLink("Dashboard", "ListaProdutos", "Produtos") </li>
+                    <li> @Html.ActionLink("Pedidos", "Pedidos", "Admin") </li>
                     <li> @Html.ActionLink("Utilizadores", "Utilizadores", "Admin") </li>
                     <li> @Html.ActionLink("Produtos", "Produtos", "Admin") </li>
+                    <li> @Html.ActionLink("Configurações Site", "ConfSite", "Admin")</li>
                 </ul>
 
-                <ul style="color:red" class="nav navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="background-color: #195712">Configurações <span class="caret"></span></a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li> @Html.ActionLink("Logs", "ListaProdutos", "Produtos", new { id = 1 }, new { htmlAttributes = new { } }) </li>
-                            <li> @Html.ActionLink("Configurações Site", "ListaProdutos", "Produtos", new { id = 0 }, new { htmlAttributes = new { } })</li>
-                        </ul>
-                    </li>
-                </ul>
+                @Html.Partial("_LoginPartial")
             }
         </div>
     </div>

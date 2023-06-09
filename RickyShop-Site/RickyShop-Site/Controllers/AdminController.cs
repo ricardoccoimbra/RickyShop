@@ -346,8 +346,8 @@ namespace RickyShop_Site.Controllers
         {
             // Obtenha os dados do gráfico do seu modelo ou de qualquer outra fonte de dados
 
-            
-            string[] meses = new string[] {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
+
+            string[] meses = new string[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" };
             int[] auxCont = new int[11];
             int mes = 0;
             foreach (var item in db.Utilizadores)
@@ -465,11 +465,14 @@ namespace RickyShop_Site.Controllers
             TempData["MensagemAviso"] = "true";
             return RedirectToAction("Produtos");
         }
-        public ActionResult AceitarMovimentacao(int id)
+        public ActionResult Pedidos(int? pagina)
         {
-            var m = db.MovimentacaoSaldo.Where(s => s.ID_Movimentacao == id).FirstOrDefault();
+            IPagedList<Pedidos> p;
+            int tamanhoPagina = 10;
+            int numeroPagina = pagina ?? 1;
+            p = db.Pedidos.ToList().ToPagedList(numeroPagina, tamanhoPagina);
 
-            return View();
+            return View(p);
         }
     }
 }

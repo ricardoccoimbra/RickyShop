@@ -126,6 +126,7 @@
     <EntitySetMapping Name="Utilizadores">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.Utilizadores">
         <MappingFragment StoreEntitySet="Utilizadores">
+          <ScalarProperty Name="Saldo" ColumnName="Saldo" />
           <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
           <ScalarProperty Name="Morada" ColumnName="Morada" />
           <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
@@ -194,7 +195,6 @@
       <EntityTypeMapping TypeName="GestãoRickyShopModel.MovimentacaoSaldo">
         <MappingFragment StoreEntitySet="MovimentacaoSaldo">
           <ScalarProperty Name="NumeroCartao" ColumnName="NumeroCartao" />
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="Tipo" ColumnName="Tipo" />
           <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
           <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />

@@ -18,7 +18,6 @@ namespace RickyShop_Site.Models
         public int ID_Utilizador { get; set; }
         public decimal Quantidade { get; set; }
         public string Tipo { get; set; }
-        public string Estado { get; set; }
         public string NumeroCartao { get; set; }
     
         public virtual Utilizadores Utilizadores { get; set; }

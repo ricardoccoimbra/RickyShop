@@ -65,7 +65,6 @@
           <Property Name="ID_Utilizador" Type="int" Nullable="false" />
           <Property Name="Quantidade" Type="money" Nullable="false" />
           <Property Name="Tipo" Type="varchar" MaxLength="1" Nullable="false" />
-          <Property Name="Estado" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="NumeroCartao" Type="varchar" MaxLength="16" />
         </EntityType>
         <EntityType Name="Pedidos">
@@ -153,6 +152,7 @@
           <Property Name="Desconto" Type="int" />
           <Property Name="Morada" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="CodigoPostal" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Saldo" Type="money" Nullable="false" />
         </EntityType>
         <Association Name="FK_Carrinho_Produto">
           <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
@@ -571,6 +571,7 @@
           <Property Name="Morada" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="CodigoPostal" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="MovimentacaoSaldo" Relationship="GestãoRickyShopModel.FK_MovimentacaoSaldo_Utilizadores" FromRole="Utilizadores" ToRole="MovimentacaoSaldo" />
+          <Property Name="Saldo" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
         </EntityType>
         <Association Name="FK_Carrinho_Produto">
           <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
@@ -863,7 +864,6 @@
           <Property Name="ID_Utilizador" Type="Int32" Nullable="false" />
           <Property Name="Quantidade" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Utilizadores" Relationship="GestãoRickyShopModel.FK_MovimentacaoSaldo_Utilizadores" FromRole="MovimentacaoSaldo" ToRole="Utilizadores" />
           <Property Name="NumeroCartao" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -1026,6 +1026,7 @@
           <EntitySetMapping Name="Utilizadores">
             <EntityTypeMapping TypeName="GestãoRickyShopModel.Utilizadores">
               <MappingFragment StoreEntitySet="Utilizadores">
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
                 <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
                 <ScalarProperty Name="Morada" ColumnName="Morada" />
                 <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
@@ -1094,7 +1095,6 @@
             <EntityTypeMapping TypeName="GestãoRickyShopModel.MovimentacaoSaldo">
               <MappingFragment StoreEntitySet="MovimentacaoSaldo">
                 <ScalarProperty Name="NumeroCartao" ColumnName="NumeroCartao" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Tipo" ColumnName="Tipo" />
                 <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
                 <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />

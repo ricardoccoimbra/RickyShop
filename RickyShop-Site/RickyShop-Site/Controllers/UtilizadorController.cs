@@ -81,11 +81,14 @@ namespace RickyShop_Site.Controllers
             if (regexCartao.IsMatch(NumCartao) && regexCVV.IsMatch(CVV) && regexValidade.IsMatch(Validade) && nomeTitular != "")
             {
                 MovimentacaoSaldo mv = new MovimentacaoSaldo();
+                var u = db.Utilizadores.Where(s => s.ID_Utilizador == UserID).FirstOrDefault();
                 mv.NumeroCartao = NumCartao;
-                mv.Estado = "Pendente";
                 mv.ID_Utilizador = UserID;
                 mv.Tipo = "+";
                 mv.Quantidade = Saldo;
+
+                u.Saldo += Saldo; 
+
 
                 db.MovimentacaoSaldo.Add(mv);
                 db.SaveChangesAsync();

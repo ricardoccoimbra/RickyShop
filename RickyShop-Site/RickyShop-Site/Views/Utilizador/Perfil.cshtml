@@ -111,7 +111,7 @@
                         <form>
                             <div class="well bgcolor-skyblue" style="width:50%">
                                 <h5>Neste momento tem disponível:</h5>
-                                <h1>100€</h1>
+                                <h1>@Model.Saldo.ToString("N2")€</h1>
                             </div>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <button class="btn btn-info" type="button" style="border-color: #f5f5f5" data-toggle="modal" data-target="#ModalAddSaldo">Depositar Saldo</button>
@@ -190,7 +190,6 @@
                                 <th>Tipo</th>
                                 <th>Quantidade</th>
                                 <th>Número do Cartão</th>
-                                <th>Estado</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -207,16 +206,10 @@
                                     }
 
                                     <td>@cartaoEscondido</td>
-                                    <td>@item.Estado</td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success center-block" role="button" onclick="">Concluir</button>
-                    </div>
                 </form>
             </div>
         </div>
