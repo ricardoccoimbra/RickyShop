@@ -474,5 +474,37 @@ namespace RickyShop_Site.Controllers
 
             return View(p);
         }
+        public ActionResult ChartUserMaisGastador()
+        {
+            // Obtenha os dados do gráfico do seu modelo ou de qualquer outra fonte de dados
+
+            string[] nomes = new string[5];
+            int[] quantidade = new int[5];
+
+            int cnt = 0;
+            foreach (var item in db.TOP5_ProdMaisVendidos())
+            {
+                nomes[cnt] = item.Nome;
+                quantidade[cnt] = Convert.ToInt32(item.total_vendido);
+                cnt++;
+            }
+
+            var chartData = new
+            {
+                labels = nomes,
+                datasets = new[]
+                {
+            new
+            {
+                data = quantidade,
+                backgroundColor = "rgba(65, 255, 30, 0.5)",
+                borderColor = "rgba(65, 255, 30, 1)",
+                borderWidth = 1,
+            }
+        }
+            };
+
+            return Json(chartData, JsonRequestBehavior.AllowGet);
+        }
     }
 }

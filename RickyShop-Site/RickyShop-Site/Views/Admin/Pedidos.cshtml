@@ -37,63 +37,17 @@
     </div>
 
 
-    <div style="display:flex">
-        <button type="submit" class="btn btn-success AddProduto" style="margin-left:5px" data-placement="top" title="Adicionar Produto"><i class="glyphicon glyphicon-plus"></i></button>
-        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#AddImagem" style="margin-left:5px" data-placement="top" title="Adicionar Imagem"><i class="glyphicon glyphicon-picture"></i></button>
-        <button type="submit" class="btn btn-info" style="margin-left:5px" data-placement="top" title="Exportar Excel" onclick="location.href = '@Url.Action("ExportarExcel", "Admin")'"><i class="glyphicon glyphicon-download-alt"></i></button>
-    </div>
-
     <hr />
 
     <div class="row" style="display:flex; margin-bottom: 10%">
         <div style="width:500px; height:500px">
-            <h1>Top 5 Produtos Mais Vendidos</h1>
-            <canvas id="chartProdutos"></canvas>
+            <h1>Top 5 Utilizadores mais Gastadores</h1>
+            <canvas id="ChartUserGastador"></canvas>
         </div>
         <div style="width:500px; height:500px; margin-left: 15%">
-            <h1>Top 5 Marcas Mais Vendidas</h1>
-            <canvas id="chartMarca"></canvas>
+            <h1>Top 5 Utilizadores mais Compradores</h1>
+            <canvas id="chartUserComprador"></canvas>
         </div>
-    </div>
-
-    <hr />
-
-    <h2>Marcas</h2>
-
-    <table class="table table-hover table-condensed table-responsive" style="width:100%">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Marca</th>
-                <th>Qtd. Produtos</th>
-                <th>Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in RickyShop_Site.Models.Entities.db.MarcaProduto)
-            {
-                <tr>
-                    <td>@item.ID_Marca</td>
-                    <td>@item.Marca</td>
-                    <td>@RickyShop_Site.Models.Entities.db.Produto.Count(s => s.ID_Marca == item.ID_Marca)</td>
-                    <td style="display:flex">
-                        @if (item.Estado == 1)
-                        {<button class="btn btn-danger" style="width: 100px;" onclick="location.href = '@Url.Action("EstadoMarca", "Admin", new { idM = item.ID_Marca, tipo = "des" })'">Desativar</button>}
-                        else
-                        {<button class="btn btn-success" style="width: 100px;" onclick="location.href = '@Url.Action("EstadoMarca", "Admin", new { idM = item.ID_Marca, tipo = "ati" })'">Ativar</button>}
-
-                        @if (RickyShop_Site.Models.Entities.db.Produto.Count(s => s.ID_Marca == item.ID_Marca) == 0)
-                        {
-                            <button class="btn btn-danger" style="width: 100px; margin-left:5px" onclick="location.href = '@Url.Action("RemoverMarca", "Admin", new { idM = item.ID_Marca })'">Remover</button>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <div style="display:flex">
-        <button type="submit" class="btn btn-success AddMarca" style="margin-left:5px" data-placement="top" title="Adicionar Marca"><i class="glyphicon glyphicon-plus"></i></button>
     </div>
 </body>
 
@@ -232,7 +186,7 @@
             url: '@Url.Action("ChartProdutoMaisVendido", "Admin")',
             method: 'GET',
             success: function (data) {
-                var ctx = document.getElementById('chartProdutos').getContext('2d');
+                var ctx = document.getElementById('ChartUserGastador').getContext('2d');
                 new Chart(ctx, {
                     type: 'pie',
                     data: data,
@@ -250,7 +204,7 @@
             url: '@Url.Action("ChartMarcaMaisVendida", "Admin")',
             method: 'GET',
             success: function (data) {
-                var ctx = document.getElementById('chartMarca').getContext('2d');
+                var ctx = document.getElementById('chartUserComprador').getContext('2d');
                 new Chart(ctx, {
                     type: 'pie',
                     data: data,
