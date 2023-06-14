@@ -233,6 +233,12 @@
     <Compile Include="Models\TOP5_ProdMaisVendidos_Result.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TOP5_UserMaisComprador_Result.cs">
+      <DependentUpon>BD-RickyShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TOP5_UserMaisGastador_Result.cs">
+      <DependentUpon>BD-RickyShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Utilizadores.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
@@ -603,6 +609,7 @@
     <Content Include="Views\Admin\MovimentacoesContaDetails.cshtml" />
     <Content Include="Views\Admin\TemplateReporte.cshtml" />
     <Content Include="Views\Admin\Pedidos.cshtml" />
+    <Content Include="Views\Admin\PedidosDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

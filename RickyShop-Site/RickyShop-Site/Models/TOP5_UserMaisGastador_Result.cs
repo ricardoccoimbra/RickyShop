@@ -10,18 +10,10 @@
 namespace RickyShop_Site.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class PedidosDetalhes
+    public partial class TOP5_UserMaisGastador_Result
     {
-        public int ID { get; set; }
-        public int ID_Pedido { get; set; }
-        public int ID_Produto { get; set; }
-        public int Quantidade { get; set; }
-        public decimal Preco { get; set; }
-        public Nullable<int> Deconto { get; set; }
-    
-        public virtual Pedidos Pedidos { get; set; }
-        public virtual Produto Produto { get; set; }
+        public int ID_Utilizador { get; set; }
+        public Nullable<decimal> preco_total { get; set; }
     }
 }

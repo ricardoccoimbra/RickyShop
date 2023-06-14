@@ -25,6 +25,7 @@
     </Key>
     <Property Name="ID_Categoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="NomeCategoria" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Estado" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="EstadoDoPedido">
     <Key>
@@ -76,6 +77,7 @@
     <Property Name="ID_Estado" Type="int" Nullable="false" />
     <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Contacto" Type="varchar" MaxLength="9" Nullable="false" />
+    <Property Name="Desconto" Type="int" />
   </EntityType>
   <EntityType Name="PedidosDetalhes">
     <Key>
@@ -86,6 +88,7 @@
     <Property Name="ID_Produto" Type="int" Nullable="false" />
     <Property Name="Quantidade" Type="int" Nullable="false" />
     <Property Name="Preco" Type="money" Nullable="false" />
+    <Property Name="Deconto" Type="int" />
   </EntityType>
   <EntityType Name="Produto">
     <Key>
@@ -148,6 +151,7 @@
     <Property Name="Morada" Type="varchar" MaxLength="200" Nullable="false" />
     <Property Name="CodigoPostal" Type="varchar" MaxLength="8" Nullable="false" />
     <Property Name="Saldo" Type="money" Nullable="false" />
+    <Property Name="Estado" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK_Carrinho_Produto">
     <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
@@ -344,6 +348,8 @@
   <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="TOP5_MarcasMaisVendidas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="TOP5_ProdMaisVendidos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="TOP5_UserMaisComprador" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="TOP5_UserMaisGastador" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="GestãoRickyShopModelStoreContainer">
     <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Carrinho" EntityType="Self.Carrinho" Schema="dbo" store:Type="Tables" />

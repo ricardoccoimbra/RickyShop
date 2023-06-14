@@ -479,13 +479,13 @@ namespace RickyShop_Site.Controllers
             // Obtenha os dados do gráfico do seu modelo ou de qualquer outra fonte de dados
 
             string[] nomes = new string[5];
-            int[] quantidade = new int[5];
+            double[] val = new double[5];
 
             int cnt = 0;
-            foreach (var item in db.TOP5_ProdMaisVendidos())
+            foreach (var item in db.TOP5_UserMaisGastador()) 
             {
-                nomes[cnt] = item.Nome;
-                quantidade[cnt] = Convert.ToInt32(item.total_vendido);
+                nomes[cnt] = db.Utilizadores.FirstOrDefault(s => s.ID_Utilizador == item.ID_Utilizador).PrimeiroNome + " " + db.Utilizadores.FirstOrDefault(s => s.ID_Utilizador == item.ID_Utilizador).SegundoNome;
+                val[cnt] = Convert.ToDouble(item.preco_total);
                 cnt++;
             }
 
@@ -496,7 +496,44 @@ namespace RickyShop_Site.Controllers
                 {
             new
             {
-                data = quantidade,
+                data = val,
+                backgroundColor = "rgba(65, 255, 30, 0.5)",
+                borderColor = "rgba(65, 255, 30, 1)",
+                borderWidth = 1,
+            }
+        }
+            };
+
+            return Json(chartData, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ViewPedidosDetails(int id)
+        {
+            var p = db.PedidosDetalhes.Where(s => s.ID_Pedido == id).ToList();
+            return PartialView("PedidosDetails", p);
+        }
+        public ActionResult ChartUserMaisComprador()
+        {
+            // Obtenha os dados do gráfico do seu modelo ou de qualquer outra fonte de dados
+
+            string[] nomes = new string[5];
+            double[] qnt = new double[5];
+
+            int cnt = 0;
+            foreach (var item in db.TOP5_UserMaisComprador())
+            {
+                nomes[cnt] = db.Utilizadores.FirstOrDefault(s => s.ID_Utilizador == item.ID_Utilizador).PrimeiroNome + " " + db.Utilizadores.FirstOrDefault(s => s.ID_Utilizador == item.ID_Utilizador).SegundoNome;
+                qnt[cnt] = Convert.ToDouble(item.total_vendido);
+                cnt++;
+            }
+
+            var chartData = new
+            {
+                labels = nomes,
+                datasets = new[]
+                {
+            new
+            {
+                data = qnt,
                 backgroundColor = "rgba(65, 255, 30, 0.5)",
                 borderColor = "rgba(65, 255, 30, 1)",
                 borderWidth = 1,

@@ -12,6 +12,7 @@
                 <th>Data de Entrega</th>
                 <th>Morada</th>
                 <th>Preço Total</th>
+                <th>Desconto</th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
                     <td>@item.DataDeEntrega.ToString("dd/mm/yyyy")</td>
                     <td>@item.MoradaEntrega</td>
                     <td>@item.PreçoTotal.ToString("N2")€</td>
+                    <td>@item.Desconto%</td>
                 </tr>
             }
         </tbody>
@@ -61,7 +63,7 @@
 <script src="~/Scripts/jQueryJava.js"></script>
 
 
-@*Modal Detalhes do Produto*@
+@*Modal Detalhes do Pedido*@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -80,9 +82,9 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        $(".ProdutoDetails").click(function () {
+        $(".PedidosDetails").click(function () {
             var id = $(this).data("value");
-            $("#conteudoModal").load("/Admin/ViewProdutosDetails/" + id, function () {
+            $("#conteudoModal").load("/Admin/ViewPedidosDetails/" + id, function () {
                 $("#myModal").modal("show");
             });
         });
@@ -90,91 +92,6 @@
     });
 </script>
 
-@*Modal Adicionar Produtos e Script*@
-<div class="modal fade" id="ModalAddProd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <!-- Conteúdo do modal -->
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                <h3 class="modal-title" id="lineModalLabel">Criar Produto</h3>
-            </div>
-            <div class="modal-body">
-                <div id="conteudoModalAddProd">
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".AddProduto").click(function () {
-            var id = $(this).data("value");
-            $("#conteudoModalAddProd").load("/Admin/ViewAddProduto", function () {
-                $("#ModalAddProd").modal("show");
-            });
-        });
-
-    });
-</script>
-
-@*Modal Adicionar Marca*@
-<div class="modal fade" id="ModalAddMarca" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <!-- Conteúdo do modal -->
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                <h3 class="modal-title" id="lineModalLabel">Criar Marca</h3>
-            </div>
-            <div class="modal-body">
-                <div id="conteudoModalAddMarca">
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".AddMarca").click(function () {
-            var id = $(this).data("value");
-            $("#conteudoModalAddMarca").load("/Admin/ViewAddMarca", function () {
-                $("#ModalAddMarca").modal("show");
-            });
-        });
-
-    });
-</script>
-
-<!-- Modal Adicionar Imagem -->
-<div class="modal fade" id="AddImagem" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                <h3 class="modal-title" id="lineModalLabel">Dados de Envio do Pedido</h3>
-            </div>
-            <div class="modal-body">
-                <!-- content goes here -->
-                <form method="post" enctype="multipart/form-data" action="~/Admin/AddImagem/">
-                    @using (Html.BeginForm())
-                    {
-                        @Html.AntiForgeryToken()
-                        <div class="form-group">
-                            <label>Imagem do Produto</label>
-                            <input type="file" name="file" required />
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success center-block">Adicionar</button>
-                        </div>
-                    }
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 
@@ -183,7 +100,7 @@
 <script>
     $(document).ready(function () {
         $.ajax({
-            url: '@Url.Action("ChartProdutoMaisVendido", "Admin")',
+            url: '@Url.Action("ChartUserMaisGastador", "Admin")',
             method: 'GET',
             success: function (data) {
                 var ctx = document.getElementById('ChartUserGastador').getContext('2d');
@@ -201,7 +118,7 @@
 <script>
     $(document).ready(function () {
         $.ajax({
-            url: '@Url.Action("ChartMarcaMaisVendida", "Admin")',
+            url: '@Url.Action("ChartUserMaisComprador", "Admin")',
             method: 'GET',
             success: function (data) {
                 var ctx = document.getElementById('chartUserComprador').getContext('2d');

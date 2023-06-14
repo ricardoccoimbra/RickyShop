@@ -25,6 +25,7 @@
     <EntitySetMapping Name="Categoria">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.Categoria">
         <MappingFragment StoreEntitySet="Categoria">
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="ID_Categoria" ColumnName="ID_Categoria" />
           <ScalarProperty Name="NomeCategoria" ColumnName="NomeCategoria" />
         </MappingFragment>
@@ -62,6 +63,7 @@
     <EntitySetMapping Name="Pedidos">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.Pedidos">
         <MappingFragment StoreEntitySet="Pedidos">
+          <ScalarProperty Name="Desconto" ColumnName="Desconto" />
           <ScalarProperty Name="MoradaEntrega" ColumnName="MoradaEntrega" />
           <ScalarProperty Name="Contacto" ColumnName="Contacto" />
           <ScalarProperty Name="Email" ColumnName="Email" />
@@ -126,6 +128,7 @@
     <EntitySetMapping Name="Utilizadores">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.Utilizadores">
         <MappingFragment StoreEntitySet="Utilizadores">
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="Saldo" ColumnName="Saldo" />
           <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
           <ScalarProperty Name="Morada" ColumnName="Morada" />
@@ -169,6 +172,7 @@
     <EntitySetMapping Name="PedidosDetalhes">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.PedidosDetalhes">
         <MappingFragment StoreEntitySet="PedidosDetalhes">
+          <ScalarProperty Name="Deconto" ColumnName="Deconto" />
           <ScalarProperty Name="Preco" ColumnName="Preco" />
           <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
           <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
@@ -227,6 +231,22 @@
         <ComplexTypeMapping TypeName="GestãoRickyShopModel.TOP5_ProdMaisVendidos_Result">
           <ScalarProperty Name="Nome" ColumnName="Nome" />
           <ScalarProperty Name="total_vendido" ColumnName="total_vendido" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="TOP5_UserMaisComprador" FunctionName="GestãoRickyShopModel.Store.TOP5_UserMaisComprador">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GestãoRickyShopModel.TOP5_UserMaisComprador_Result">
+          <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
+          <ScalarProperty Name="total_vendido" ColumnName="total_vendido" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="TOP5_UserMaisGastador" FunctionName="GestãoRickyShopModel.Store.TOP5_UserMaisGastador">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GestãoRickyShopModel.TOP5_UserMaisGastador_Result">
+          <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
+          <ScalarProperty Name="preco_total" ColumnName="preco_total" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

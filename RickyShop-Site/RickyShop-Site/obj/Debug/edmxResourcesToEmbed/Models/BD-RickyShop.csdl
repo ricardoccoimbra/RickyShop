@@ -28,6 +28,7 @@
     <Property Name="ID_Categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="NomeCategoria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Produto" Relationship="Self.FK_Produto_Categoria" FromRole="Categoria" ToRole="Produto" />
+    <Property Name="Estado" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="EstadoDoPedido">
     <Key>
@@ -75,6 +76,7 @@
     <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Contacto" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
     <Property Name="MoradaEntrega" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Desconto" Type="Int32" />
   </EntityType>
   <EntityType Name="Produto">
     <Key>
@@ -151,6 +153,7 @@
     <Property Name="CodigoPostal" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="MovimentacaoSaldo" Relationship="GestãoRickyShopModel.FK_MovimentacaoSaldo_Utilizadores" FromRole="Utilizadores" ToRole="MovimentacaoSaldo" />
     <Property Name="Saldo" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Estado" Type="Int32" Nullable="false" />
   </EntityType>
   <Association Name="FK_Carrinho_Produto">
     <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
@@ -377,6 +380,8 @@
     </FunctionImport>
     <FunctionImport Name="TOP5_MarcasMaisVendidas" ReturnType="Collection(GestãoRickyShopModel.TOP5_MarcasMaisVendidas_Result)" />
     <FunctionImport Name="TOP5_ProdMaisVendidos" ReturnType="Collection(GestãoRickyShopModel.TOP5_ProdMaisVendidos_Result)" />
+    <FunctionImport Name="TOP5_UserMaisComprador" ReturnType="Collection(GestãoRickyShopModel.TOP5_UserMaisComprador_Result)" />
+    <FunctionImport Name="TOP5_UserMaisGastador" ReturnType="Collection(GestãoRickyShopModel.TOP5_UserMaisGastador_Result)" />
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -400,6 +405,7 @@
     <Property Name="Preco" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <NavigationProperty Name="Pedidos" Relationship="GestãoRickyShopModel.FK_PedidosDetalhes_Pedidos" FromRole="PedidosDetalhes" ToRole="Pedidos" />
     <NavigationProperty Name="Produto" Relationship="GestãoRickyShopModel.FK_PedidosDetalhes_Produto" FromRole="PedidosDetalhes" ToRole="Produto" />
+    <Property Name="Deconto" Type="Int32" />
   </EntityType>
   <Association Name="FK_PedidosDetalhes_Pedidos">
     <End Type="GestãoRickyShopModel.Pedidos" Role="Pedidos" Multiplicity="1" />
@@ -473,5 +479,13 @@
   <ComplexType Name="TOP5_ProdMaisVendidos_Result">
     <Property Type="String" Name="Nome" Nullable="false" MaxLength="30" />
     <Property Type="Int32" Name="total_vendido" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="TOP5_UserMaisComprador_Result">
+    <Property Type="Int32" Name="ID_Utilizador" Nullable="false" />
+    <Property Type="Int32" Name="total_vendido" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="TOP5_UserMaisGastador_Result">
+    <Property Type="Int32" Name="ID_Utilizador" Nullable="false" />
+    <Property Type="Decimal" Name="preco_total" Nullable="true" Precision="19" />
   </ComplexType>
 </Schema>

@@ -22,6 +22,7 @@ namespace RickyShop_Site.Models
     
         public int ID_Categoria { get; set; }
         public string NomeCategoria { get; set; }
+        public int Estado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Produto> Produto { get; set; }

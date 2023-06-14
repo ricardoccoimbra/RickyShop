@@ -30,6 +30,7 @@ namespace RickyShop_Site.Models
         public string Email { get; set; }
         public string Contacto { get; set; }
         public string MoradaEntrega { get; set; }
+        public Nullable<int> Desconto { get; set; }
     
         public virtual EstadoDoPedido EstadoDoPedido { get; set; }
         public virtual Utilizadores Utilizadores { get; set; }

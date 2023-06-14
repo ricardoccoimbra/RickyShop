@@ -172,5 +172,15 @@ namespace RickyShop_Site.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TOP5_ProdMaisVendidos_Result>("TOP5_ProdMaisVendidos");
         }
+    
+        public virtual ObjectResult<TOP5_UserMaisComprador_Result> TOP5_UserMaisComprador()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TOP5_UserMaisComprador_Result>("TOP5_UserMaisComprador");
+        }
+    
+        public virtual ObjectResult<TOP5_UserMaisGastador_Result> TOP5_UserMaisGastador()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TOP5_UserMaisGastador_Result>("TOP5_UserMaisGastador");
+        }
     }
 }
