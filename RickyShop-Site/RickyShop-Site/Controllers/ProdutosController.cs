@@ -71,11 +71,11 @@ namespace RickyShop_Site.Controllers
                     }
                     else
                     {
-                        if (id == 4)
+                        if (id == -1)
                         {
                             produtos = produtos.Where(s => s.Nome.ToUpper().Contains(searchString.ToUpper())
                                     || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper()));
-                            produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina).FirstOrDefault().ID_Categoria = 4;
+                            produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina).FirstOrDefault().ID_Categoria = -1;
 
                             prodPage = produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina);
 
@@ -109,11 +109,11 @@ namespace RickyShop_Site.Controllers
                 }//Categoria produtos com promoção
                 else
                 {
-                    if (id != 4)
+                    if (id != -1)
                         prodPage = produtos.Where(s => s.ID_Categoria == id).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                     else
                     {
-                        produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina).FirstOrDefault().ID_Categoria = 4;
+                        produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina).FirstOrDefault().ID_Categoria = -1;
                         prodPage = produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina);
                     }
                 }
@@ -140,7 +140,7 @@ namespace RickyShop_Site.Controllers
                     }
                     else
                     {
-                        if (id != 4)
+                        if (id != -1)
                         {
                             produtos = produtos.Where(s => s.Nome.ToUpper().Contains(searchString.ToUpper())
                             || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper())).Where(s => s.Desconto != null && s.ID_Categoria == id);
@@ -151,7 +151,7 @@ namespace RickyShop_Site.Controllers
                         {
                             produtos = produtos.Where(s => s.Nome.ToUpper().Contains(searchString.ToUpper())
                             || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper())).Where(s => s.Desconto != null);
-                            produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina).FirstOrDefault().ID_Categoria = 4;
+                            produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina).FirstOrDefault().ID_Categoria = -1;
 
                             prodPage = produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina);
                         }
@@ -173,12 +173,12 @@ namespace RickyShop_Site.Controllers
                 }//Categoria produtos com promoção
                 else
                 {
-                    if (id != 4)
+                    if (id != -1)
                         prodPage = produtos.Where(s => s.ID_Categoria == id).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                     else
                     {
                         prodPage = produtos.Where(s => s.Desconto != null).ToList().ToPagedList(numeroPagina, tamanhoPagina);
-                        prodPage.FirstOrDefault().ID_Categoria = 4;
+                        prodPage.FirstOrDefault().ID_Categoria = -1;
                     }
                 }
 
@@ -206,8 +206,8 @@ namespace RickyShop_Site.Controllers
                         string searchString = Session["DetalhesPesquisa"].ToString();
 
 
-                        if (id != 4)
-                        {
+                        if (id != -1)
+                        {   
                             produtos = produtos.Where(s => s.Nome.ToUpper().Contains(searchString.ToUpper())
                             || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper())).Where(s => s.Desconto != null && s.ID_Categoria == id);
 
@@ -217,13 +217,13 @@ namespace RickyShop_Site.Controllers
                         {
                             produtos = produtos.Where(s => s.Nome.ToUpper().Contains(searchString.ToUpper())
                             || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper())).Where(s => s.Desconto != null);
-                            produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina).FirstOrDefault().ID_Categoria = 4;
+                            produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina).FirstOrDefault().ID_Categoria = -1;
                             prodPage = produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina);
                         }
                     }
                     else
                     {
-                        if (id != 4)
+                        if (id != -1)
                         {
                             prodPage = db.Produto.Where(s => s.Desconto != null && s.ID_Categoria == id).ToList().ToPagedList(numeroPagina, tamanhoPagina);
 
@@ -232,7 +232,7 @@ namespace RickyShop_Site.Controllers
                         {
 
                             prodPage = db.Produto.Where(s => s.Desconto != null).ToList().ToPagedList(numeroPagina, tamanhoPagina);
-                            prodPage.FirstOrDefault().ID_Categoria = 4;
+                            prodPage.FirstOrDefault().ID_Categoria = -1;
                         }
                     }
 

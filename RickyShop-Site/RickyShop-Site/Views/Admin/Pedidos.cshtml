@@ -25,7 +25,10 @@
                     <td>@item.DataDeEntrega.ToString("dd/mm/yyyy")</td>
                     <td>@item.MoradaEntrega</td>
                     <td>@item.PreçoTotal.ToString("N2")€</td>
-                    <td>@item.Desconto%</td>
+                    @if (item.Desconto != null)
+                    {<td>@item.Desconto%</td>}
+                    else
+                    {<td>-</td> }
                 </tr>
             }
         </tbody>

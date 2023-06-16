@@ -246,7 +246,10 @@ namespace RickyShop_Site.Models
                 else
                     return false;
 
-                p.Desconto = desconto;
+                if (desconto == 0)
+                    p.Desconto = null;
+                else
+                    p.Desconto = desconto;
                 p.PreçoPorQuantidade = preco;
                 p.Descrição = descricao;
 
@@ -259,7 +262,7 @@ namespace RickyShop_Site.Models
                     }
                 }
                 else
-                p.Destaque = 0;
+                    p.Destaque = 0;
 
                 if (publicado == null && destaque == null)
                 {

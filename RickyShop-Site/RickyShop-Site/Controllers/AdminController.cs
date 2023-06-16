@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
@@ -14,6 +15,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace RickyShop_Site.Controllers
 {
@@ -282,6 +284,7 @@ namespace RickyShop_Site.Controllers
         }
         public ActionResult AlterarProduto(int id, string nomeProduto, int nomeCategoria, int preco, int qtdStock, string file, int desconto, bool? publicado, int marca, string descricao, bool? destaque)
         {
+            //Validar se a marca ou categoria estão ativas, se não tiverem dá erro
             bool valid = Generic.AtualizarProd(id, nomeProduto, nomeCategoria, preco, qtdStock, file, desconto, publicado, marca, descricao, destaque);
 
             if (valid == true)
@@ -302,7 +305,7 @@ namespace RickyShop_Site.Controllers
             {
                 Response.Write($"<script>alert('Já existe uma marca com esse nome!')</script>");
             }
-            return null;
+            return RedirectToAction("Produtos");
         }
         public ActionResult ViewAddProduto()
         {
@@ -363,6 +366,7 @@ namespace RickyShop_Site.Controllers
                 {
             new
             {
+                label = "Qtd. Novos Users",
                 data = auxCont,
                 backgroundColor = "rgba(65, 255, 30, 0.5)",
                 borderColor = "rgba(65, 255, 30, 1)",
@@ -473,7 +477,7 @@ namespace RickyShop_Site.Controllers
             p = db.Pedidos.ToList().ToPagedList(numeroPagina, tamanhoPagina);
 
             return View(p);
-        }
+        }  
         public ActionResult ChartUserMaisGastador()
         {
             // Obtenha os dados do gráfico do seu modelo ou de qualquer outra fonte de dados
@@ -542,6 +546,71 @@ namespace RickyShop_Site.Controllers
             };
 
             return Json(chartData, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ViewAddCategoria()
+        {
+            return PartialView("CriarCategoria");
+        }
+        public ActionResult CriarCategoria(string categoria)
+        {
+            if (db.Categoria.Count(s => s.NomeCategoria.ToLower() == categoria.ToLower()) == 0)
+            {
+                Categoria c = new Categoria();
+                c.NomeCategoria = categoria;
+                db.Categoria.Add(c);
+                db.SaveChanges();
+            }
+            else
+            {
+                Response.Write($"<script>alert('Já existe uma categoria com esse nome!')</script>");
+            }
+            return RedirectToAction("Produtos");
+        }
+        public ActionResult EstadoCategoria(int id, string tipo)
+        {
+            var c = db.Categoria.Where(s => s.ID_Categoria == id).FirstOrDefault();
+
+            if (tipo == "des")
+            {
+                c.Estado = 0;
+                Entities.db.Categoria.Where(s => s.ID_Categoria == id).FirstOrDefault().Estado = 0;
+
+                foreach (var item in db.Produto.Where(s => s.ID_Categoria == c.ID_Categoria))
+                {
+                    Entities.db.Produto.Where(s => s.ID_Marca == c.ID_Categoria).FirstOrDefault().Descontinuado = 0;
+                    item.Descontinuado = 0;
+                }
+
+            }
+            else
+            {
+                c.Estado = 1;
+                Entities.db.Categoria.Where(s => s.ID_Categoria == id).FirstOrDefault().Estado = 1;
+
+                foreach (var item in db.Produto.Where(s => s.ID_Marca == c.ID_Categoria))
+                {
+                    Entities.db.Produto.Where(s => s.ID_Marca == c.ID_Categoria).FirstOrDefault().Descontinuado = 1;
+                    item.Descontinuado = 1;
+                }
+            }
+
+            db.SaveChanges();
+            Entities.db.SaveChanges();
+            return RedirectToAction("Produtos");
+        }
+        public ActionResult RemoverMarca(int id)
+        {
+            var m = db.MarcaProduto.Where(s => s.ID_Marca == id).FirstOrDefault();
+            db.MarcaProduto.Remove(m);
+            db.SaveChanges();
+            return RedirectToAction("Produtos");
+        }
+        public ActionResult RemoverCategoria(int id)
+        {
+            var c = db.Categoria.Where(s => s.ID_Categoria == id).FirstOrDefault();
+            db.Categoria.Remove(c);
+            db.SaveChanges();
+            return RedirectToAction("Produtos");
         }
     }
 }
