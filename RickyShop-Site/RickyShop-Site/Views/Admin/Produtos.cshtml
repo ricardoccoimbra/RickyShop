@@ -52,7 +52,21 @@
                             @("Sem desconto")
                         }
                     </td>
-                    <td>@item.QuantidadeStock</td>
+                    @if (item.QuantidadeStock <= 5)
+                    {
+                        <td style="background-color: rgba(255, 0, 0, 0.6) ">@item.QuantidadeStock</td>
+                    }
+                    else
+                    {
+                        if (item.QuantidadeStock <= 10)
+                        {
+                            <td style="background-color: rgba(255, 227, 0, 0.6) ">@item.QuantidadeStock</td>
+                        }
+                        else
+                        {
+                            <td style="background-color: rgba(0, 255, 16, 0.6); ">@item.QuantidadeStock</td>
+                        }
+                    }
                     <td>~@item.ImagemPath</td>
                     <td>@item.Descrição.Substring(0, 30)...</td>
                     <td>@RickyShop_Site.Models.Entities.db.Categoria.FirstOrDefault(s => s.ID_Categoria == item.ID_Categoria).NomeCategoria</td>

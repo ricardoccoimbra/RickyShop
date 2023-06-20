@@ -182,5 +182,10 @@ namespace RickyShop_Site.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TOP5_UserMaisGastador_Result>("TOP5_UserMaisGastador");
         }
+    
+        public virtual ObjectResult<TOP5_ProdutosMenosStock_Result> TOP5_ProdutosMenosStock()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TOP5_ProdutosMenosStock_Result>("TOP5_ProdutosMenosStock");
+        }
     }
 }

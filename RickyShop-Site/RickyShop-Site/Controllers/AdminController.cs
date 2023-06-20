@@ -612,5 +612,69 @@ namespace RickyShop_Site.Controllers
             db.SaveChanges();
             return RedirectToAction("Produtos");
         }
+        public ActionResult ChartEstatisticasMesesCompras()
+        {
+            // Obtenha os dados do gráfico do seu modelo ou de qualquer outra fonte de dados
+
+
+            string[] meses = new string[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" };
+            int[] auxCont = new int[11];
+            int mes = 0;
+            foreach (var item in db.Pedidos)
+            {
+                mes = item.DataDoPedido.Month - 1;
+                auxCont[mes] += 1;
+            }
+
+            var chartData = new
+            {
+                labels = meses,
+                datasets = new[]
+                {
+            new
+            {
+                label = "Qtd. Pedidos",
+                data = auxCont,
+                backgroundColor = "rgba(65, 255, 30, 0.5)",
+                borderColor = "rgba(65, 255, 30, 1)",
+                borderWidth = 1,
+            }
+        }
+            };
+
+            return Json(chartData, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ChartProdutosMenosStock()
+        {
+            // Obtenha os dados do gráfico do seu modelo ou de qualquer outra fonte de dados
+
+            string[] nomes = new string[5];
+            double[] qnt = new double[5];
+
+            int cnt = 0;
+            foreach (var item in db.TOP5_ProdutosMenosStock())
+            {
+                nomes[cnt] = item.Nome;
+                qnt[cnt] = Convert.ToDouble(item.QuantidadeStock);
+                cnt++;
+            }
+
+            var chartData = new
+            {
+                labels = nomes,
+                datasets = new[]
+                {
+            new
+            {
+                data = qnt,
+                backgroundColor = "rgba(65, 255, 30, 0.5)",
+                borderColor = "rgba(65, 255, 30, 1)",
+                borderWidth = 1,
+            }
+        }
+            };
+
+            return Json(chartData, JsonRequestBehavior.AllowGet);
+        }
     }
 }

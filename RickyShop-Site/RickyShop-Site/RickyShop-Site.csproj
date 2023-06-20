@@ -233,6 +233,9 @@
     <Compile Include="Models\TOP5_ProdMaisVendidos_Result.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TOP5_ProdutosMenosStock_Result.cs">
+      <DependentUpon>BD-RickyShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TOP5_UserMaisComprador_Result.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>

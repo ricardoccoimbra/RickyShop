@@ -59,10 +59,9 @@
             }
             else
             {
-                @Html.ActionLink("RickyShop", "Dashboard", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("RickyShop", "Home", "Admin", new { area = "" }, new { @class = "navbar-brand" })
 
                 <ul style="color:red" class="nav navbar-nav">
-                    <li> @Html.ActionLink("Dashboard", "ListaProdutos", "Produtos") </li>
                     <li> @Html.ActionLink("Pedidos", "Pedidos", "Admin") </li>
                     <li> @Html.ActionLink("Utilizadores", "Utilizadores", "Admin") </li>
                     <li> @Html.ActionLink("Produtos", "Produtos", "Admin") </li>

@@ -7,15 +7,15 @@
 }
 
 
-inner {
+.inner {
     padding: 10px;
 }
 
-icon-img {
+.icon-img {
     transition: all .3s linear;
     position: absolute;
-    top: -10px;
-    right: 10px;
+    top: 5px;
+    right: 20px;
     z-index: 0;
     font-size: 90px;
     color: rgba(0,0,0,0.15);

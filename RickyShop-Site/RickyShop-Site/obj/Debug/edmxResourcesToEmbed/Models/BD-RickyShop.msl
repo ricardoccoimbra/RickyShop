@@ -250,5 +250,23 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="TOP5_ProdutosMenosStock" FunctionName="GestãoRickyShopModel.Store.TOP5_ProdutosMenosStock">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GestãoRickyShopModel.TOP5_ProdutosMenosStock_Result">
+          <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="PreçoPorQuantidade" ColumnName="PreçoPorQuantidade" />
+          <ScalarProperty Name="ID_Categoria" ColumnName="ID_Categoria" />
+          <ScalarProperty Name="QuantidadeStock" ColumnName="QuantidadeStock" />
+          <ScalarProperty Name="ImagemPath" ColumnName="ImagemPath" />
+          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+          <ScalarProperty Name="Desconto" ColumnName="Desconto" />
+          <ScalarProperty Name="ID_Marca" ColumnName="ID_Marca" />
+          <ScalarProperty Name="Genero" ColumnName="Genero" />
+          <ScalarProperty Name="Descontinuado" ColumnName="Descontinuado" />
+          <ScalarProperty Name="Destaque" ColumnName="Destaque" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

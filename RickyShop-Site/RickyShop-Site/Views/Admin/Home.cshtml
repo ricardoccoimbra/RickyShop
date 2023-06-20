@@ -1,61 +1,131 @@
 ﻿<link href="~/Content/StyleDashboard.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<section class="content">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
 
-    <div class="row">
-        <div class="col-lg-3 col-xs-6">
-            <div style="background-color: yellow" class="small-box">
-                <div style="padding: 10px;">
-                    <h3>150</h3>
-                    <p>New Orders</p>
+<script src="~/Scripts/jQuery.js"></script>
+<script src="~/Scripts/jQueryJava.js"></script>
+
+<body style="margin-top: 10px">
+    <section class="content">
+        <div class="row">
+            <div class="col-lg-3 col-xs-3">
+                <div style="background-color: orange" class="small-box">
+                    <div class="inner">
+                        <h3>@RickyShop_Site.Models.Entities.db.Pedidos.Count()</h3>
+                        <p>Pedidos</p>
+                    </div>
+                    <div class="icon-img">
+                        <i class="glyphicon glyphicon-shopping-cart"></i>
+                    </div>
+                    <a href="~/Admin/Pedidos" class="small-box-footer">Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-                <div class="icon-img">
-                    <i class="glyphicon glyphicon-camera"></i>
+            </div>
+
+            <div class="col-lg-3 col-xs-3">
+                <div class="small-box" style="background-color:indianred;">
+                    <div class="inner">
+                        <h3>@RickyShop_Site.Models.Entities.db.Utilizadores.Count()</h3>
+                        <p>Utilizadores</p>
+                    </div>
+                    <div class="icon-img">
+                        <i class="glyphicon glyphicon-user"></i>
+                    </div>
+                    <a href="~/Admin/Utilizadores" class="small-box-footer">Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+
+            <div class="col-lg-3 col-xs-3">
+                <div class="small-box" style="background-color:cadetblue">
+                    <div class="inner">
+                        <h3>@RickyShop_Site.Models.Entities.db.Produto.Count()</h3>
+                        <p>Produtos</p>
+                    </div>
+                    <div class="icon-img">
+                        <i class="glyphicon glyphicon-picture"></i>
+                    </div>
+                    <a href="~/Admin/Produtos" class="small-box-footer">Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-xs-3">
+                <div class="small-box" style="background-color:yellowgreen;">
+                    <div class="inner">
+                        <h3>1</h3>
+                        <p>Configurações do Site</p>
+                    </div>
+                    <div class="icon-img">
+                        <i class="glyphicon glyphicon-cog"></i>
+                    </div>
+                    <a href="~/Admin/ConfSite" class="small-box-footer">Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="col-lg-3 col-xs-6">
-            <div class="small-box" style="background-color:red">
-                <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
-                    <p>Bounce Rate</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
+    <hr />
 
-        <div class="col-lg-3 col-xs-6">
-            <div class="small-box" style="background-color:blue">
-                <div class="inner">
-                    <h3>44</h3>
-                    <p>User Registrations</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-person-add"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-xs-6">
-            <div class="small-box" style="background-color:green">
-                <div class="inner">
-                    <h3>65</h3>
-                    <p>Unique Visitors</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
+    <div style="margin-bottom: 5%; margin-left:15%">
+        <div style="width:800px; height:400px">
+            <h2>Estatística de Compras</h2>
+            <canvas id="chartEstatisticaCompras"></canvas>
         </div>
     </div>
 
+    <div class="row">
+        <p class="alert-success text-center" style="font-size: 40px; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; border-radius: 15px; margin-top: 3%; width: 800px; margin-left: 187px; margin-bottom: 5%">
+            Lucro de @RickyShop_Site.Models.Entities.db.Pedidos.Sum(s => s.PreçoTotal).ToString("N2")€
+        </p>
+    </div>
 
 
-</section>
+    <hr />
+
+    <div style="margin-bottom: 10%; margin-left: 30%">
+        <div style="width:500px; height:500px">
+            <h2>Top 5 Produtos Com Menos Stock</h2>
+            <canvas id="chatrProdMenosStock"></canvas>
+        </div>
+    </div>
+</body>
+
+
+@*Gráficos*@
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("ChartEstatisticasMesesCompras", "Admin")',
+            method: 'GET',
+            success: function (data) {
+                var ctx = document.getElementById('chartEstatisticaCompras').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: data,
+                    options: {
+                        responsive: true,
+                    }
+                });
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("ChartProdutosMenosStock", "Admin")',
+            method: 'GET',
+            success: function (data) {
+                var ctx = document.getElementById('chatrProdMenosStock').getContext('2d');
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: data,
+                    options: {
+                        responsive: true,
+                    }
+                });
+            }
+        });
+    });
+</script>
