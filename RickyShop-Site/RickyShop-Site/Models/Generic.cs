@@ -90,13 +90,13 @@ namespace RickyShop_Site.Models
                 {
                     if (filtro2 == "PrecoCres")
                     {
-                        prodPage = produtos.Where(s => s.ID_Marca == n && s.Desconto != null).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                        prodPage = produtos.Where(s => s.ID_Marca == n && s.Desconto != null && s.Descontinuado == 1).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                         prodPage.FirstOrDefault().ID_Categoria = id;
                         return prodPage;
                     }
                     else
                     {
-                        prodPage = produtos.Where(s => s.ID_Marca == n && s.Desconto != null).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                        prodPage = produtos.Where(s => s.ID_Marca == n && s.Desconto != null && s.Descontinuado == 1).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                         prodPage.FirstOrDefault().ID_Categoria = id;
                         return prodPage;
                     }
@@ -105,12 +105,12 @@ namespace RickyShop_Site.Models
                 {
                     if (filtro2 == "PrecoCres")
                     {
-                        prodPage = produtos.Where(s => s.ID_Marca == n && s.ID_Categoria == id).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                        prodPage = produtos.Where(s => s.ID_Marca == n && s.ID_Categoria == id && s.Descontinuado == 1).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                         return prodPage;
                     }
                     else
                     {
-                        prodPage = produtos.Where(s => s.ID_Marca == n && s.ID_Categoria == id).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                        prodPage = produtos.Where(s => s.ID_Marca == n && s.ID_Categoria == id && s.Descontinuado == 1).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                         return prodPage;
                     }
                 }
@@ -122,13 +122,13 @@ namespace RickyShop_Site.Models
                 {
                     if (filtro[1].ToString() == "PrecoCres")
                     {
-                        prodPage = produtos.Where(s => s.Desconto != null).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                        prodPage = produtos.Where(s => s.Desconto != null && s.Descontinuado == 1).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                         prodPage.FirstOrDefault().ID_Categoria = id;
                         return prodPage;
                     }
                     else
                     {
-                        prodPage = produtos.Where(s => s.Desconto != null).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                        prodPage = produtos.Where(s => s.Desconto != null && s.Descontinuado == 1).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                         prodPage.FirstOrDefault().ID_Categoria = id;
                         return prodPage;
                     }
@@ -140,12 +140,12 @@ namespace RickyShop_Site.Models
                     {
                         if (filtro[1].ToString() == "PrecoCres")
                         {
-                            prodPage = produtos.Where(s => s.ID_Categoria == id).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            prodPage = produtos.Where(s => s.ID_Categoria == id && s.Descontinuado == 1).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                             return prodPage;
                         }
                         else
                         {
-                            prodPage = produtos.Where(s => s.ID_Categoria == id).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            prodPage = produtos.Where(s => s.ID_Categoria == id && s.Descontinuado == 1).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                             return prodPage;
                         }
                     }
@@ -153,13 +153,13 @@ namespace RickyShop_Site.Models
                     {
                         if (filtro[1].ToString() == "PrecoCres")
                         {
-                            prodPage = produtos.OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            prodPage = produtos.Where(s => s.Descontinuado == 1 && s.Descontinuado == 1).OrderBy(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                             prodPage.FirstOrDefault().ID_Categoria = 4;
                             return prodPage;
                         }
                         else
                         {
-                            prodPage = produtos.OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            prodPage = produtos.Where(s => s.Descontinuado == 1 && s.Descontinuado == 1).OrderByDescending(s => s.PreçoPorQuantidade).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                             prodPage.FirstOrDefault().ID_Categoria = 4;
                             return prodPage;
                         }
@@ -250,6 +250,7 @@ namespace RickyShop_Site.Models
                     p.Desconto = null;
                 else
                     p.Desconto = desconto;
+
                 p.PreçoPorQuantidade = preco;
                 p.Descrição = descricao;
 
@@ -268,6 +269,8 @@ namespace RickyShop_Site.Models
                 {
                     p.Descontinuado = 0;
                 }
+                else
+                    p.Descontinuado = 1;
 
 
                 db.SaveChangesAsync();

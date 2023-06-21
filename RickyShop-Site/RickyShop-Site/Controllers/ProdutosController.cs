@@ -67,7 +67,7 @@ namespace RickyShop_Site.Controllers
                     if (id == 0)
                     {
                         produtos = produtos.Where(s => s.Nome.ToUpper().Contains(searchString.ToUpper())
-                                || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper())).Where(c => c.Desconto != null);
+                                || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper())).Where(c => c.Desconto != null && c.Descontinuado == 1);
                     }
                     else
                     {
@@ -77,18 +77,18 @@ namespace RickyShop_Site.Controllers
                                     || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper()));
                             produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina).FirstOrDefault().ID_Categoria = -1;
 
-                            prodPage = produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                            prodPage = produtos.Where(s => s.Descontinuado == 1).ToList().ToPagedList(numeroPagina, tamanhoPagina);
 
                         }
                         else
                         {
                             produtos = produtos.Where(s => s.Nome.ToUpper().Contains(searchString.ToUpper())
-                                     || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper())).Where(c => c.ID_Categoria == id);
+                                     || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper())).Where(c => c.ID_Categoria == id && c.Descontinuado == 1);
                         }
                         if (produtos.Count() == 0)
                         {
                             Response.Write($"<script>alert('Não existe nenhum produto pesquisado!')</script>");
-                            return View(db.Produto.Where(s => s.ID_Categoria == id).ToList().ToPagedList(numeroPagina, tamanhoPagina));
+                            return View(db.Produto.Where(s => s.ID_Categoria == id && s.Descontinuado == 1).ToList().ToPagedList(numeroPagina, tamanhoPagina));
                         }
                     }
                 }//Procurar produtos consoante a pesquisa do user
@@ -103,17 +103,17 @@ namespace RickyShop_Site.Controllers
 
                 if (id == 0)
                 {
-                    prodPage = db.Produto.Where(s => s.Desconto != null).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                    prodPage = db.Produto.Where(s => s.Desconto != null && s.Descontinuado == 1).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                     prodPage.FirstOrDefault().ID_Categoria = 0;
 
                 }//Categoria produtos com promoção
                 else
                 {
                     if (id != -1)
-                        prodPage = produtos.Where(s => s.ID_Categoria == id).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                        prodPage = produtos.Where(s => s.ID_Categoria == id && s.Descontinuado == 1).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                     else
                     {
-                        produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina).FirstOrDefault().ID_Categoria = -1;
+                        produtos.Where(s => s.Descontinuado == 1).ToList().ToPagedList(numeroPagina, tamanhoPagina).FirstOrDefault().ID_Categoria = -1;
                         prodPage = produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina);
                     }
                 }
@@ -136,21 +136,21 @@ namespace RickyShop_Site.Controllers
                     if (id == 0)
                     {
                         produtos = produtos.Where(s => s.Nome.ToUpper().Contains(searchString.ToUpper())
-                                || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper())).Where(c => c.Desconto != null);
+                                || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper())).Where(c => c.Desconto != null && c.Descontinuado == 1);
                     }
                     else
                     {
                         if (id != -1)
                         {
                             produtos = produtos.Where(s => s.Nome.ToUpper().Contains(searchString.ToUpper())
-                            || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper())).Where(s => s.Desconto != null && s.ID_Categoria == id);
+                            || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper())).Where(s => s.Desconto != null && s.ID_Categoria == id && s.Descontinuado == 1);
 
                             prodPage = produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina);
                         }
                         else
                         {
                             produtos = produtos.Where(s => s.Nome.ToUpper().Contains(searchString.ToUpper())
-                            || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper())).Where(s => s.Desconto != null);
+                            || s.MarcaProduto.Marca.ToUpper().Contains(searchString.ToUpper())).Where(s => s.Desconto != null && s.Descontinuado == 1);
                             produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina).FirstOrDefault().ID_Categoria = -1;
 
                             prodPage = produtos.ToList().ToPagedList(numeroPagina, tamanhoPagina);
@@ -167,17 +167,17 @@ namespace RickyShop_Site.Controllers
 
                 if (id == 0)
                 {
-                    prodPage = db.Produto.Where(s => s.Desconto != null).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                    prodPage = db.Produto.Where(s => s.Desconto != null && s.Descontinuado == 1).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                     prodPage.FirstOrDefault().ID_Categoria = 0;
 
                 }//Categoria produtos com promoção
                 else
                 {
                     if (id != -1)
-                        prodPage = produtos.Where(s => s.ID_Categoria == id).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                        prodPage = produtos.Where(s => s.ID_Categoria == id && s.Descontinuado == 1).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                     else
                     {
-                        prodPage = produtos.Where(s => s.Desconto != null).ToList().ToPagedList(numeroPagina, tamanhoPagina);
+                        prodPage = produtos.Where(s => s.Desconto != null && s.Descontinuado == 1).ToList().ToPagedList(numeroPagina, tamanhoPagina);
                         prodPage.FirstOrDefault().ID_Categoria = -1;
                     }
                 }
@@ -407,12 +407,22 @@ namespace RickyShop_Site.Controllers
         }
         public ActionResult SomaProd(int id)
         {
+            var p = db.Produto.FirstOrDefault(s => s.ID_Produto == id);
             int UserID = Convert.ToInt32(Session["UserID"]);
-            var p = db.Carrinho.Where(s => s.ID_Produto == id && s.ID_Utilizador == UserID).FirstOrDefault();
-            p.Quantidade++;
-            db.SaveChangesAsync();
+            var pc = db.Carrinho.Where(s => s.ID_Produto == id && s.ID_Utilizador == UserID).FirstOrDefault();
 
+            if (p.QuantidadeStock >= pc.Quantidade)
+            {
+                pc.Quantidade++;
+
+                Entities.db.Carrinho.Where(s => s.ID_Produto == id && s.ID_Utilizador == UserID).FirstOrDefault().Quantidade++;
+                //db.SaveChangesAsync();
+            }
+            else
+            { /*deu erro*/ }
+            Entities.db.SaveChanges();
             return RedirectToAction("CarrinhoProdutos", new { id = UserID });
+
         }
         public ActionResult DiminuiProd(int id)
         {
@@ -421,13 +431,15 @@ namespace RickyShop_Site.Controllers
             if (p.Quantidade == 1)
             {
                 db.Carrinho.Remove(p);
+                Entities.db.Carrinho.Remove(p);
             }
             else
             {
+                Entities.db.Carrinho.Where(s => s.ID_Produto == id && s.ID_Utilizador == UserID).FirstOrDefault().Quantidade--;
                 p.Quantidade--;
             }
-            db.SaveChangesAsync();
-
+            //db.SaveChangesAsync();
+            Entities.db.SaveChanges();
             return RedirectToAction("CarrinhoProdutos", new { id = UserID });
         }
         #endregion
@@ -443,20 +455,33 @@ namespace RickyShop_Site.Controllers
                 var u = db.Utilizadores.Where(s => s.ID_Utilizador == UserID).FirstOrDefault();
                 //Fechar compra, mas verificar se o user tem saldo, se não tiver saldo mostrar mensagem de aviso
 
-                Pedidos p = new Pedidos();
-                p.ID_Utilizador = UserID;
-                p.DataDoPedido = DateTime.Now;
-                p.DataDeEntrega = DateTime.Now.AddDays(7);
-                p.MoradaEntrega = locEntrega;
-                p.CodigoPostal = codPostal;
-                p.PreçoTotal = Generic.PrecoTotal(UserID);
+                double saldo = Convert.ToDouble(u.Saldo);
+                double total = Convert.ToDouble(Generic.PrecoTotal(UserID));
 
-                p.ID_Estado = 0;
-                p.Email = u.Email;
-                p.Contacto = u.Contacto;
-                db.Pedidos.Add(p);
-                u.Desconto = null;
-                db.SaveChanges();
+                if(saldo >= total)
+                {
+                    Pedidos p = new Pedidos();
+                    p.ID_Utilizador = UserID;
+                    p.DataDoPedido = DateTime.Now;
+                    p.DataDeEntrega = DateTime.Now.AddDays(7);
+                    p.MoradaEntrega = locEntrega;
+                    p.CodigoPostal = codPostal;
+                    p.PreçoTotal = Generic.PrecoTotal(UserID);
+
+                    p.ID_Estado = 0;
+                    p.Email = u.Email;
+                    p.Contacto = u.Contacto;
+                    db.Pedidos.Add(p);
+                    u.Desconto = null;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    //Dá erro, saldo insoficiente
+                    return null;
+                }
+
+
             }
             else
             {

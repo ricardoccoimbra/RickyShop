@@ -66,6 +66,12 @@
 
     <hr />
 
+    <div class="row">
+        <p class="alert-success text-center" style="font-size: 40px; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; border-radius: 15px; margin-top: 3%; width: 800px; margin-left: 187px; margin-bottom: 5%">
+            Lucro de @RickyShop_Site.Models.Entities.db.Pedidos.Sum(s => s.PreçoTotal).ToString("N2")€
+        </p>
+    </div>
+
     <div style="margin-bottom: 5%; margin-left:15%">
         <div style="width:800px; height:400px">
             <h2>Estatística de Compras</h2>
@@ -73,14 +79,8 @@
         </div>
     </div>
 
-    <div class="row">
-        <p class="alert-success text-center" style="font-size: 40px; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; border-radius: 15px; margin-top: 3%; width: 800px; margin-left: 187px; margin-bottom: 5%">
-            Lucro de @RickyShop_Site.Models.Entities.db.Pedidos.Sum(s => s.PreçoTotal).ToString("N2")€
-        </p>
-    </div>
 
-
-    <hr />
+    <hr style="margin-bottom: 5%; margin-top:5%"/>
 
     <div style="margin-bottom: 10%; margin-left: 30%">
         <div style="width:500px; height:500px">

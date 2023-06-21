@@ -43,12 +43,12 @@
                         if (x != -1)
                         {
 
-                            @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto.Where(s => s.Produto.Count(c => c.ID_Categoria == x) != 0), "ID_Marca", "Marca"), "Nenhum", new { id = "cat_pedido", @class = "btn btn-default dropdown-toggle" })
+                            @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto.Where(s => s.Produto.Count(c => c.ID_Categoria == x) != 0 && s.Estado == 1), "ID_Marca", "Marca"), "Nenhum", new { id = "cat_pedido", @class = "btn btn-default dropdown-toggle" })
                         }
                     }
                     else
                     {
-                        @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto.Where(s => s.Produto.Count(z => z.Desconto != null) != 0), "ID_Marca", "Marca"), "Nenhum", new { id = "cat_pedido", @class = "btn btn-default dropdown-toggle" })
+                        @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto.Where(s => s.Produto.Count(z => z.Desconto != null) != 0 && s.Estado == 1), "ID_Marca", "Marca"), "Nenhum", new { id = "cat_pedido", @class = "btn btn-default dropdown-toggle" })
                     }
 
                 </div>
@@ -106,9 +106,9 @@
 
                         <div class="panel-body text-center" style="height: 170px; width:255px">
                             <h4>
-                                <a class="pro-title">
-                                    @Html.DisplayFor(modelItem => item.Nome).
-                                </a>
+                                <label class="pro-title">
+                                    @Html.DisplayFor(modelItem => item.Nome)
+                                </label>
                             </h4>
                             @if (item.Desconto == null)
                             {
@@ -132,22 +132,33 @@
 
 
                             <p style="margin-left:5px">
-                                <button class="btn btn-dark btn-rounded mr-1" data - toggle="tooltip" title="Ver Produto" onclick="location.href = '@Url.Action("ProdutoDetalhado", "Produtos", new { @id = item.ID_Produto })'">
-                                    <i class="glyphicon glyphicon-search">
-                                    </i>
-                                </button>
-                                @if (Session["UserID"] != null)
+                                @if (item.QuantidadeStock != 0)
                                 {
-                                    <button class="btn btn-dark btn-rounded mr-1" data - toggle="tooltip" title="Adicionar ao Carrinho" style="background-color: #195712; color: white" onclick="location.href = '@Url.Action("ProdCarrinho", "Produtos", new { idC = item.ID_Categoria, idP = item.ID_Produto })'">
-                                        <i class="glyphicon glyphicon-shopping-cart">
+                                    <button class="btn btn-dark btn-rounded mr-1" data - toggle="tooltip" title="Ver Produto" onclick="location.href = '@Url.Action("ProdutoDetalhado", "Produtos", new { @id = item.ID_Produto })'">
+                                        <i class="glyphicon glyphicon-search">
                                         </i>
                                     </button>
-                                    <button class="btn btn-dark btn-rounded mr-1" data - toggle="tooltip" title="Adicionar aos Favoritos" style="background-color:#ce2e2e; color:white" onclick="location.href = '@Url.Action("AddProdFavoritos", "Produtos", new { idC = item.ID_Categoria, idP = item.ID_Produto })'">
-                                        <i class="glyphicon glyphicon-heart">
-                                        </i>
-                                    </button>
+                                    if (Session["UserID"] != null)
+                                    {
+                                        <button class="btn btn-dark btn-rounded mr-1" data - toggle="tooltip" title="Adicionar ao Carrinho" style="background-color: #195712; color: white" onclick="location.href = '@Url.Action("ProdCarrinho", "Produtos", new { idC = item.ID_Categoria, idP = item.ID_Produto })'">
+                                            <i class="glyphicon glyphicon-shopping-cart">
+                                            </i>
+                                        </button>
+                                        <button class="btn btn-dark btn-rounded mr-1" data - toggle="tooltip" title="Adicionar aos Favoritos" style="background-color:#ce2e2e; color:white" onclick="location.href = '@Url.Action("AddProdFavoritos", "Produtos", new { idC = item.ID_Categoria, idP = item.ID_Produto })'">
+                                            <i class="glyphicon glyphicon-heart">
+                                            </i>
+                                        </button>
+                                    }
                                 }
-                            </p>
+                                else
+                                {
+                                    <div class="row">
+                                        <p class="alert-danger text-center" style=" font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; border-radius: 15px;">
+                                           UPS! De momento sem Stock!
+                                        </p>
+                                    </div>
+                                }
+
                         </div>
                     </section>
                 </div>
@@ -168,7 +179,7 @@
 </body>
 
 
-<div class="footer-section" >
+<div class="footer-section">
     Página @Model.PageNumber de @Model.PageCount
     @Html.PagedListPager(Model, page => Url.Action("ListaProdutos", new { pagina = page }))
 </div>

@@ -42,9 +42,13 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="background-color: #195712">Categorias <span class="caret"></span></a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li> @Html.ActionLink("Roupa", "ListaProdutos", "Produtos", new { id = 1 }, new { htmlAttributes = new { } }) </li>
-                            <li> @Html.ActionLink("Tênis", "ListaProdutos", "Produtos", new { id = 2 }, new { htmlAttributes = new { } }) </li>
-                            <li> @Html.ActionLink("Desporto", "ListaProdutos", "Produtos", new { id = 3 }, new { htmlAttributes = new { } }) </li>
+                            @foreach (var item in RickyShop_Site.Models.Entities.db.Categoria)
+                            {
+                                if (item.Estado == 1)
+                                {
+                                    <li> @Html.ActionLink(item.NomeCategoria, "ListaProdutos", "Produtos", new { id = item.ID_Categoria }, new { htmlAttributes = new { } }) </li>
+}
+                            }
                             <li role="separator" class="divider"></li>
                             <li>
                             <li> @Html.ActionLink("Promoções", "ListaProdutos", "Produtos", new { id = 0 }, new { htmlAttributes = new { } })</li>
@@ -92,12 +96,14 @@
                 <div class="col-md-4 footer-two">
                     <h5>Categorias </h5>
                     <ul>
-                        <li>@Html.ActionLink("Roupa", "ListaProdutos", "Produtos", new { id = 1 }, new { htmlAttributes = new { } }) </li>
-                        <li>@Html.ActionLink("Tênis", "ListaProdutos", "Produtos", new { id = 2 }, new { htmlAttributes = new { } }) </li>
-                        <li>@Html.ActionLink("Desporto", "ListaProdutos", "Produtos", new { id = 3 }, new { htmlAttributes = new { } }) </li>
-
-                        <li><a href="about.html">Promoções</a></li>
-                        <li><a href="about.html">Parceiros</a></li>
+                        @foreach (var item in RickyShop_Site.Models.Entities.db.Categoria)
+                        {
+                            if (item.Estado == 1)
+                            {
+                                <li> @Html.ActionLink(item.NomeCategoria, "ListaProdutos", "Produtos", new { id = item.ID_Categoria }, new { htmlAttributes = new { } }) </li>
+                            }
+                        }
+                        <li> @Html.ActionLink("Promoções", "ListaProdutos", "Produtos", new { id = 0 }, new { htmlAttributes = new { } })</li>
                     </ul>
                 </div>
                 <div class="col-md-4 footer-four">

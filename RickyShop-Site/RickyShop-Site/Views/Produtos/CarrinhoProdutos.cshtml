@@ -71,7 +71,15 @@
                                     </label>
                                 </div>
                                 <div style="display: flex;">
-                                    <input type="text" class="form-control input-sm product-qtd-input" value="@item.Quantidade" style="width: 40px; border-radius: 1px; text-align: center;" readonly="readonly">
+                                    @if (item.Quantidade > RickyShop_Site.Models.Entities.db.Produto.FirstOrDefault(s => s.ID_Produto == item.ID_Produto).QuantidadeStock)
+                                    {
+                                        //adicionar tool tip
+                                        <input type="text" class="form-control input-sm product-qtd-input" value="@item.Quantidade" style="width: 40px; border-radius: 1px; text-align: center; color:red" readonly="readonly">
+                                    }
+                                    else
+                                    {
+                                        <input type="text" class="form-control input-sm product-qtd-input" value="@item.Quantidade" style="width: 40px; border-radius: 1px; text-align: center;" readonly="readonly">
+                                    }
                                     <button type="button" style="width: 30px; border-radius: 1px;" onclick="location.href = '@Url.Action("SomaProd", "Produtos", new { @id = item.ID_Produto })'">
                                         @*Mudar a SP e adicionar ID do produto*@
                                         <i class="glyphicon  glyphicon-plus"></i>
@@ -148,12 +156,30 @@
                     <br />
                     <br />
 
-                    <button class="btn btn-primary d-flex center-block" type="button" style="background-color: grey; border-color: white;" data-toggle="modal" data-target="#squarespaceModal">
-                        <div class="d-flex justify-content-between">
-                            <span>@total€</span>
-                            <span>Checkout</span>
-                        </div>
-                    </button>
+                    @{
+                        bool cnt = true;
+                        foreach (var item in RickyShop_Site.Models.Entities.db.Carrinho.Where(s => s.ID_Utilizador == u.ID_Utilizador))
+                        {
+                            if (item.Quantidade > RickyShop_Site.Models.Entities.db.Produto.FirstOrDefault(s => s.ID_Produto == item.ID_Produto).QuantidadeStock)
+                            {
+                                cnt = false;
+                                break;
+                            }
+                        }
+
+                        if (cnt == true)
+                        {
+                            <button class="btn btn-primary d-flex center-block" type="button" style="background-color: grey; border-color: white;" data-toggle="modal" data-target="#squarespaceModal">
+                                <div class="d-flex justify-content-between">
+                                    <span>@total€</span>
+                                    <span>Checkout</span>
+                                </div>
+                            </button>
+                        }
+
+                    }
+
+
 
                     <br />
 

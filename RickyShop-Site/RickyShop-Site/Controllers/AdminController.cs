@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
@@ -477,7 +476,7 @@ namespace RickyShop_Site.Controllers
             p = db.Pedidos.ToList().ToPagedList(numeroPagina, tamanhoPagina);
 
             return View(p);
-        }  
+        }
         public ActionResult ChartUserMaisGastador()
         {
             // Obtenha os dados do gráfico do seu modelo ou de qualquer outra fonte de dados
@@ -486,7 +485,7 @@ namespace RickyShop_Site.Controllers
             double[] val = new double[5];
 
             int cnt = 0;
-            foreach (var item in db.TOP5_UserMaisGastador()) 
+            foreach (var item in db.TOP5_UserMaisGastador())
             {
                 nomes[cnt] = db.Utilizadores.FirstOrDefault(s => s.ID_Utilizador == item.ID_Utilizador).PrimeiroNome + " " + db.Utilizadores.FirstOrDefault(s => s.ID_Utilizador == item.ID_Utilizador).SegundoNome;
                 val[cnt] = Convert.ToDouble(item.preco_total);
