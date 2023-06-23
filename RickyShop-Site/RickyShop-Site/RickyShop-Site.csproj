@@ -596,12 +596,12 @@
     <Content Include="Views\Produtos\ProdutoDetalhado.cshtml" />
     <Content Include="Views\ResetPass\TemplateEmail.cshtml" />
     <Content Include="Views\Produtos\ListaProdutos.cshtml" />
-    <Content Include="Views\Produtos\CarrinhoProdutos.cshtml" />
+    <Content Include="Views\Utilizador\CarrinhoProdutos.cshtml" />
     <Content Include="Views\Produtos\FecharCompra.cshtml" />
     <Content Include="Views\Utilizador\Perfil.cshtml" />
-    <Content Include="Views\Produtos\ProdutosFavoritos.cshtml" />
-    <Content Include="Views\Produtos\HistoricoCompras.cshtml" />
-    <Content Include="Views\Produtos\Details.cshtml" />
+    <Content Include="Views\Utilizador\ProdutosFavoritos.cshtml" />
+    <Content Include="Views\Utilizador\HistoricoCompras.cshtml" />
+    <Content Include="Views\Utilizador\Details.cshtml" />
     <Content Include="Views\ResetPass\TemplateTeste.cshtml" />
     <Content Include="Views\Admin\Home.cshtml" />
     <Content Include="Views\Admin\Produtos.cshtml" />

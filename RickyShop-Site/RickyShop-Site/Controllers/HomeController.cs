@@ -15,7 +15,7 @@ namespace RickyShop_Site.Controllers
 {
     public class HomeController : Controller
     {
-        GestãoRickyShopEntities db = new GestãoRickyShopEntities();
+        //GestãoRickyShopEntities Entities.db = new GestãoRickyShopEntities();
 
         public ActionResult About()
         {
@@ -72,9 +72,9 @@ namespace RickyShop_Site.Controllers
                         u.Saldo = 0;
                         u.PassWord = Generic.CriarPassHash(u.PassWord);
 
-                        db.Utilizadores.Add(u);
+                        Entities.db.Utilizadores.Add(u);
 
-                        db.SaveChanges();
+                        Entities.db.SaveChanges();
                         TempData["MensagemAviso"] = "true";
                         return RedirectToAction("Login");
 
@@ -108,7 +108,7 @@ namespace RickyShop_Site.Controllers
         {
             try
             {
-                var user = db.Utilizadores.FirstOrDefault(us => us.Email == email);
+                var user = Entities.db.Utilizadores.FirstOrDefault(us => us.Email == email);
 
                 if (user != null)
                 {
@@ -125,10 +125,10 @@ namespace RickyShop_Site.Controllers
                         var d = Dns.GetHostAddresses(Dns.GetHostName());
                         Logs logs = new Logs();
                         logs.IP_TentativaLogin = d[1].ToString();
-                        logs.ID_Utilizador = db.Utilizadores.FirstOrDefault(s => s.Email == email).ID_Utilizador;
+                        logs.ID_Utilizador = Entities.db.Utilizadores.FirstOrDefault(s => s.Email == email).ID_Utilizador;
                         logs.Erro_Login = DateTime.Now;
-                        db.Logs.Add(logs);
-                        db.SaveChangesAsync();
+                        Entities.db.Logs.Add(logs);
+                        Entities.db.SaveChangesAsync();
 
                         Response.Write("<script>alert('Credicen');</script>");
                         return View();
@@ -164,7 +164,7 @@ namespace RickyShop_Site.Controllers
 
         public ActionResult Inicio()
         {
-            var prodProm = db.Produto.ToList();
+            var prodProm = Entities.db.Produto.ToList();
 
             return View(prodProm);
         }

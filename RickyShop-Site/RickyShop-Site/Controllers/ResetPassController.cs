@@ -19,7 +19,7 @@ namespace RickyShop_Site.Controllers
 {
     public class ResetPassController : Controller
     {
-        GestãoRickyShopEntities db = new GestãoRickyShopEntities();
+        //GestãoRickyShopEntities Entities.db = new GestãoRickyShopEntities();
 
         // GET: ResetPass
         public ActionResult EnvioToken()
@@ -59,11 +59,11 @@ namespace RickyShop_Site.Controllers
         public ActionResult ValidacaoToken(Token token)
         {
             int UserID = Convert.ToInt32(Session["UserID"]);
-            if (db.Token.Count(t => t.ID_Utilizador == UserID && t.TokenAleatorio == token.TokenAleatorio && t.Estado == 1) != 0)
+            if (Entities.db.Token.Count(t => t.ID_Utilizador == UserID && t.TokenAleatorio == token.TokenAleatorio && t.Estado == 1) != 0)
             {
-                var t = db.Token.FirstOrDefault(s => s.ID_Utilizador == UserID && s.Estado == 1);
+                var t = Entities.db.Token.FirstOrDefault(s => s.ID_Utilizador == UserID && s.Estado == 1);
                 t.Estado = 0;
-                db.SaveChangesAsync();
+                Entities.db.SaveChangesAsync();
                 return RedirectToAction("ResetPassword");
             }
             else
@@ -79,20 +79,20 @@ namespace RickyShop_Site.Controllers
         {
             bool valid = false;
             string tokenAleatorio;
-            Utilizadores user = db.Utilizadores.Where(s => s.Email == u.Email).FirstOrDefault();
+            Utilizadores user = Entities.db.Utilizadores.Where(s => s.Email == u.Email).FirstOrDefault();
             do
             {
                 tokenAleatorio = Generic.TokenAleatorio();
-                if (db.Token.Count(t => t.TokenAleatorio == tokenAleatorio) == 0)
+                if (Entities.db.Token.Count(t => t.TokenAleatorio == tokenAleatorio) == 0)
                 {
 
                     Token token = new Token();
                     token.TokenAleatorio = tokenAleatorio;
-                    token.ID_Utilizador = db.Utilizadores.Where(s => s.Email == u.Email).FirstOrDefault().ID_Utilizador;
+                    token.ID_Utilizador = Entities.db.Utilizadores.Where(s => s.Email == u.Email).FirstOrDefault().ID_Utilizador;
                     token.Estado = 1;
                     Session["UserID"] = token.ID_Utilizador;
 
-                    if (db.Token.Count(t => t.ID_Utilizador == token.ID_Utilizador && t.Estado == 1) != 0)
+                    if (Entities.db.Token.Count(t => t.ID_Utilizador == token.ID_Utilizador && t.Estado == 1) != 0)
                     {
                         
                         TempData["MensagemAviso"] = "true";
@@ -100,7 +100,7 @@ namespace RickyShop_Site.Controllers
                     }
                     else
                     {
-                        db.Token.Add(token);
+                        Entities.db.Token.Add(token);
                         valid = true;
                     }
                 }
@@ -188,7 +188,7 @@ namespace RickyShop_Site.Controllers
             //WebMail.Password = "Pitolni08";
             //WebMail.From = "cruzcoimbra08@yahoo.com";
 
-            db.SaveChangesAsync();
+            Entities.db.SaveChangesAsync();
 
 
             TempData["MensagemAviso"] = "true";
@@ -199,14 +199,14 @@ namespace RickyShop_Site.Controllers
         public ActionResult ResetPassword(Utilizadores u)
         {
             int UserID = Convert.ToInt32(Session["UserID"]);
-            var user = db.Utilizadores.FirstOrDefault(s => s.ID_Utilizador == UserID);
+            var user = Entities.db.Utilizadores.FirstOrDefault(s => s.ID_Utilizador == UserID);
             if (true == Generic.CompararPassHash(u.PassWord, user.PassWord))
             {
 
                 u.PassWord = Generic.CriarPassHash(u.PassWord);
 
                 user.PassWord = u.PassWord;
-                db.SaveChangesAsync();
+                Entities.db.SaveChangesAsync();
                 TempData["MensagemResetPass"] = "true";
                 return RedirectToAction("Login", "Home");
             }

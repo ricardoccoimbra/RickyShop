@@ -20,6 +20,7 @@ namespace RickyShop_Site.Models
         public int Quantidade { get; set; }
         public decimal Preco { get; set; }
         public Nullable<int> Deconto { get; set; }
+        public Nullable<int> Desconto { get; set; }
     
         public virtual Pedidos Pedidos { get; set; }
         public virtual Produto Produto { get; set; }

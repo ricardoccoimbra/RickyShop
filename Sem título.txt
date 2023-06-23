@@ -20,12 +20,14 @@
 						| O QUE FALTA ADICIONAR | 
 						 -----------------------
 
-1º Mudar nos controlleres para "Entities.db" em vez de "db.xxx"
+1º Mudar nos controlleres para "Entities.db" em vez de "db.xxx" ✅
 2º Adicionar Promoções
 3º Adicionar POP-UPS - DEPOIS DAS AÇÕES
-4º Adicionar ficheiro XML configurações
+4º Adicionar ficheiro XML Jason configurações ✅
 5º Completar conecxao user -> admin (apagar conta, utilizador)
-6º Acrescentar desconto historico de pedidos USER
+6º Acrescentar desconto historico de pedidos USER ✅
 7º Try Catch, mandar para pagina de erro
 8º Adiconar nos contactos Enviar mensagem de sugestão
+
+9º Pagamento Paypal
 

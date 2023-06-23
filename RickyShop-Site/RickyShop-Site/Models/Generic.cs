@@ -17,9 +17,9 @@ namespace RickyShop_Site.Models
         {
             string i = "certo";
 
-            var nif = db.Utilizadores.Count(s => s.NIF == _NIF);
-            var num = db.Utilizadores.Count(s => s.Contacto == _Contacto);
-            var mail = db.Utilizadores.Count(s => s.Email == _Email);
+            var nif = Entities.db.Utilizadores.Count(s => s.NIF == _NIF);
+            var num = Entities.db.Utilizadores.Count(s => s.Contacto == _Contacto);
+            var mail = Entities.db.Utilizadores.Count(s => s.Email == _Email);
 
             if (nif == 0)
             {
@@ -170,10 +170,10 @@ namespace RickyShop_Site.Models
 
         public static decimal PrecoTotal(int id)
         {
-            var u = db.Utilizadores.FirstOrDefault(s => s.ID_Utilizador == id);
+            var u = Entities.db.Utilizadores.FirstOrDefault(s => s.ID_Utilizador == id);
             decimal total = 0;
 
-            foreach (var item in db.DadosCarrinhoProduto(id))
+            foreach (var item in Entities.db.DadosCarrinhoProduto(id))
             {
                 if (item.Desconto == null)
                 {
@@ -228,7 +228,7 @@ namespace RickyShop_Site.Models
 
         public static bool AtualizarProd(int id, string nomeProduto, int nomeCategoria, int preco, int qtdStock, string file, int desconto, bool? publicado, int marca, string descricao, bool? destaque)
         {
-            Produto p = db.Produto.Where(s => s.ID_Produto == id).FirstOrDefault();
+            Produto p = Entities.db.Produto.Where(s => s.ID_Produto == id).FirstOrDefault();
             if (file != "")
             {
                 return true;
@@ -241,7 +241,7 @@ namespace RickyShop_Site.Models
                 p.ID_Categoria = nomeCategoria;
                 p.QuantidadeStock = qtdStock;
 
-                if (db.Produto.ToList().Where(s => s.ID_Produto != id).Count(s => s.Nome == nomeProduto) == 0)
+                if (Entities.db.Produto.ToList().Where(s => s.ID_Produto != id).Count(s => s.Nome == nomeProduto) == 0)
                     p.Nome = nomeProduto; // Ver se o nome do produto ja existe
                 else
                     return false;
@@ -256,7 +256,7 @@ namespace RickyShop_Site.Models
 
                 if (destaque == true)
                 {
-                    if (db.Produto.ToList().Where(s => s.ID_Produto != id).Count(s => s.Destaque == 1) != 3)
+                    if (Entities.db.Produto.ToList().Where(s => s.ID_Produto != id).Count(s => s.Destaque == 1) != 3)
                     {
                         p.Destaque = 1;
                         p.Descontinuado = 1;
@@ -273,7 +273,7 @@ namespace RickyShop_Site.Models
                     p.Descontinuado = 1;
 
 
-                db.SaveChangesAsync();
+                Entities.db.SaveChangesAsync();
                 return true;
             }
         }

@@ -32,6 +32,7 @@
         <AssociationConnector Association="GestãoRickyShopModel.FK_PedidosDetalhes_Produto" />
         <EntityTypeShape EntityType="GestãoRickyShopModel.MovimentacaoSaldo" Width="1.5" PointX="3" PointY="17.125" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_MovimentacaoSaldo_Utilizadores" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Reporte" Width="1.5" PointX="8.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

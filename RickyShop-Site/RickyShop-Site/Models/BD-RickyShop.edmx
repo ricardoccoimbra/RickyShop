@@ -93,7 +93,7 @@
           <Property Name="ID_Produto" Type="int" Nullable="false" />
           <Property Name="Quantidade" Type="int" Nullable="false" />
           <Property Name="Preco" Type="money" Nullable="false" />
-          <Property Name="Deconto" Type="int" />
+          <Property Name="Desconto" Type="int" />
         </EntityType>
         <EntityType Name="Produto">
           <Key>
@@ -119,6 +119,16 @@
           <Property Name="ID_Favoritos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_Produto" Type="int" Nullable="false" />
           <Property Name="ID_Utilizador" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reporte">
+          <Key>
+            <PropertyRef Name="ID_Reporte" />
+          </Key>
+          <Property Name="ID_Reporte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome_Utilizador" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Titulo_Reporte" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descrição" Type="varchar" MaxLength="5000" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -368,6 +378,7 @@
           <EntitySet Name="PedidosDetalhes" EntityType="Self.PedidosDetalhes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Produto" EntityType="Self.Produto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProdutosFavoritos" EntityType="Self.ProdutosFavoritos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reporte" EntityType="Self.Reporte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Utilizadores" EntityType="Self.Utilizadores" Schema="dbo" store:Type="Tables" />
@@ -811,6 +822,7 @@
           <FunctionImport Name="TOP5_UserMaisComprador" ReturnType="Collection(GestãoRickyShopModel.TOP5_UserMaisComprador_Result)" />
           <FunctionImport Name="TOP5_UserMaisGastador" ReturnType="Collection(GestãoRickyShopModel.TOP5_UserMaisGastador_Result)" />
           <FunctionImport Name="TOP5_ProdutosMenosStock" ReturnType="Collection(GestãoRickyShopModel.TOP5_ProdutosMenosStock_Result)" />
+          <EntitySet Name="Reporte" EntityType="GestãoRickyShopModel.Reporte" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -835,6 +847,7 @@
           <NavigationProperty Name="Pedidos" Relationship="GestãoRickyShopModel.FK_PedidosDetalhes_Pedidos" FromRole="PedidosDetalhes" ToRole="Pedidos" />
           <NavigationProperty Name="Produto" Relationship="GestãoRickyShopModel.FK_PedidosDetalhes_Produto" FromRole="PedidosDetalhes" ToRole="Produto" />
           <Property Name="Deconto" Type="Int32" />
+          <Property Name="Desconto" Type="Int32" />
         </EntityType>
         <Association Name="FK_PedidosDetalhes_Pedidos">
           <End Type="GestãoRickyShopModel.Pedidos" Role="Pedidos" Multiplicity="1" />
@@ -931,6 +944,16 @@
           <Property Type="Int32" Name="Descontinuado" Nullable="false" />
           <Property Type="Int32" Name="Destaque" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Reporte">
+          <Key>
+            <PropertyRef Name="ID_Reporte" />
+          </Key>
+          <Property Name="ID_Reporte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome_Utilizador" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Titulo_Reporte" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Descrição" Type="String" Nullable="false" MaxLength="5000" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1108,7 +1131,7 @@
           <EntitySetMapping Name="PedidosDetalhes">
             <EntityTypeMapping TypeName="GestãoRickyShopModel.PedidosDetalhes">
               <MappingFragment StoreEntitySet="PedidosDetalhes">
-                <ScalarProperty Name="Deconto" ColumnName="Deconto" />
+                <ScalarProperty Name="Desconto" ColumnName="Desconto" />
                 <ScalarProperty Name="Preco" ColumnName="Preco" />
                 <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
                 <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
@@ -1204,6 +1227,17 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Reporte">
+            <EntityTypeMapping TypeName="GestãoRickyShopModel.Reporte">
+              <MappingFragment StoreEntitySet="Reporte">
+                <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+                <ScalarProperty Name="Titulo_Reporte" ColumnName="Titulo_Reporte" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Nome_Utilizador" ColumnName="Nome_Utilizador" />
+                <ScalarProperty Name="ID_Reporte" ColumnName="ID_Reporte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
