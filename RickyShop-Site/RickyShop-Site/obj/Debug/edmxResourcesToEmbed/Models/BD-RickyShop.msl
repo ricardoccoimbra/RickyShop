@@ -169,18 +169,6 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="GestãoRickyShopModel.Store.sp_renamediagram" />
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="GestãoRickyShopModel.Store.sp_upgraddiagrams" />
-    <EntitySetMapping Name="PedidosDetalhes">
-      <EntityTypeMapping TypeName="GestãoRickyShopModel.PedidosDetalhes">
-        <MappingFragment StoreEntitySet="PedidosDetalhes">
-          <ScalarProperty Name="Deconto" ColumnName="Deconto" />
-          <ScalarProperty Name="Preco" ColumnName="Preco" />
-          <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
-          <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
-          <ScalarProperty Name="ID_Pedido" ColumnName="ID_Pedido" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="DadosCarrinhoProduto" FunctionName="GestãoRickyShopModel.Store.DadosCarrinhoProduto">
       <ResultMapping>
         <ComplexTypeMapping TypeName="GestãoRickyShopModel.DadosCarrinhoProduto_Result">
@@ -268,5 +256,28 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="Reporte">
+      <EntityTypeMapping TypeName="GestãoRickyShopModel.Reporte">
+        <MappingFragment StoreEntitySet="Reporte">
+          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+          <ScalarProperty Name="Titulo_Reporte" ColumnName="Titulo_Reporte" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Nome_Utilizador" ColumnName="Nome_Utilizador" />
+          <ScalarProperty Name="ID_Reporte" ColumnName="ID_Reporte" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PedidosDetalhes">
+      <EntityTypeMapping TypeName="GestãoRickyShopModel.PedidosDetalhes">
+        <MappingFragment StoreEntitySet="PedidosDetalhes">
+          <ScalarProperty Name="Desconto" ColumnName="Desconto" />
+          <ScalarProperty Name="Preco" ColumnName="Preco" />
+          <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
+          <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
+          <ScalarProperty Name="ID_Pedido" ColumnName="ID_Pedido" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

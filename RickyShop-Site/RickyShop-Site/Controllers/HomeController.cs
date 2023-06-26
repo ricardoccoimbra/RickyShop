@@ -195,9 +195,18 @@ namespace RickyShop_Site.Controllers
             }
         }
 
-        public ActionResult Teste()
+        public ActionResult EnviarReporte(string Nome, string Email, string Titulo, string descricao)
         {
-            return View();
+            Reporte r = new Reporte();
+
+            r.Nome_Utilizador = Nome;
+            r.Email = Email;
+            r.Titulo_Reporte = Titulo;
+            r.Descrição = descricao;
+
+            Entities.db.Reporte.Add(r);
+            Entities.db.SaveChangesAsync();
+            return RedirectToAction("Contact");
         }
     }
 }

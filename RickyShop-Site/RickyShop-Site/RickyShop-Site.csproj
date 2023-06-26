@@ -215,6 +215,9 @@
     <Compile Include="Models\ProdutosFavoritos.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Reporte.cs">
+      <DependentUpon>BD-RickyShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>

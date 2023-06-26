@@ -88,7 +88,7 @@
     <Property Name="ID_Produto" Type="int" Nullable="false" />
     <Property Name="Quantidade" Type="int" Nullable="false" />
     <Property Name="Preco" Type="money" Nullable="false" />
-    <Property Name="Deconto" Type="int" />
+    <Property Name="Desconto" Type="int" />
   </EntityType>
   <EntityType Name="Produto">
     <Key>
@@ -114,6 +114,16 @@
     <Property Name="ID_Favoritos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ID_Produto" Type="int" Nullable="false" />
     <Property Name="ID_Utilizador" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Reporte">
+    <Key>
+      <PropertyRef Name="ID_Reporte" />
+    </Key>
+    <Property Name="ID_Reporte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nome_Utilizador" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Titulo_Reporte" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Descrição" Type="varchar" MaxLength="5000" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -363,6 +373,7 @@
     <EntitySet Name="PedidosDetalhes" EntityType="Self.PedidosDetalhes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Produto" EntityType="Self.Produto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProdutosFavoritos" EntityType="Self.ProdutosFavoritos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reporte" EntityType="Self.Reporte" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Utilizadores" EntityType="Self.Utilizadores" Schema="dbo" store:Type="Tables" />

@@ -39,9 +39,9 @@ namespace RickyShop_Site.Models
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Token> Token { get; set; }
         public virtual DbSet<Utilizadores> Utilizadores { get; set; }
-        public virtual DbSet<PedidosDetalhes> PedidosDetalhes { get; set; }
         public virtual DbSet<MovimentacaoSaldo> MovimentacaoSaldo { get; set; }
         public virtual DbSet<Reporte> Reporte { get; set; }
+        public virtual DbSet<PedidosDetalhes> PedidosDetalhes { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
