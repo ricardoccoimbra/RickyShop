@@ -189,6 +189,7 @@
     <Compile Include="Models\DadosProdutosFavoritos_Result.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DadosSettingsSite.cs" />
     <Compile Include="Models\Entities.cs" />
     <Compile Include="Models\EstadoDoPedido.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
@@ -489,16 +490,13 @@
     <Content Include="Content\Site.css" />
     <Content Include="Imagens\Carimbo.png" />
     <Content Include="Imagens\Logo.png" />
-    <Content Include="Imagens\AirForce1.jpg" />
     <Content Include="Imagens\Captura de ecrã 2023-03-31 141642.png" />
     <Content Include="Imagens\EmailPassword.png" />
-    <Content Include="Imagens\fundo-imagem.jpg" />
     <Content Include="Imagens\imageTeste.jpg" />
-    <Content Include="Imagens\jorda.jpg" />
-    <Content Include="Imagens\Lacoste-Sweatshirt-Tape.jpg" />
     <Content Include="Imagens\login-image.jpg" />
-    <Content Include="Imagens\McKenzie-Fato-de-Treino.jpg" />
     <Content Include="Imagens\PayPal.png" />
+    <Content Include="Imagens\ProdDestaque.png" />
+    <Content Include="Imagens\ProdPorPagina.png" />
     <Content Include="Imagens\ResetPassword-image.png" />
     <Content Include="Models\BD-RickyShop.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -618,9 +616,11 @@
     <Content Include="Views\Admin\Pedidos.cshtml" />
     <Content Include="Views\Admin\PedidosDetails.cshtml" />
     <Content Include="Views\Admin\CriarCategoria.cshtml" />
+    <Content Include="Views\Admin\ConfigSite.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="FicheiroJson\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,48 @@
+﻿@model RickyShop_Site.Models.DadosSettingsSite
+
+
+<!DOCTYPE html>
+
+<h2>Configurações do Site</h2>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ConfigSite</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div>
+
+
+
+            <div class="center-block" style="margin-left:20%">
+                <div class="thumbnail inline-block" style="max-width: 700px; max-height: 700px; background: green">
+                    <img src="~/Imagens/ProdDestaque.png" class="img-responsive center-block" alt="Imagem">
+                </div>
+                Quantidade de Produtos em Destaque
+                @Html.EditorFor(model => model.QtdProdutosDestaque, new { htmlAttributes = new { @class = "form-control" } })
+
+            </div>
+
+            <br />
+            <br />
+            <hr />
+            <br />
+            <br />
+
+            <div class="center-block" style="margin-left:20%">
+                <div class="thumbnail inline-block" style="max-width: 700px; max-height: 700px; background: green">
+                    <img src="~/Imagens/ProdPorPagina.png" class="img-responsive center-block" alt="Imagem">
+                </div>
+                Quantidade Produtos Produtos por Pagina =
+                @Html.EditorFor(model => model.QtdProdutosPagina, new { htmlAttributes = new { @class = "form-control" } }) <br />
+
+            </div>
+
+            <input type="submit" value="Save" class="btn btn-primary" style="width: 1000px; margin-top: 25px; text-align: center; margin-left: 24%;" />
+        </div>
+    }
+</body>
+</html>

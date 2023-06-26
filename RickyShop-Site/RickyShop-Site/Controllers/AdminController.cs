@@ -15,6 +15,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using Newtonsoft.Json;
 
 namespace RickyShop_Site.Controllers
 {
@@ -672,6 +673,59 @@ namespace RickyShop_Site.Controllers
             };
 
             return Json(chartData, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult EscreverJson()
+        {
+            // Objeto que você deseja serializar em JSON
+            var objeto = new DadosSettingsSite();
+
+            // Caminho e nome do arquivo onde será salvo o JSON
+            var caminhoArquivo = Server.MapPath("~/FicheiroJson/SettingsRickyShop.json");
+
+            // Serializa o objeto em JSON
+            var json = JsonConvert.SerializeObject(objeto);
+
+            // Grava o JSON no arquivo
+            System.IO.File.WriteAllText(caminhoArquivo, json);
+
+            return View();
+        }
+        public ActionResult ConfigSite()
+        {
+            // Caminho e nome do arquivo JSON a ser lido
+            var caminhoArquivo = Server.MapPath("~/FicheiroJson/SettingsRickyShop.json");
+
+            // Lê o conteúdo do arquivo JSON
+            var json = System.IO.File.ReadAllText(caminhoArquivo);
+
+            // Desserializa o JSON em um objeto ou estrutura de dados adequada
+            var objeto = JsonConvert.DeserializeObject<DadosSettingsSite>(json);
+
+            // Use o objeto como desejado
+            // Por exemplo, você pode retorná-lo para uma View
+
+            DadosSettingsSite d = new DadosSettingsSite();
+            
+            return View(objeto);
+        }
+
+        [HttpPost]
+        public ActionResult ConfigSite(DadosSettingsSite s)
+        {
+            // Objeto que você deseja serializar em JSON
+
+            var objeto = s;
+
+            // Caminho e nome do arquivo onde será salvo o JSON
+            var caminhoArquivo = Server.MapPath("~/FicheiroJson/SettingsRickyShop.json");
+
+            // Serializa o objeto em JSON
+            var json = JsonConvert.SerializeObject(objeto);
+
+            // Grava o JSON no arquivo
+            System.IO.File.WriteAllText(caminhoArquivo, json);
+
+            return View();
         }
     }
 }

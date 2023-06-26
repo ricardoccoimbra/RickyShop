@@ -27,7 +27,7 @@
 5º Completar conecxao user -> admin (apagar conta, utilizador)
 6º Acrescentar desconto historico de pedidos USER ✅
 7º Try Catch, mandar para pagina de erro
-8º Adiconar nos contactos Enviar mensagem de sugestão
+8º Adiconar nos contactos Enviar mensagem de sugestão ✅ (FALTA ADICIONAR NA PAGINA DO ADMIN)
 
 9º Pagamento Paypal
 
