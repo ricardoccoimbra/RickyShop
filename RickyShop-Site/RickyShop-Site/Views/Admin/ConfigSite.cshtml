@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 
 <h2>Configurações do Site</h2>
+<br />
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -15,34 +16,63 @@
         @Html.AntiForgeryToken()
         <div>
 
+            <div class="row" style="display:flex">
+                <div class="center-block">
+                    <h3>Quantidade de Produtos em Destaque</h3>
+                    <div class="thumbnail inline-block" style="max-width: 700px; max-height: 700px; background: green">
+                        <img src="~/Imagens/ProdDestaque.png" class="img-responsive center-block" alt="Imagem">
+                    </div>
+                    @Html.EditorFor(model => model.QtdProdutosDestaque, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = 1 } })
 
-
-            <div class="center-block" style="margin-left:20%">
-                <div class="thumbnail inline-block" style="max-width: 700px; max-height: 700px; background: green">
-                    <img src="~/Imagens/ProdDestaque.png" class="img-responsive center-block" alt="Imagem">
                 </div>
-                Quantidade de Produtos em Destaque
-                @Html.EditorFor(model => model.QtdProdutosDestaque, new { htmlAttributes = new { @class = "form-control" } })
 
+
+                <div class="center-block" style=" margin-left: 5%">
+                    <h3>Quantidade Produtos Produtos por Pagina</h3>
+                    <div class="thumbnail inline-block" style="max-width: 700px; max-height: 700px; background: green;">
+                        <img src="~/Imagens/ProdPorPagina.png" class="img-responsive center-block" alt="Imagem">
+                    </div>
+                    @Html.EditorFor(model => model.QtdProdutosPagina, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = 1 } }) <br />
+
+                </div>
             </div>
 
-            <br />
-            <br />
-            <hr />
-            <br />
-            <br />
+            <input type="submit" value="Save" class="btn btn-success center-block" />
 
-            <div class="center-block" style="margin-left:20%">
-                <div class="thumbnail inline-block" style="max-width: 700px; max-height: 700px; background: green">
-                    <img src="~/Imagens/ProdPorPagina.png" class="img-responsive center-block" alt="Imagem">
-                </div>
-                Quantidade Produtos Produtos por Pagina =
-                @Html.EditorFor(model => model.QtdProdutosPagina, new { htmlAttributes = new { @class = "form-control" } }) <br />
-
-            </div>
-
-            <input type="submit" value="Save" class="btn btn-primary" style="width: 1000px; margin-top: 25px; text-align: center; margin-left: 24%;" />
         </div>
     }
+
+    <br />
+    <br />
+    <hr />
+    <br />
+    <br />
+
+    <h2>Reportes</h2>
+
+    <table class="table table-condensed" style="width:100%">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Utilizador</th>
+                <th>Email</th>
+                <th>Título</th>
+                <th>Descrição</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in RickyShop_Site.Models.Entities.db.Reporte)
+            {
+                <tr>
+                    <td><a href="#" data-value="@item.ID_Reporte" class="ReporteDetails">@item.ID_Reporte</a></td>
+                    <td>@item.Nome_Utilizador</td>
+                    <td>@item.Email</td>
+                    <td>@item.Titulo_Reporte</td>
+                    <td>@item.Descrição.Substring(0, 30)...</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
 </body>
 </html>

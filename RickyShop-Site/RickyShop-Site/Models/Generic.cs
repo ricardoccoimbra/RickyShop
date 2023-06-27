@@ -1,4 +1,5 @@
-﻿using PagedList;
+﻿using Newtonsoft.Json;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Web;
+
 
 namespace RickyShop_Site.Models
 {
@@ -278,5 +280,16 @@ namespace RickyShop_Site.Models
             }
         }
 
+        public static DadosSettingsSite ValSettings(string caminhoArquivo /* ~/FicheiroJson/SettingsRickyShop.json */)
+        {
+
+            // Lê o conteúdo do arquivo JSON
+            var json = System.IO.File.ReadAllText(caminhoArquivo);
+
+            // Desserializa o JSON em um objeto ou estrutura de dados adequada
+            var objeto = JsonConvert.DeserializeObject<DadosSettingsSite>(json);
+
+            return objeto;
+        }
     }
 }

@@ -80,7 +80,8 @@
     <div class="row">
         @foreach (var item in Model)
         {
-            if (cnt != 3)
+            var qtdDestaque = RickyShop_Site.Models.Generic.ValSettings(Server.MapPath(@"~/FicheiroJson/SettingsRickyShop.json")).QtdProdutosDestaque;
+            if (cnt != qtdDestaque)
             {
                 if (item.Destaque == 1)
                 {

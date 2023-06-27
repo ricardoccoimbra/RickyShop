@@ -692,21 +692,7 @@ namespace RickyShop_Site.Controllers
         }
         public ActionResult ConfigSite()
         {
-            // Caminho e nome do arquivo JSON a ser lido
-            var caminhoArquivo = Server.MapPath("~/FicheiroJson/SettingsRickyShop.json");
-
-            // Lê o conteúdo do arquivo JSON
-            var json = System.IO.File.ReadAllText(caminhoArquivo);
-
-            // Desserializa o JSON em um objeto ou estrutura de dados adequada
-            var objeto = JsonConvert.DeserializeObject<DadosSettingsSite>(json);
-
-            // Use o objeto como desejado
-            // Por exemplo, você pode retorná-lo para uma View
-
-            DadosSettingsSite d = new DadosSettingsSite();
-            
-            return View(objeto);
+            return View(Generic.ValSettings(Server.MapPath("~/FicheiroJson/SettingsRickyShop.json")));
         }
 
         [HttpPost]
