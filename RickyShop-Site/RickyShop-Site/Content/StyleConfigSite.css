@@ -1,0 +1,17 @@
+﻿
+.reporte-estado-circulo {
+    width: 20px;
+    height: 20px;
+    border-radius: 33px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.reporte-estado-circulo--pendente {
+    background-color: #fcd917;
+}
+
+.reporte-estado-circulo--fechado {
+    background-color: #5cff00;
+
+}

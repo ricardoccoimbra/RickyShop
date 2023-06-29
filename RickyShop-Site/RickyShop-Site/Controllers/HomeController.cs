@@ -128,7 +128,7 @@ namespace RickyShop_Site.Controllers
                         logs.ID_Utilizador = Entities.db.Utilizadores.FirstOrDefault(s => s.Email == email).ID_Utilizador;
                         logs.Erro_Login = DateTime.Now;
                         Entities.db.Logs.Add(logs);
-                        Entities.db.SaveChangesAsync();
+                        Entities.db.SaveChanges();
 
                         Response.Write("<script>alert('Credicen');</script>");
                         return View();
@@ -205,7 +205,7 @@ namespace RickyShop_Site.Controllers
             r.Descrição = descricao;
 
             Entities.db.Reporte.Add(r);
-            Entities.db.SaveChangesAsync();
+            Entities.db.SaveChanges();
             return RedirectToAction("Contact");
         }
     }

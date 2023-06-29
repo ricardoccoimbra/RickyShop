@@ -259,6 +259,7 @@
     <EntitySetMapping Name="Reporte">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.Reporte">
         <MappingFragment StoreEntitySet="Reporte">
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="Descrição" ColumnName="Descrição" />
           <ScalarProperty Name="Titulo_Reporte" ColumnName="Titulo_Reporte" />
           <ScalarProperty Name="Email" ColumnName="Email" />
@@ -275,6 +276,27 @@
           <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
           <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
           <ScalarProperty Name="ID_Pedido" ColumnName="ID_Pedido" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Promo">
+      <EntityTypeMapping TypeName="GestãoRickyShopModel.Promo">
+        <MappingFragment StoreEntitySet="Promo">
+          <ScalarProperty Name="Desconto" ColumnName="Desconto" />
+          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+          <ScalarProperty Name="Path_Logo" ColumnName="Path_Logo" />
+          <ScalarProperty Name="FimData_Promo" ColumnName="FimData_Promo" />
+          <ScalarProperty Name="InicioData_Promo" ColumnName="InicioData_Promo" />
+          <ScalarProperty Name="ID_Promo" ColumnName="ID_Promo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PromoDetalhes">
+      <EntityTypeMapping TypeName="GestãoRickyShopModel.PromoDetalhes">
+        <MappingFragment StoreEntitySet="PromoDetalhes">
+          <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
+          <ScalarProperty Name="ID_Promo" ColumnName="ID_Promo" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

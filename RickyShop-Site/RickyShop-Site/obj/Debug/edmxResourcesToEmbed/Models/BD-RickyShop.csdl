@@ -99,6 +99,7 @@
     <NavigationProperty Name="MarcaProduto" Relationship="Self.FK_Produto_MarcaProduto" FromRole="Produto" ToRole="MarcaProduto" />
     <NavigationProperty Name="ProdutosFavoritos" Relationship="Self.FK_ProdutosFavoritos_Produto" FromRole="Produto" ToRole="ProdutosFavoritos" />
     <NavigationProperty Name="PedidosDetalhes" Relationship="GestãoRickyShopModel.FK_PedidosDetalhes_Produto" FromRole="Produto" ToRole="PedidosDetalhes" />
+    <NavigationProperty Name="PromoDetalhes" Relationship="GestãoRickyShopModel.FK_PromoDetalhes_Produto" FromRole="Produto" ToRole="PromoDetalhes" />
   </EntityType>
   <EntityType Name="ProdutosFavoritos">
     <Key>
@@ -384,6 +385,16 @@
       <End Role="Produto" EntitySet="Produto" />
       <End Role="PedidosDetalhes" EntitySet="PedidosDetalhes" />
     </AssociationSet>
+    <EntitySet Name="Promo" EntityType="GestãoRickyShopModel.Promo" />
+    <EntitySet Name="PromoDetalhes" EntityType="GestãoRickyShopModel.PromoDetalhes" />
+    <AssociationSet Name="FK_PromoDetalhes_Produto" Association="GestãoRickyShopModel.FK_PromoDetalhes_Produto">
+      <End Role="Produto" EntitySet="Produto" />
+      <End Role="PromoDetalhes" EntitySet="PromoDetalhes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PromoDetalhes_Promocao" Association="GestãoRickyShopModel.FK_PromoDetalhes_Promocao">
+      <End Role="Promo" EntitySet="Promo" />
+      <End Role="PromoDetalhes" EntitySet="PromoDetalhes" />
+    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -476,6 +487,7 @@
     <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Titulo_Reporte" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Descrição" Type="String" Nullable="false" MaxLength="5000" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="PedidosDetalhes">
     <Key>
@@ -511,6 +523,52 @@
       </Principal>
       <Dependent Role="PedidosDetalhes">
         <PropertyRef Name="ID_Produto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Promo">
+    <Key>
+      <PropertyRef Name="ID_Promo" />
+    </Key>
+    <Property Name="ID_Promo" Type="Int32" Nullable="false" />
+    <Property Name="InicioData_Promo" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="FimData_Promo" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Path_Logo" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Descrição" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Desconto" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="PromoDetalhes" Relationship="GestãoRickyShopModel.FK_PromoDetalhes_Promocao" FromRole="Promo" ToRole="PromoDetalhes" />
+  </EntityType>
+  <EntityType Name="PromoDetalhes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ID_Promo" Type="Int32" Nullable="false" />
+    <Property Name="ID_Produto" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Produto" Relationship="GestãoRickyShopModel.FK_PromoDetalhes_Produto" FromRole="PromoDetalhes" ToRole="Produto" />
+    <NavigationProperty Name="Promo" Relationship="GestãoRickyShopModel.FK_PromoDetalhes_Promocao" FromRole="PromoDetalhes" ToRole="Promo" />
+  </EntityType>
+  <Association Name="FK_PromoDetalhes_Produto">
+    <End Type="GestãoRickyShopModel.Produto" Role="Produto" Multiplicity="1" />
+    <End Type="GestãoRickyShopModel.PromoDetalhes" Role="PromoDetalhes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Produto">
+        <PropertyRef Name="ID_Produto" />
+      </Principal>
+      <Dependent Role="PromoDetalhes">
+        <PropertyRef Name="ID_Produto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PromoDetalhes_Promocao">
+    <End Type="GestãoRickyShopModel.Promo" Role="Promo" Multiplicity="1" />
+    <End Type="GestãoRickyShopModel.PromoDetalhes" Role="PromoDetalhes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Promo">
+        <PropertyRef Name="ID_Promo" />
+      </Principal>
+      <Dependent Role="PromoDetalhes">
+        <PropertyRef Name="ID_Promo" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

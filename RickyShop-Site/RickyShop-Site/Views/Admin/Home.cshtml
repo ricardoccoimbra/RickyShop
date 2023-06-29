@@ -80,7 +80,7 @@
     </div>
 
 
-    <hr style="margin-bottom: 5%; margin-top:5%"/>
+    <hr style="margin-bottom: 5%; margin-top:5%" />
 
     <div style="margin-bottom: 10%; margin-left: 30%">
         <div style="width:500px; height:500px">
@@ -88,6 +88,40 @@
             <canvas id="chatrProdMenosStock"></canvas>
         </div>
     </div>
+
+    <hr style="margin-bottom: 5%; margin-top:5%" />
+
+    <h1>Promoção</h1>
+
+    <table class="table table-condensed" style="width:100%">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Data Inicio</th>
+                <th>Data Fim</th>
+                <th>Descrição</th>
+                <th>Desconto</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in RickyShop_Site.Models.Entities.db.Promo)
+            {
+                <tr>
+                    <td><a href="#" data-value="@item.ID_Promo" class="PedidosDetails">@item.ID_Promo</a></td>
+                    <td>@item.InicioData_Promo.ToString("dd/mm/yyyy")</td>
+                    <td>@item.FimData_Promo.ToString("dd/mm/yyyy")</td>
+                    <td>@item.Descrição.Substring(0, 50)...</td>
+                    <td>@item.Desconto</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div style="display:flex">
+        <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#AddPromo" style="margin-left:5px" data-placement="top" title="Adicionar Produto"><i class="glyphicon glyphicon-plus"></i></button>
+        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#AddImagem" style="margin-left:5px" data-placement="top" title="Adicionar Imagem"><i class="glyphicon glyphicon-picture"></i></button>
+    </div>
+
 </body>
 
 
@@ -129,3 +163,79 @@
         });
     });
 </script>
+
+<div class="modal fade" id="AddImagem" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Adicionar Nova Imagem - Promoção</h3>
+            </div>
+            <div class="modal-body">
+                <!-- content goes here -->
+                <form method="post" enctype="multipart/form-data" action="~/Admin/AddImagemPromo/">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label>Imagem da Promoção</label>
+                            <input type="file" name="file" required />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success center-block">Adicionar</button>
+                        </div>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="AddPromo" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Criar Promoção</h3>
+            </div>
+            <div class="modal-body">
+                <!-- content goes here -->
+                <form method="post" enctype="multipart/form-data" action="~/Admin/Home/">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Selecione os itens
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                @foreach (var item in RickyShop_Site.Models.Entities.db.Produto)
+                                {
+                                    <div class="dropdown-item">
+                                        @Html.CheckBoxFor(m => item.Selecionado)
+                                        @Html.LabelFor(m => item.Selecionado, item.Nome)
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <button type="submit">PADA</button>
+
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').click(function () {
+            $(this).siblings('.dropdown-menu').toggle();
+        });
+    });
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

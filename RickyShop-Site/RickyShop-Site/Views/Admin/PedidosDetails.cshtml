@@ -17,9 +17,9 @@
                 <td>@RickyShop_Site.Models.Entities.db.Produto.Where(s => s.ID_Produto == item.ID_Produto).FirstOrDefault().Nome</td>
                 <td>@item.Quantidade</td>
                 <td>@item.Preco.ToString("N2")€</td>
-                @if (item.Deconto != null)
+                @if (item.Desconto != null)
                 {
-                    <td>@item.Deconto%</td>
+                    <td>@item.Desconto%</td>
                 }
                 else
                 {

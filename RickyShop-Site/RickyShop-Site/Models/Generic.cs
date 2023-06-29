@@ -228,7 +228,7 @@ namespace RickyShop_Site.Models
             return pass;
         }
 
-        public static bool AtualizarProd(int id, string nomeProduto, int nomeCategoria, int preco, int qtdStock, string file, int desconto, bool? publicado, int marca, string descricao, bool? destaque)
+        public static bool AtualizarProd(int id, string nomeProduto, int nomeCategoria, int preco, int qtdStock, string file, int desconto, bool? publicado, int marca, string descricao, bool? destaque, string caminhoPath)
         {
             Produto p = Entities.db.Produto.Where(s => s.ID_Produto == id).FirstOrDefault();
             if (file != "")
@@ -258,7 +258,7 @@ namespace RickyShop_Site.Models
 
                 if (destaque == true)
                 {
-                    if (Entities.db.Produto.ToList().Where(s => s.ID_Produto != id).Count(s => s.Destaque == 1) != 3)
+                    if (Entities.db.Produto.ToList().Where(s => s.ID_Produto != id).Count(s => s.Destaque == 1) != ValSettings(caminhoPath).QtdProdutosDestaque)
                     {
                         p.Destaque = 1;
                         p.Descontinuado = 1;
@@ -275,7 +275,7 @@ namespace RickyShop_Site.Models
                     p.Descontinuado = 1;
 
 
-                Entities.db.SaveChangesAsync();
+                Entities.db.SaveChanges();
                 return true;
             }
         }

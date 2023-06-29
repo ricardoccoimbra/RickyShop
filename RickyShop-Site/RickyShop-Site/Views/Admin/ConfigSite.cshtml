@@ -1,6 +1,6 @@
 ﻿@model RickyShop_Site.Models.DadosSettingsSite
 
-
+<link href="~/Content/StyleConfigSite.css" rel="stylesheet" />
 <!DOCTYPE html>
 
 <h2>Configurações do Site</h2>
@@ -58,6 +58,7 @@
                 <th>Email</th>
                 <th>Título</th>
                 <th>Descrição</th>
+                <th class="text-center">Estado</th>
             </tr>
         </thead>
         <tbody>
@@ -69,6 +70,16 @@
                     <td>@item.Email</td>
                     <td>@item.Titulo_Reporte</td>
                     <td>@item.Descrição.Substring(0, 30)...</td>
+                    <td>
+                        @if (item.Estado == 0)
+                        {
+                            <div class="reporte-estado-circulo reporte-estado-circulo--pendente"></div>
+                        }
+                        else
+                        {
+                            <div class="reporte-estado-circulo reporte-estado-circulo--fechado"></div>
+                        }
+                    </td>
                 </tr>
             }
         </tbody>
@@ -76,3 +87,39 @@
 
 </body>
 </html>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
+<script src="~/Scripts/jQuery.js"></script>
+<script src="~/Scripts/jQueryJava.js"></script>
+
+
+@*Modal Detalhes do Pedido*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Conteúdo do modal -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Detalhes do Reporte</h3>
+            </div>
+            <div class="modal-body">
+                <div id="conteudoModal">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".ReporteDetails").click(function () {
+            var id = $(this).data("value");
+            $("#conteudoModal").load("/Admin/ViewReporteDetails/" + id, function () {
+                $("#myModal").modal("show");
+            });
+        });
+
+    });
+</script>

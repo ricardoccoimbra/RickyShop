@@ -1,0 +1,51 @@
+﻿@model RickyShop_Site.Models.Reporte
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View</title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="nome_utilizador">Nome do Utilizador</label>
+                @Html.EditorFor(model => model.Nome_Utilizador, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="titulo_reporte">Título do Reporte</label>
+                @Html.EditorFor(model => model.Titulo_Reporte, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="email">Email</label>
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="descricao">Descrição</label>
+                @Html.TextAreaFor(model => model.Descrição, new { @class = "form-control", rows = "10", disabled = "disabled" })
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Estado == 0)
+    {
+        <div class="modal-footer">
+            <input type="submit" class="btn btn-primary float-right" value="Concluir Reporte" onclick="location.href = '@Url.Action("FecharReporte", "Admin", new { @id = Model.ID_Reporte})'">
+        </div>
+    }
+</body>
+</html>

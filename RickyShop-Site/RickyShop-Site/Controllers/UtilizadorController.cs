@@ -36,7 +36,7 @@ namespace RickyShop_Site.Controllers
                 dUser.CodigoPostal = codPostal;
                 dUser.Morada = morada;
 
-                Entities.db.SaveChangesAsync();
+                Entities.db.SaveChanges();
 
                 return RedirectToAction("Perfil", "Utilizador", UserID);
             }
@@ -54,7 +54,7 @@ namespace RickyShop_Site.Controllers
                     {
                         NovaPassword = Generic.CriarPassHash(NovaPassword);
                         user.PassWord = NovaPassword;
-                        Entities.db.SaveChangesAsync();
+                        Entities.db.SaveChanges();
                         return RedirectToAction("Perfil", "Utilizador", user.ID_Utilizador);
                     }
                     else
@@ -91,7 +91,7 @@ namespace RickyShop_Site.Controllers
 
 
                 Entities.db.MovimentacaoSaldo.Add(mv);
-                Entities.db.SaveChangesAsync();
+                Entities.db.SaveChanges();
 
                 return RedirectToAction("Perfil", "Utilizador", UserID);
             }
@@ -126,7 +126,7 @@ namespace RickyShop_Site.Controllers
                 f.ID_Produto = idP;
                 f.ID_Utilizador = userID;
                 Entities.db.ProdutosFavoritos.Add(f);
-                Entities.db.SaveChangesAsync();
+                Entities.db.SaveChanges();
             }
             return RedirectToAction("ListaProdutos", "Produtos", new { id = idC });
         }
@@ -134,7 +134,7 @@ namespace RickyShop_Site.Controllers
         {
             var p = Entities.db.ProdutosFavoritos.Where(s => s.ID_Produto == idProd && s.ID_Utilizador == 2).FirstOrDefault();
             Entities.db.ProdutosFavoritos.Remove(p);
-            Entities.db.SaveChangesAsync();
+            Entities.db.SaveChanges();
             return RedirectToAction("ProdutosFavoritos", "Utilizador");
         }
         public ActionResult ProdutosFavoritos()
@@ -164,7 +164,7 @@ namespace RickyShop_Site.Controllers
                 c.Quantidade = 1;
                 c.Tamanho = "M";
                 Entities.db.Carrinho.Add(c);
-                Entities.db.SaveChangesAsync();
+                Entities.db.SaveChanges();
             }
             return RedirectToAction("ListaProdutos", "Produtos", new { id = idC });
         }
@@ -173,7 +173,7 @@ namespace RickyShop_Site.Controllers
             int UserID = Convert.ToInt32(Session["UserID"]);
             var p = Entities.db.Carrinho.Where(s => s.ID_Utilizador == UserID && s.ID_Produto == id).FirstOrDefault();
             Entities.db.Carrinho.Remove(p);
-            Entities.db.SaveChangesAsync();
+            Entities.db.SaveChanges();
 
             return RedirectToAction("CarrinhoProdutos", new { id = UserID });
         }

@@ -424,7 +424,7 @@ namespace RickyShop_Site.Controllers
 
             var c = Entities.db.Carrinho.Where(s => s.ID_Utilizador == UserID).ToList();
             Entities.db.Carrinho.RemoveRange(c);
-            Entities.db.SaveChangesAsync();
+            Entities.db.SaveChanges();
             return View(prod);
         }
 

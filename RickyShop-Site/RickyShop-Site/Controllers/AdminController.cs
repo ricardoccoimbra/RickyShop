@@ -56,7 +56,7 @@ namespace RickyShop_Site.Controllers
         {
             return PartialView("CriarProduto");
         }
-        public ActionResult AddImagem(HttpPostedFileBase file)
+        public ActionResult AddImagemProduto(HttpPostedFileBase file)
         {
             string fileName = Path.GetFileName(file.FileName);
             string path = Path.Combine(Server.MapPath("~/Produtos/"), fileName);
@@ -265,7 +265,7 @@ namespace RickyShop_Site.Controllers
                         produto.Destaque = 0;
 
                         Entities.db.Produto.Add(produto);
-                        Entities.db.SaveChangesAsync();
+                        Entities.db.SaveChanges();
                     }
                     else
                     {
@@ -284,7 +284,7 @@ namespace RickyShop_Site.Controllers
         public ActionResult AlterarProduto(int id, string nomeProduto, int nomeCategoria, int preco, int qtdStock, string file, int desconto, bool? publicado, int marca, string descricao, bool? destaque)
         {
             //Validar se a marca ou categoria estão ativas, se não tiverem dá erro
-            bool valid = Generic.AtualizarProd(id, nomeProduto, nomeCategoria, preco, qtdStock, file, desconto, publicado, marca, descricao, destaque);
+            bool valid = Generic.AtualizarProd(id, nomeProduto, nomeCategoria, preco, qtdStock, file, desconto, publicado, marca, descricao, destaque, Server.MapPath("~/FicheiroJson/SettingsRickyShop.json"));
 
             if (valid == true)
                 return RedirectToAction("Produtos", "Admin");
@@ -334,7 +334,7 @@ namespace RickyShop_Site.Controllers
             var u = Entities.db.Utilizadores.Where(s => s.ID_Utilizador == id).FirstOrDefault();
 
             u.Desconto = valDesconto;
-            Entities.db.SaveChangesAsync();
+            Entities.db.SaveChanges();
 
             return RedirectToAction("Utilizadores");
         }
@@ -462,7 +462,7 @@ namespace RickyShop_Site.Controllers
             //WebMail.Password = "Pitolni08";
             //WebMail.From = "cruzcoimbra08@yahoo.com";
 
-            Entities.db.SaveChangesAsync();
+            Entities.db.SaveChanges(); 
 
 
             TempData["MensagemAviso"] = "true";
@@ -711,6 +711,57 @@ namespace RickyShop_Site.Controllers
             // Grava o JSON no arquivo
             System.IO.File.WriteAllText(caminhoArquivo, json);
 
+            return View();
+        }
+        public ActionResult ViewReporteDetails(int id)
+        {
+            // Retorne a exibição do modal
+            var p = Entities.db.Reporte.Where(s => s.ID_Reporte == id).FirstOrDefault();
+            return PartialView("ReporteDetails", p);
+        }
+        public ActionResult FecharReporte (int id)
+        {
+            var r = Entities.db.Reporte.FirstOrDefault(s => s.ID_Reporte == id);
+
+            r.Estado = 1;
+            Entities.db.SaveChanges();
+
+            return RedirectToAction("ConfigSite");
+        }
+        public ActionResult AddImagemPromo(HttpPostedFileBase file)
+        {
+            string fileName = Path.GetFileName(file.FileName);
+            string path = Path.Combine(Server.MapPath("~/ImgPromo/"), fileName);
+            FileInfo fileInfo = new FileInfo(path);
+
+            if (fileInfo.Exists != true)
+            {
+                string extension = Path.GetExtension(fileName);
+
+                switch (extension.ToLower())
+                {
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                        file.SaveAs(path);
+                        return null;
+                    default://Meter mensagens de erro e avisar que só aquelas extesnsoes são validas
+                        ModelState.AddModelError("file", "Apenas arquivos .jpg, .jpeg e .png são permitidos.");
+                        return null;
+                }
+            }
+            else
+            {
+                //Meter aviso que precisa de imagem
+                Response.Write($"<script>alert('Não existe nenhum produto pesquisado!')</script>");
+                return null;
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult Home(Produto produto)
+        {
             return View();
         }
     }

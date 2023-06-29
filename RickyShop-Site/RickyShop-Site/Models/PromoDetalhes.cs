@@ -12,13 +12,13 @@ namespace RickyShop_Site.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Reporte
+    public partial class PromoDetalhes
     {
-        public int ID_Reporte { get; set; }
-        public string Nome_Utilizador { get; set; }
-        public string Email { get; set; }
-        public string Titulo_Reporte { get; set; }
-        public string Descrição { get; set; }
-        public int Estado { get; set; }
+        public int ID { get; set; }
+        public int ID_Promo { get; set; }
+        public int ID_Produto { get; set; }
+    
+        public virtual Produto Produto { get; set; }
+        public virtual Promo Promo { get; set; }
     }
 }

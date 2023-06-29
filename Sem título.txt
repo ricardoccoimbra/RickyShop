@@ -24,10 +24,10 @@
 2º Adicionar Promoções
 3º Adicionar POP-UPS - DEPOIS DAS AÇÕES
 4º Adicionar ficheiro XML Jason configurações ✅
-5º Completar conecxao user -> admin (apagar conta, utilizador)
 6º Acrescentar desconto historico de pedidos USER ✅
 7º Try Catch, mandar para pagina de erro
-8º Adiconar nos contactos Enviar mensagem de sugestão ✅ (FALTA ADICIONAR NA PAGINA DO ADMIN)
+8º Adiconar nos contactos Enviar mensagem de sugestão ✅ 
+9º Pagamento Paypal (?)
+10º Configurar atualizar automatico o estado dos pedidos
 
-9º Pagamento Paypal
-
+5º Completar conecxao user -> admin (apagar conta, utilizador)

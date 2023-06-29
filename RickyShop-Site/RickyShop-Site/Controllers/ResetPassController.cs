@@ -63,7 +63,7 @@ namespace RickyShop_Site.Controllers
             {
                 var t = Entities.db.Token.FirstOrDefault(s => s.ID_Utilizador == UserID && s.Estado == 1);
                 t.Estado = 0;
-                Entities.db.SaveChangesAsync();
+                Entities.db.SaveChanges();
                 return RedirectToAction("ResetPassword");
             }
             else
@@ -188,7 +188,7 @@ namespace RickyShop_Site.Controllers
             //WebMail.Password = "Pitolni08";
             //WebMail.From = "cruzcoimbra08@yahoo.com";
 
-            Entities.db.SaveChangesAsync();
+            Entities.db.SaveChanges();
 
 
             TempData["MensagemAviso"] = "true";
@@ -206,7 +206,7 @@ namespace RickyShop_Site.Controllers
                 u.PassWord = Generic.CriarPassHash(u.PassWord);
 
                 user.PassWord = u.PassWord;
-                Entities.db.SaveChangesAsync();
+                Entities.db.SaveChanges();
                 TempData["MensagemResetPass"] = "true";
                 return RedirectToAction("Login", "Home");
             }
