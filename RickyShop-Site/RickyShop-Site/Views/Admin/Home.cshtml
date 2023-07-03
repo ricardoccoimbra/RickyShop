@@ -7,6 +7,9 @@
 <script src="~/Scripts/jQuery.js"></script>
 <script src="~/Scripts/jQueryJava.js"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 <body style="margin-top: 10px">
     <section class="content">
         <div class="row">
@@ -97,6 +100,7 @@
         <thead>
             <tr>
                 <th>#</th>
+                <th>Nome</th>
                 <th>Data Inicio</th>
                 <th>Data Fim</th>
                 <th>Descrição</th>
@@ -107,20 +111,22 @@
             @foreach (var item in RickyShop_Site.Models.Entities.db.Promo)
             {
                 <tr>
-                    <td><a href="#" data-value="@item.ID_Promo" class="PedidosDetails">@item.ID_Promo</a></td>
-                    <td>@item.InicioData_Promo.ToString("dd/mm/yyyy")</td>
-                    <td>@item.FimData_Promo.ToString("dd/mm/yyyy")</td>
-                    <td>@item.Descrição.Substring(0, 50)...</td>
-                    <td>@item.Desconto</td>
+                    <td><a href="#" data-value="@item.ID_Promo" class="ViewPromo">@item.ID_Promo</a></td>
+                    <td>@item.Nome</td>
+                    <td>@item.InicioData_Promo.ToString("dd/MM/yyyy")</td>
+                    <td>@item.FimData_Promo.ToString("dd/MM/yyyy")</td>
+                    <td>@item.Descrição.Substring(0, 25)...</td>
+                    <td>@item.Desconto%</td>
                 </tr>
             }
         </tbody>
     </table>
 
     <div style="display:flex">
-        <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#AddPromo" style="margin-left:5px" data-placement="top" title="Adicionar Produto"><i class="glyphicon glyphicon-plus"></i></button>
+        <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#AddPromo" style="margin-left:5px" data-placement="top" title="Criar Promoção"><i class="glyphicon glyphicon-plus"></i></button>
         <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#AddImagem" style="margin-left:5px" data-placement="top" title="Adicionar Imagem"><i class="glyphicon glyphicon-picture"></i></button>
     </div>
+
 
 </body>
 
@@ -174,68 +180,162 @@
             <div class="modal-body">
                 <!-- content goes here -->
                 <form method="post" enctype="multipart/form-data" action="~/Admin/AddImagemPromo/">
-                    @using (Html.BeginForm())
-                    {
-                        @Html.AntiForgeryToken()
-                        <div class="form-group">
-                            <label>Imagem da Promoção</label>
-                            <input type="file" name="file" required />
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success center-block">Adicionar</button>
-                        </div>
-                    }
+
+                    <div class="form-group">
+                        <label>Imagem da Promoção</label>
+                        <input type="file" name="file" required />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success center-block">Adicionar</button>
+                    </div>
+
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="AddPromo" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal" id="AddPromo" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                <h3 class="modal-title" id="lineModalLabel">Criar Promoção</h3>
-            </div>
-            <div class="modal-body">
-                <!-- content goes here -->
-                <form method="post" enctype="multipart/form-data" action="~/Admin/Home/">
-                    @using (Html.BeginForm())
-                    {
-                        @Html.AntiForgeryToken()
+        <div class="modal-content center-block" style="width:150%">
+            <form action="~/Admin/CriarPromo/" enctype="multipart/form-data" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h3 class="modal-title" id="lineModalLabel">Criar Promoção</h3>
+                </div>
+                <div class="modal-body">
 
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Selecione os itens
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                @foreach (var item in RickyShop_Site.Models.Entities.db.Produto)
-                                {
-                                    <div class="dropdown-item">
-                                        @Html.CheckBoxFor(m => item.Selecionado)
-                                        @Html.LabelFor(m => item.Selecionado, item.Nome)
-                                    </div>
-                                }
-                            </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="nome">Nome:</label>
+                            <input type="text" id="nome" name="nome" required>
                         </div>
+                        <div class="col-md-6" style="display:flex">
+                            <label for="file">Imagem:</label>
+                            <input type="file" name="file" required />
+                        </div>
+                    </div>
 
-                        <button type="submit">PADA</button>
+                    <br />
 
-                    }
-                </form>
-            </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="dataInicio">Data de Início:</label>
+                            <input type="date" id="dataInicio" name="dataInicio" disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="dataFim">Data de Fim:</label>
+                            <input type="date" id="dataFim" name="dataFim" value="" required>
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div>
+                        <input type="radio" id="categoriaRadio" name="opcao" onchange="atualizarDropdown();" value="1" /> Categoria
+                        <input type="radio" id="marcaRadio" name="opcao" onchange="atualizarDropdown();" value="2" /> Marca
+                    </div>
+                    <div>
+                        <select class="form-control" name="marca" id="dropdownMarcas" style="display: none;">
+                            <option value="">Selecione uma marca</option>
+                            @foreach (var item in RickyShop_Site.Models.Entities.db.MarcaProduto)
+                            {
+                                if (item.Estado == 1)
+                                {
+                                    <option value="@item.ID_Marca">@item.Marca</option>
+                                }
+                            }
+                        </select>
+                        <select class="form-control" name="categoria" id="dropdownCategorias" style="display: none;">
+                            <option value="">Selecione uma categoria</option>
+                            @foreach (var item in RickyShop_Site.Models.Entities.db.Categoria)
+                            {
+                                if (item.Estado == 1)
+                                {
+                                    <option value="@item.ID_Categoria">@item.NomeCategoria</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <br />
+
+                    <div>
+                        <label for="desconto">Desconto:</label>
+                        <input type="number" min="1" max="99" id="desconto" name="desconto" required>
+                    </div>
+
+                    <br />
+
+                    <div>
+                        <label for="descricao">Descrição:</label>
+                        <textarea id="descricao" name="descricao" minlength="50" rows="10" style="width: 958px; height: 192px; max-width: 874px;" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit">Teste</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <script>
-    $(document).ready(function () {
-        $('.dropdown-toggle').click(function () {
-            $(this).siblings('.dropdown-menu').toggle();
-        });
-    });
+    function atualizarDropdown() {
+        var categoriaRadio = document.getElementById("categoriaRadio");
+        var marcaRadio = document.getElementById("marcaRadio");
+        var dropdownMarcas = document.getElementById("dropdownMarcas");
+        var dropdownCategorias = document.getElementById("dropdownCategorias");
+
+
+        // Mostra ou esconde as dropdowns de acordo com a seleção do radiobutton
+        dropdownMarcas.style.display = marcaRadio.checked ? "block" : "none";
+        dropdownCategorias.style.display = categoriaRadio.checked ? "block" : "none";
+    }
 </script>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Obter a data atual
+    var currentDate = new Date();
+
+    // Formatar a data no formato necessário para o campo date
+    var year = currentDate.getFullYear();
+    var month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Os meses são baseados em zero, então é necessário adicionar +1
+    var day = currentDate.getDate().toString().padStart(2, '0');
+
+    // Definir o valor do campo date
+    var dateValue = year + '-' + month + '-' + day;
+    document.getElementById("dataInicio").value = dateValue;
+
+</script>
+
+
+@*Modal Adicionar Produtos e Script*@
+<div class="modal fade" id="ModalViewPromo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Conteúdo do modal -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Adicionar Desconto</h3>
+            </div>
+            <div class="modal-body">
+                <div id="conteudoModalViewPromo">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".ViewPromo").click(function () {
+            var id = $(this).data("value");
+            $("#conteudoModalViewPromo").load("/Admin/ViewPromo/" + id, function () {
+                $("#ModalViewPromo").modal("show");
+            });
+        });
+
+    });
+</script>

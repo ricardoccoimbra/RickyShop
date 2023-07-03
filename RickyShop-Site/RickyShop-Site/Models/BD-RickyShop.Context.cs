@@ -33,17 +33,34 @@ namespace RickyShop_Site.Models
         public virtual DbSet<EstadoDoPedido> EstadoDoPedido { get; set; }
         public virtual DbSet<Logs> Logs { get; set; }
         public virtual DbSet<MarcaProduto> MarcaProduto { get; set; }
+        public virtual DbSet<MovimentacaoSaldo> MovimentacaoSaldo { get; set; }
         public virtual DbSet<Pedidos> Pedidos { get; set; }
+        public virtual DbSet<PedidosDetalhes> PedidosDetalhes { get; set; }
         public virtual DbSet<Produto> Produto { get; set; }
         public virtual DbSet<ProdutosFavoritos> ProdutosFavoritos { get; set; }
+        public virtual DbSet<Promo> Promo { get; set; }
+        public virtual DbSet<Reporte> Reporte { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Token> Token { get; set; }
         public virtual DbSet<Utilizadores> Utilizadores { get; set; }
-        public virtual DbSet<MovimentacaoSaldo> MovimentacaoSaldo { get; set; }
-        public virtual DbSet<Reporte> Reporte { get; set; }
-        public virtual DbSet<PedidosDetalhes> PedidosDetalhes { get; set; }
-        public virtual DbSet<Promo> Promo { get; set; }
-        public virtual DbSet<PromoDetalhes> PromoDetalhes { get; set; }
+    
+        public virtual ObjectResult<DadosCarrinhoProduto_Result> DadosCarrinhoProduto(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DadosCarrinhoProduto_Result>("DadosCarrinhoProduto", iDParameter);
+        }
+    
+        public virtual ObjectResult<DadosProdutosFavoritos_Result> DadosProdutosFavoritos(Nullable<int> iD)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DadosProdutosFavoritos_Result>("DadosProdutosFavoritos", iDParameter);
+        }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -148,24 +165,6 @@ namespace RickyShop_Site.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
-        public virtual ObjectResult<DadosCarrinhoProduto_Result> DadosCarrinhoProduto(Nullable<int> iD)
-        {
-            var iDParameter = iD.HasValue ?
-                new ObjectParameter("ID", iD) :
-                new ObjectParameter("ID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DadosCarrinhoProduto_Result>("DadosCarrinhoProduto", iDParameter);
-        }
-    
-        public virtual ObjectResult<DadosProdutosFavoritos_Result> DadosProdutosFavoritos(Nullable<int> iD)
-        {
-            var iDParameter = iD.HasValue ?
-                new ObjectParameter("ID", iD) :
-                new ObjectParameter("ID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DadosProdutosFavoritos_Result>("DadosProdutosFavoritos", iDParameter);
-        }
-    
         public virtual ObjectResult<TOP5_MarcasMaisVendidas_Result> TOP5_MarcasMaisVendidas()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TOP5_MarcasMaisVendidas_Result>("TOP5_MarcasMaisVendidas");
@@ -176,6 +175,11 @@ namespace RickyShop_Site.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TOP5_ProdMaisVendidos_Result>("TOP5_ProdMaisVendidos");
         }
     
+        public virtual ObjectResult<TOP5_ProdutosMenosStock_Result> TOP5_ProdutosMenosStock()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TOP5_ProdutosMenosStock_Result>("TOP5_ProdutosMenosStock");
+        }
+    
         public virtual ObjectResult<TOP5_UserMaisComprador_Result> TOP5_UserMaisComprador()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TOP5_UserMaisComprador_Result>("TOP5_UserMaisComprador");
@@ -184,11 +188,6 @@ namespace RickyShop_Site.Models
         public virtual ObjectResult<TOP5_UserMaisGastador_Result> TOP5_UserMaisGastador()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TOP5_UserMaisGastador_Result>("TOP5_UserMaisGastador");
-        }
-    
-        public virtual ObjectResult<TOP5_ProdutosMenosStock_Result> TOP5_ProdutosMenosStock()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TOP5_ProdutosMenosStock_Result>("TOP5_ProdutosMenosStock");
         }
     }
 }

@@ -4,39 +4,36 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2d1e9ed2f9954e5c83cc56893e4d307b" Name="Diagram1">
-        <EntityTypeShape EntityType="GestãoRickyShopModel.Admin" Width="1.5" PointX="11.75" PointY="4.5" IsExpanded="true" />
+      <Diagram DiagramId="090fb884e3794458a678ee22002c1289" Name="Diagram1">
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Admin" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="GestãoRickyShopModel.Carrinho" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.Categoria" Width="1.5" PointX="1.5" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.EstadoDoPedido" Width="1.5" PointX="3.75" PointY="14.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.Logs" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.MarcaProduto" Width="1.5" PointX="1.5" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.Pedidos" Width="1.5" PointX="6" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.Produto" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.ProdutosFavoritos" Width="1.5" PointX="6" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.sysdiagrams" Width="1.5" PointX="9.625" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.Token" Width="1.5" PointX="3" PointY="20.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.Utilizadores" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Categoria" Width="1.5" PointX="1.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.EstadoDoPedido" Width="1.5" PointX="3.75" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Logs" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.MarcaProduto" Width="1.5" PointX="1.5" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.MovimentacaoSaldo" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Pedidos" Width="1.5" PointX="6" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.PedidosDetalhes" Width="1.5" PointX="8.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Produto" Width="1.5" PointX="3.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.ProdutosFavoritos" Width="1.5" PointX="6" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Promo" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Reporte" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.sysdiagrams" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Token" Width="1.5" PointX="3" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GestãoRickyShopModel.Utilizadores" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_Carrinho_Produto" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_Carrinho_Utilizadores" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_Produto_Categoria" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_Pedidos_EstadoDoPedido" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_Logs_Utilizadores" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_Produto_MarcaProduto" ManuallyRouted="false" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_MovimentacaoSaldo_Utilizadores" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_Pedidos_Utilizadores" ManuallyRouted="false" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_PedidosDetalhes_Pedidos" ManuallyRouted="false" />
+        <AssociationConnector Association="GestãoRickyShopModel.FK_PedidosDetalhes_Produto" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_ProdutosFavoritos_Produto" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_ProdutosFavoritos_Utilizadores" ManuallyRouted="false" />
         <AssociationConnector Association="GestãoRickyShopModel.FK_Token_Utilizadores" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.MovimentacaoSaldo" Width="1.5" PointX="3" PointY="17.125" />
-        <AssociationConnector Association="GestãoRickyShopModel.FK_MovimentacaoSaldo_Utilizadores" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.Reporte" Width="1.5" PointX="11.25" PointY="8.25" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.PedidosDetalhes" Width="1.5" PointX="8.25" PointY="5.125" />
-        <AssociationConnector Association="GestãoRickyShopModel.FK_PedidosDetalhes_Pedidos" />
-        <AssociationConnector Association="GestãoRickyShopModel.FK_PedidosDetalhes_Produto" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.Promo" Width="1.5" PointX="9.5" PointY="11.25" />
-        <EntityTypeShape EntityType="GestãoRickyShopModel.PromoDetalhes" Width="1.5" PointX="7.375" PointY="0.5" />
-        <AssociationConnector Association="GestãoRickyShopModel.FK_PromoDetalhes_Produto" />
-        <AssociationConnector Association="GestãoRickyShopModel.FK_PromoDetalhes_Promocao" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

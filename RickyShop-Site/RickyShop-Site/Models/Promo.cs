@@ -14,20 +14,14 @@ namespace RickyShop_Site.Models
     
     public partial class Promo
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Promo()
-        {
-            this.PromoDetalhes = new HashSet<PromoDetalhes>();
-        }
-    
         public int ID_Promo { get; set; }
         public System.DateTime InicioData_Promo { get; set; }
         public System.DateTime FimData_Promo { get; set; }
         public string Path_Logo { get; set; }
         public string Descrição { get; set; }
         public int Desconto { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PromoDetalhes> PromoDetalhes { get; set; }
+        public Nullable<int> ID_Categoria { get; set; }
+        public Nullable<int> ID_Marca { get; set; }
+        public string Nome { get; set; }
     }
 }

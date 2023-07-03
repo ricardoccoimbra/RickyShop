@@ -1,0 +1,57 @@
+﻿@model RickyShop_Site.Models.Promo
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PromoDetails</title>
+</head>
+<body>
+    <div class="row text-center" style="font-size: 30px;">
+        @Html.DisplayFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", @style = "font-zi" } })
+    </div>
+
+    <div class="row text-center" style="font-size: 30px;">
+        <img src="@Html.DisplayFor(model => model.Path_Logo)" />
+    </div>
+
+    <br />
+    <br />
+
+    <label>Descrição</label>
+    <div class="row text-center" style="margin-left:1%;">
+        <textarea style="max-width:557px; width:557px" class="form-control" rows="10" disabled="disabled">@Model.Descrição</textarea>
+    </div>
+
+    <br />
+
+    <div class="row text-center" style="margin-left:1%;">
+        Produtos em Desconto:
+        @if (Model.ID_Categoria != null)
+        {
+            <label>@RickyShop_Site.Models.Entities.db.Categoria.FirstOrDefault(s => s.ID_Categoria == Model.ID_Categoria).NomeCategoria</label>
+        }
+        else
+        {
+            <label>
+                @RickyShop_Site.Models.Entities.db.MarcaProduto.FirstOrDefault(s => s.ID_Marca == Model.ID_Marca).Marca
+            </label>
+        }
+
+        | <label>@Model.Desconto%</label>
+    </div>
+
+    <br />
+
+    <div class="row text-center" style="margin-left:1%;">
+        Inicio: <label>@Model.InicioData_Promo.ToString("dd/MM/yyyy")</label> - Fim: <label>@Model.FimData_Promo.ToString("dd/MM/yyyy")</label>
+    </div>
+
+</body>
+</html>

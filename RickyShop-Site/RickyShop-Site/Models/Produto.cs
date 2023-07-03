@@ -35,7 +35,6 @@ namespace RickyShop_Site.Models
         public int Descontinuado { get; set; }
         public int Destaque { get; set; }
         public bool EstadoProm { get; set; }
-        public bool Selecionado { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Carrinho> Carrinho { get; set; }
@@ -45,6 +44,5 @@ namespace RickyShop_Site.Models
         public virtual ICollection<ProdutosFavoritos> ProdutosFavoritos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PedidosDetalhes> PedidosDetalhes { get; set; }
-        public virtual ICollection<PromoDetalhes> PromoDetalhes { get; set; }
     }
 }

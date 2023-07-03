@@ -219,9 +219,6 @@
     <Compile Include="Models\Promo.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PromoDetalhes.cs">
-      <DependentUpon>BD-RickyShop.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Reporte.cs">
       <DependentUpon>BD-RickyShop.tt</DependentUpon>
     </Compile>
@@ -505,6 +502,7 @@
     <Content Include="Imagens\ProdDestaque.png" />
     <Content Include="Imagens\ProdPorPagina.png" />
     <Content Include="Imagens\ResetPassword-image.png" />
+    <Content Include="ImgPromo\LogoRickyShop.png" />
     <Content Include="Models\BD-RickyShop.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>BD-RickyShop.edmx</DependentUpon>
@@ -546,13 +544,6 @@
     <Content Include="Ténis\7.jpg" />
     <Content Include="Ténis\8.jpg" />
     <Content Include="Ténis\9.jpg" />
-    <EntityDeploy Include="Models\BD-RickyShop.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>BD-RickyShop.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\BD-RickyShop.edmx.diagram">
-      <DependentUpon>BD-RickyShop.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\themes\default\assets\fonts\icons.woff2" />
     <Content Include="Content\themes\default\assets\fonts\icons.woff" />
     <Content Include="Content\themes\default\assets\fonts\icons.ttf" />
@@ -567,6 +558,13 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="App_Browsers\qt.browser" />
+    <EntityDeploy Include="Models\BD-RickyShop.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BD-RickyShop.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\BD-RickyShop.edmx.diagram">
+      <DependentUpon>BD-RickyShop.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\carouselAuto.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -625,11 +623,12 @@
     <Content Include="Views\Admin\CriarCategoria.cshtml" />
     <Content Include="Views\Admin\ConfigSite.cshtml" />
     <Content Include="Views\Admin\ReporteDetails.cshtml" />
+    <Content Include="Views\Admin\TemplateNovaPromo.cshtml" />
+    <Content Include="Views\Admin\PromoDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="FicheiroJson\" />
-    <Folder Include="ImgPromo\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>

@@ -82,9 +82,9 @@
                     {
                         if (marca.Estado == 1)
                         {
-                            <option value="@marca.ID_Marca">@marca.Marca</option>
+                            <option value="@marca.ID_Marca"  @(Model.FirstOrDefault().ID_Marca == marca.ID_Marca? "selected" : "")> @marca.Marca</option>
+                            }
                         }
-                    }
                 </select>
             </div>
         </div>

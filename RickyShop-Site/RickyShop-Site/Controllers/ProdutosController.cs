@@ -191,7 +191,7 @@ namespace RickyShop_Site.Controllers
         public ActionResult ListaProdutos(Produto p, int id)
         {
             IPagedList<Produto> prodPage;
-            int tamanhoPagina = Generic.ValSettings(Server.MapPath("tamanhoPagina")).QtdProdutosPagina;
+            int tamanhoPagina = Generic.ValSettings(Server.MapPath("~/FicheiroJson/SettingsRickyShop.json")).QtdProdutosPagina;
             // valor não pode ser nulo, caso seja ele fica a 1, como se fosse um if
             int numeroPagina = 1;
 

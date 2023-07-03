@@ -17,9 +17,9 @@
     <Property Name="PrecoProduto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="ID_Produto" Type="Int32" Nullable="false" />
     <Property Name="Quantidade" Type="Int32" Nullable="false" />
+    <Property Name="Tamanho" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Produto" Relationship="Self.FK_Carrinho_Produto" FromRole="Carrinho" ToRole="Produto" />
     <NavigationProperty Name="Utilizadores" Relationship="Self.FK_Carrinho_Utilizadores" FromRole="Carrinho" ToRole="Utilizadores" />
-    <Property Name="Tamanho" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Categoria">
     <Key>
@@ -27,8 +27,8 @@
     </Key>
     <Property Name="ID_Categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="NomeCategoria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Produto" Relationship="Self.FK_Produto_Categoria" FromRole="Categoria" ToRole="Produto" />
     <Property Name="Estado" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Produto" Relationship="Self.FK_Produto_Categoria" FromRole="Categoria" ToRole="Produto" />
   </EntityType>
   <EntityType Name="EstadoDoPedido">
     <Key>
@@ -56,8 +56,19 @@
     </Key>
     <Property Name="ID_Marca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Produto" Relationship="Self.FK_Produto_MarcaProduto" FromRole="MarcaProduto" ToRole="Produto" />
     <Property Name="Estado" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Produto" Relationship="Self.FK_Produto_MarcaProduto" FromRole="MarcaProduto" ToRole="Produto" />
+  </EntityType>
+  <EntityType Name="MovimentacaoSaldo">
+    <Key>
+      <PropertyRef Name="ID_Movimentacao" />
+    </Key>
+    <Property Name="ID_Movimentacao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Utilizador" Type="Int32" Nullable="false" />
+    <Property Name="Quantidade" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Tipo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NumeroCartao" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Utilizadores" Relationship="Self.FK_MovimentacaoSaldo_Utilizadores" FromRole="MovimentacaoSaldo" ToRole="Utilizadores" />
   </EntityType>
   <EntityType Name="Pedidos">
     <Key>
@@ -67,16 +78,29 @@
     <Property Name="ID_Utilizador" Type="Int32" Nullable="false" />
     <Property Name="DataDoPedido" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="DataDeEntrega" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="MoradaEntrega" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="CodigoPostal" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="PreçoTotal" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="ID_Estado" Type="Int32" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Contacto" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Desconto" Type="Int32" />
     <NavigationProperty Name="EstadoDoPedido" Relationship="Self.FK_Pedidos_EstadoDoPedido" FromRole="Pedidos" ToRole="EstadoDoPedido" />
     <NavigationProperty Name="Utilizadores" Relationship="Self.FK_Pedidos_Utilizadores" FromRole="Pedidos" ToRole="Utilizadores" />
-    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Contacto" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-    <Property Name="MoradaEntrega" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PedidosDetalhes" Relationship="Self.FK_PedidosDetalhes_Pedidos" FromRole="Pedidos" ToRole="PedidosDetalhes" />
+  </EntityType>
+  <EntityType Name="PedidosDetalhes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Pedido" Type="Int32" Nullable="false" />
+    <Property Name="ID_Produto" Type="Int32" Nullable="false" />
+    <Property Name="Quantidade" Type="Int32" Nullable="false" />
+    <Property Name="Preco" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="Desconto" Type="Int32" />
-    <NavigationProperty Name="PedidosDetalhes" Relationship="GestãoRickyShopModel.FK_PedidosDetalhes_Pedidos" FromRole="Pedidos" ToRole="PedidosDetalhes" />
+    <NavigationProperty Name="Pedidos" Relationship="Self.FK_PedidosDetalhes_Pedidos" FromRole="PedidosDetalhes" ToRole="Pedidos" />
+    <NavigationProperty Name="Produto" Relationship="Self.FK_PedidosDetalhes_Produto" FromRole="PedidosDetalhes" ToRole="Produto" />
   </EntityType>
   <EntityType Name="Produto">
     <Key>
@@ -97,9 +121,8 @@
     <NavigationProperty Name="Carrinho" Relationship="Self.FK_Carrinho_Produto" FromRole="Produto" ToRole="Carrinho" />
     <NavigationProperty Name="Categoria" Relationship="Self.FK_Produto_Categoria" FromRole="Produto" ToRole="Categoria" />
     <NavigationProperty Name="MarcaProduto" Relationship="Self.FK_Produto_MarcaProduto" FromRole="Produto" ToRole="MarcaProduto" />
+    <NavigationProperty Name="PedidosDetalhes" Relationship="Self.FK_PedidosDetalhes_Produto" FromRole="Produto" ToRole="PedidosDetalhes" />
     <NavigationProperty Name="ProdutosFavoritos" Relationship="Self.FK_ProdutosFavoritos_Produto" FromRole="Produto" ToRole="ProdutosFavoritos" />
-    <NavigationProperty Name="PedidosDetalhes" Relationship="GestãoRickyShopModel.FK_PedidosDetalhes_Produto" FromRole="Produto" ToRole="PedidosDetalhes" />
-    <NavigationProperty Name="PromoDetalhes" Relationship="GestãoRickyShopModel.FK_PromoDetalhes_Produto" FromRole="Produto" ToRole="PromoDetalhes" />
   </EntityType>
   <EntityType Name="ProdutosFavoritos">
     <Key>
@@ -110,6 +133,31 @@
     <Property Name="ID_Utilizador" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Produto" Relationship="Self.FK_ProdutosFavoritos_Produto" FromRole="ProdutosFavoritos" ToRole="Produto" />
     <NavigationProperty Name="Utilizadores" Relationship="Self.FK_ProdutosFavoritos_Utilizadores" FromRole="ProdutosFavoritos" ToRole="Utilizadores" />
+  </EntityType>
+  <EntityType Name="Promo">
+    <Key>
+      <PropertyRef Name="ID_Promo" />
+    </Key>
+    <Property Name="ID_Promo" Type="Int32" Nullable="false" />
+    <Property Name="InicioData_Promo" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="FimData_Promo" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Path_Logo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descrição" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Desconto" Type="Int32" Nullable="false" />
+    <Property Name="ID_Categoria" Type="Int32" />
+    <Property Name="ID_Marca" Type="Int32" />
+    <Property Name="Nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Reporte">
+    <Key>
+      <PropertyRef Name="ID_Reporte" />
+    </Key>
+    <Property Name="ID_Reporte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nome_Utilizador" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Titulo_Reporte" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descrição" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -145,16 +193,16 @@
     <Property Name="Contacto" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DataDeAdesao" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="Desconto" Type="Int32" />
+    <Property Name="Morada" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CodigoPostal" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Saldo" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Estado" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Carrinho" Relationship="Self.FK_Carrinho_Utilizadores" FromRole="Utilizadores" ToRole="Carrinho" />
     <NavigationProperty Name="Logs" Relationship="Self.FK_Logs_Utilizadores" FromRole="Utilizadores" ToRole="Logs" />
+    <NavigationProperty Name="MovimentacaoSaldo" Relationship="Self.FK_MovimentacaoSaldo_Utilizadores" FromRole="Utilizadores" ToRole="MovimentacaoSaldo" />
     <NavigationProperty Name="Pedidos" Relationship="Self.FK_Pedidos_Utilizadores" FromRole="Utilizadores" ToRole="Pedidos" />
     <NavigationProperty Name="ProdutosFavoritos" Relationship="Self.FK_ProdutosFavoritos_Utilizadores" FromRole="Utilizadores" ToRole="ProdutosFavoritos" />
     <NavigationProperty Name="Token" Relationship="Self.FK_Token_Utilizadores" FromRole="Utilizadores" ToRole="Token" />
-    <Property Name="Morada" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="CodigoPostal" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="MovimentacaoSaldo" Relationship="GestãoRickyShopModel.FK_MovimentacaoSaldo_Utilizadores" FromRole="Utilizadores" ToRole="MovimentacaoSaldo" />
-    <Property Name="Saldo" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="Estado" Type="Int32" Nullable="false" />
   </EntityType>
   <Association Name="FK_Carrinho_Produto">
     <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
@@ -228,6 +276,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_MovimentacaoSaldo_Utilizadores">
+    <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
+    <End Role="MovimentacaoSaldo" Type="Self.MovimentacaoSaldo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizadores">
+        <PropertyRef Name="ID_Utilizador" />
+      </Principal>
+      <Dependent Role="MovimentacaoSaldo">
+        <PropertyRef Name="ID_Utilizador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Pedidos_Utilizadores">
     <End Role="Utilizadores" Type="Self.Utilizadores" Multiplicity="1" />
     <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="*" />
@@ -237,6 +297,30 @@
       </Principal>
       <Dependent Role="Pedidos">
         <PropertyRef Name="ID_Utilizador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PedidosDetalhes_Pedidos">
+    <End Role="Pedidos" Type="Self.Pedidos" Multiplicity="1" />
+    <End Role="PedidosDetalhes" Type="Self.PedidosDetalhes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pedidos">
+        <PropertyRef Name="ID_Pedido" />
+      </Principal>
+      <Dependent Role="PedidosDetalhes">
+        <PropertyRef Name="ID_Pedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PedidosDetalhes_Produto">
+    <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
+    <End Role="PedidosDetalhes" Type="Self.PedidosDetalhes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Produto">
+        <PropertyRef Name="ID_Produto" />
+      </Principal>
+      <Dependent Role="PedidosDetalhes">
+        <PropertyRef Name="ID_Produto" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -283,9 +367,13 @@
     <EntitySet Name="EstadoDoPedido" EntityType="Self.EstadoDoPedido" />
     <EntitySet Name="Logs" EntityType="Self.Logs" />
     <EntitySet Name="MarcaProduto" EntityType="Self.MarcaProduto" />
+    <EntitySet Name="MovimentacaoSaldo" EntityType="Self.MovimentacaoSaldo" />
     <EntitySet Name="Pedidos" EntityType="Self.Pedidos" />
+    <EntitySet Name="PedidosDetalhes" EntityType="Self.PedidosDetalhes" />
     <EntitySet Name="Produto" EntityType="Self.Produto" />
     <EntitySet Name="ProdutosFavoritos" EntityType="Self.ProdutosFavoritos" />
+    <EntitySet Name="Promo" EntityType="Self.Promo" />
+    <EntitySet Name="Reporte" EntityType="Self.Reporte" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="Token" EntityType="Self.Token" />
     <EntitySet Name="Utilizadores" EntityType="Self.Utilizadores" />
@@ -313,9 +401,21 @@
       <End Role="MarcaProduto" EntitySet="MarcaProduto" />
       <End Role="Produto" EntitySet="Produto" />
     </AssociationSet>
+    <AssociationSet Name="FK_MovimentacaoSaldo_Utilizadores" Association="Self.FK_MovimentacaoSaldo_Utilizadores">
+      <End Role="Utilizadores" EntitySet="Utilizadores" />
+      <End Role="MovimentacaoSaldo" EntitySet="MovimentacaoSaldo" />
+    </AssociationSet>
     <AssociationSet Name="FK_Pedidos_Utilizadores" Association="Self.FK_Pedidos_Utilizadores">
       <End Role="Utilizadores" EntitySet="Utilizadores" />
       <End Role="Pedidos" EntitySet="Pedidos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PedidosDetalhes_Pedidos" Association="Self.FK_PedidosDetalhes_Pedidos">
+      <End Role="Pedidos" EntitySet="Pedidos" />
+      <End Role="PedidosDetalhes" EntitySet="PedidosDetalhes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PedidosDetalhes_Produto" Association="Self.FK_PedidosDetalhes_Produto">
+      <End Role="Produto" EntitySet="Produto" />
+      <End Role="PedidosDetalhes" EntitySet="PedidosDetalhes" />
     </AssociationSet>
     <AssociationSet Name="FK_ProdutosFavoritos_Produto" Association="Self.FK_ProdutosFavoritos_Produto">
       <End Role="Produto" EntitySet="Produto" />
@@ -329,6 +429,12 @@
       <End Role="Utilizadores" EntitySet="Utilizadores" />
       <End Role="Token" EntitySet="Token" />
     </AssociationSet>
+    <FunctionImport Name="DadosCarrinhoProduto" ReturnType="Collection(GestãoRickyShopModel.DadosCarrinhoProduto_Result)">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DadosProdutosFavoritos" ReturnType="Collection(GestãoRickyShopModel.DadosProdutosFavoritos_Result)">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+    </FunctionImport>
     <FunctionImport Name="sp_alterdiagram">
       <Parameter Name="diagramname" Mode="In" Type="String" />
       <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -359,43 +465,30 @@
       <Parameter Name="new_diagramname" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_upgraddiagrams" />
-    <FunctionImport Name="DadosCarrinhoProduto" ReturnType="Collection(GestãoRickyShopModel.DadosCarrinhoProduto_Result)">
-      <Parameter Name="ID" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <EntitySet Name="MovimentacaoSaldo" EntityType="GestãoRickyShopModel.MovimentacaoSaldo" />
-    <AssociationSet Name="FK_MovimentacaoSaldo_Utilizadores" Association="GestãoRickyShopModel.FK_MovimentacaoSaldo_Utilizadores">
-      <End Role="Utilizadores" EntitySet="Utilizadores" />
-      <End Role="MovimentacaoSaldo" EntitySet="MovimentacaoSaldo" />
-    </AssociationSet>
-    <FunctionImport Name="DadosProdutosFavoritos" ReturnType="Collection(GestãoRickyShopModel.DadosProdutosFavoritos_Result)">
-      <Parameter Name="ID" Mode="In" Type="Int32" />
-    </FunctionImport>
     <FunctionImport Name="TOP5_MarcasMaisVendidas" ReturnType="Collection(GestãoRickyShopModel.TOP5_MarcasMaisVendidas_Result)" />
     <FunctionImport Name="TOP5_ProdMaisVendidos" ReturnType="Collection(GestãoRickyShopModel.TOP5_ProdMaisVendidos_Result)" />
+    <FunctionImport Name="TOP5_ProdutosMenosStock" ReturnType="Collection(GestãoRickyShopModel.TOP5_ProdutosMenosStock_Result)" />
     <FunctionImport Name="TOP5_UserMaisComprador" ReturnType="Collection(GestãoRickyShopModel.TOP5_UserMaisComprador_Result)" />
     <FunctionImport Name="TOP5_UserMaisGastador" ReturnType="Collection(GestãoRickyShopModel.TOP5_UserMaisGastador_Result)" />
-    <FunctionImport Name="TOP5_ProdutosMenosStock" ReturnType="Collection(GestãoRickyShopModel.TOP5_ProdutosMenosStock_Result)" />
-    <EntitySet Name="Reporte" EntityType="GestãoRickyShopModel.Reporte" />
-    <EntitySet Name="PedidosDetalhes" EntityType="GestãoRickyShopModel.PedidosDetalhes" />
-    <AssociationSet Name="FK_PedidosDetalhes_Pedidos" Association="GestãoRickyShopModel.FK_PedidosDetalhes_Pedidos">
-      <End Role="Pedidos" EntitySet="Pedidos" />
-      <End Role="PedidosDetalhes" EntitySet="PedidosDetalhes" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PedidosDetalhes_Produto" Association="GestãoRickyShopModel.FK_PedidosDetalhes_Produto">
-      <End Role="Produto" EntitySet="Produto" />
-      <End Role="PedidosDetalhes" EntitySet="PedidosDetalhes" />
-    </AssociationSet>
-    <EntitySet Name="Promo" EntityType="GestãoRickyShopModel.Promo" />
-    <EntitySet Name="PromoDetalhes" EntityType="GestãoRickyShopModel.PromoDetalhes" />
-    <AssociationSet Name="FK_PromoDetalhes_Produto" Association="GestãoRickyShopModel.FK_PromoDetalhes_Produto">
-      <End Role="Produto" EntitySet="Produto" />
-      <End Role="PromoDetalhes" EntitySet="PromoDetalhes" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PromoDetalhes_Promocao" Association="GestãoRickyShopModel.FK_PromoDetalhes_Promocao">
-      <End Role="Promo" EntitySet="Promo" />
-      <End Role="PromoDetalhes" EntitySet="PromoDetalhes" />
-    </AssociationSet>
   </EntityContainer>
+  <ComplexType Name="DadosCarrinhoProduto_Result">
+    <Property Type="String" Name="Nome" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="ImagemPath" Nullable="false" MaxLength="250" />
+    <Property Type="Decimal" Name="PreçoPorQuantidade" Nullable="false" Precision="19" />
+    <Property Type="String" Name="Descrição" Nullable="false" MaxLength="1000" />
+    <Property Type="Int32" Name="Quantidade" Nullable="false" />
+    <Property Type="String" Name="Tamanho" Nullable="false" MaxLength="5" />
+    <Property Type="Int32" Name="ID_Produto" Nullable="false" />
+    <Property Type="Int32" Name="Desconto" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="DadosProdutosFavoritos_Result">
+    <Property Type="String" Name="Nome" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="ImagemPath" Nullable="false" MaxLength="250" />
+    <Property Type="String" Name="Descrição" Nullable="false" MaxLength="1000" />
+    <Property Type="Int32" Name="ID_Produto" Nullable="false" />
+    <Property Type="Int32" Name="Desconto" Nullable="true" />
+    <Property Type="Decimal" Name="PreçoPorQuantidade" Nullable="false" Precision="19" />
+  </ComplexType>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
     <Property Type="Binary" Name="definition" Nullable="true" />
@@ -407,47 +500,6 @@
     <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
     <Property Type="Int32" Name="OwnerID" Nullable="false" />
   </ComplexType>
-  <ComplexType Name="DadosCarrinhoProduto_Result">
-    <Property Type="String" Name="Nome" Nullable="false" MaxLength="30" />
-    <Property Type="String" Name="ImagemPath" Nullable="false" MaxLength="250" />
-    <Property Type="Decimal" Name="PreçoPorQuantidade" Nullable="false" Precision="19" />
-    <Property Type="String" Name="Descrição" Nullable="false" MaxLength="1000" />
-    <Property Type="Int32" Name="Quantidade" Nullable="false" />
-    <Property Type="String" Name="Tamanho" Nullable="false" MaxLength="5" />
-    <Property Type="Int32" Name="ID_Produto" Nullable="false" />
-    <Property Type="Int32" Name="Desconto" Nullable="true" />
-  </ComplexType>
-  <EntityType Name="MovimentacaoSaldo">
-    <Key>
-      <PropertyRef Name="ID_Movimentacao" />
-    </Key>
-    <Property Name="ID_Movimentacao" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ID_Utilizador" Type="Int32" Nullable="false" />
-    <Property Name="Quantidade" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="Tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Utilizadores" Relationship="GestãoRickyShopModel.FK_MovimentacaoSaldo_Utilizadores" FromRole="MovimentacaoSaldo" ToRole="Utilizadores" />
-    <Property Name="NumeroCartao" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
-  </EntityType>
-  <Association Name="FK_MovimentacaoSaldo_Utilizadores">
-    <End Type="GestãoRickyShopModel.Utilizadores" Role="Utilizadores" Multiplicity="1" />
-    <End Type="GestãoRickyShopModel.MovimentacaoSaldo" Role="MovimentacaoSaldo" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Utilizadores">
-        <PropertyRef Name="ID_Utilizador" />
-      </Principal>
-      <Dependent Role="MovimentacaoSaldo">
-        <PropertyRef Name="ID_Utilizador" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <ComplexType Name="DadosProdutosFavoritos_Result">
-    <Property Type="String" Name="Nome" Nullable="false" MaxLength="30" />
-    <Property Type="String" Name="ImagemPath" Nullable="false" MaxLength="250" />
-    <Property Type="String" Name="Descrição" Nullable="false" MaxLength="1000" />
-    <Property Type="Int32" Name="ID_Produto" Nullable="false" />
-    <Property Type="Int32" Name="Desconto" Nullable="true" />
-    <Property Type="Decimal" Name="PreçoPorQuantidade" Nullable="false" Precision="19" />
-  </ComplexType>
   <ComplexType Name="TOP5_MarcasMaisVendidas_Result">
     <Property Type="String" Name="Marca" Nullable="false" MaxLength="50" />
     <Property Type="Int32" Name="total_vendido" Nullable="true" />
@@ -455,14 +507,6 @@
   <ComplexType Name="TOP5_ProdMaisVendidos_Result">
     <Property Type="String" Name="Nome" Nullable="false" MaxLength="30" />
     <Property Type="Int32" Name="total_vendido" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="TOP5_UserMaisComprador_Result">
-    <Property Type="Int32" Name="ID_Utilizador" Nullable="false" />
-    <Property Type="Int32" Name="total_vendido" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="TOP5_UserMaisGastador_Result">
-    <Property Type="Int32" Name="ID_Utilizador" Nullable="false" />
-    <Property Type="Decimal" Name="preco_total" Nullable="true" Precision="19" />
   </ComplexType>
   <ComplexType Name="TOP5_ProdutosMenosStock_Result">
     <Property Type="Int32" Name="ID_Produto" Nullable="false" />
@@ -478,98 +522,12 @@
     <Property Type="Int32" Name="Descontinuado" Nullable="false" />
     <Property Type="Int32" Name="Destaque" Nullable="false" />
   </ComplexType>
-  <EntityType Name="Reporte">
-    <Key>
-      <PropertyRef Name="ID_Reporte" />
-    </Key>
-    <Property Name="ID_Reporte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Nome_Utilizador" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Titulo_Reporte" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Descrição" Type="String" Nullable="false" MaxLength="5000" FixedLength="false" Unicode="false" />
-    <Property Name="Estado" Type="Int32" Nullable="false" />
-  </EntityType>
-  <EntityType Name="PedidosDetalhes">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ID_Pedido" Type="Int32" Nullable="false" />
-    <Property Name="ID_Produto" Type="Int32" Nullable="false" />
-    <Property Name="Quantidade" Type="Int32" Nullable="false" />
-    <Property Name="Preco" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-    <Property Name="Desconto" Type="Int32" />
-    <NavigationProperty Name="Pedidos" Relationship="GestãoRickyShopModel.FK_PedidosDetalhes_Pedidos" FromRole="PedidosDetalhes" ToRole="Pedidos" />
-    <NavigationProperty Name="Produto" Relationship="GestãoRickyShopModel.FK_PedidosDetalhes_Produto" FromRole="PedidosDetalhes" ToRole="Produto" />
-  </EntityType>
-  <Association Name="FK_PedidosDetalhes_Pedidos">
-    <End Type="GestãoRickyShopModel.Pedidos" Role="Pedidos" Multiplicity="1" />
-    <End Type="GestãoRickyShopModel.PedidosDetalhes" Role="PedidosDetalhes" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Pedidos">
-        <PropertyRef Name="ID_Pedido" />
-      </Principal>
-      <Dependent Role="PedidosDetalhes">
-        <PropertyRef Name="ID_Pedido" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PedidosDetalhes_Produto">
-    <End Type="GestãoRickyShopModel.Produto" Role="Produto" Multiplicity="1" />
-    <End Type="GestãoRickyShopModel.PedidosDetalhes" Role="PedidosDetalhes" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Produto">
-        <PropertyRef Name="ID_Produto" />
-      </Principal>
-      <Dependent Role="PedidosDetalhes">
-        <PropertyRef Name="ID_Produto" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="Promo">
-    <Key>
-      <PropertyRef Name="ID_Promo" />
-    </Key>
-    <Property Name="ID_Promo" Type="Int32" Nullable="false" />
-    <Property Name="InicioData_Promo" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="FimData_Promo" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Path_Logo" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-    <Property Name="Descrição" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="Desconto" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="PromoDetalhes" Relationship="GestãoRickyShopModel.FK_PromoDetalhes_Promocao" FromRole="Promo" ToRole="PromoDetalhes" />
-  </EntityType>
-  <EntityType Name="PromoDetalhes">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
-    <Property Name="ID_Promo" Type="Int32" Nullable="false" />
-    <Property Name="ID_Produto" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Produto" Relationship="GestãoRickyShopModel.FK_PromoDetalhes_Produto" FromRole="PromoDetalhes" ToRole="Produto" />
-    <NavigationProperty Name="Promo" Relationship="GestãoRickyShopModel.FK_PromoDetalhes_Promocao" FromRole="PromoDetalhes" ToRole="Promo" />
-  </EntityType>
-  <Association Name="FK_PromoDetalhes_Produto">
-    <End Type="GestãoRickyShopModel.Produto" Role="Produto" Multiplicity="1" />
-    <End Type="GestãoRickyShopModel.PromoDetalhes" Role="PromoDetalhes" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Produto">
-        <PropertyRef Name="ID_Produto" />
-      </Principal>
-      <Dependent Role="PromoDetalhes">
-        <PropertyRef Name="ID_Produto" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PromoDetalhes_Promocao">
-    <End Type="GestãoRickyShopModel.Promo" Role="Promo" Multiplicity="1" />
-    <End Type="GestãoRickyShopModel.PromoDetalhes" Role="PromoDetalhes" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Promo">
-        <PropertyRef Name="ID_Promo" />
-      </Principal>
-      <Dependent Role="PromoDetalhes">
-        <PropertyRef Name="ID_Promo" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
+  <ComplexType Name="TOP5_UserMaisComprador_Result">
+    <Property Type="Int32" Name="ID_Utilizador" Nullable="false" />
+    <Property Type="Int32" Name="total_vendido" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="TOP5_UserMaisGastador_Result">
+    <Property Type="Int32" Name="ID_Utilizador" Nullable="false" />
+    <Property Type="Decimal" Name="preco_total" Nullable="true" Precision="19" />
+  </ComplexType>
 </Schema>

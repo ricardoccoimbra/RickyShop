@@ -269,7 +269,7 @@ namespace RickyShop_Site.Controllers
                     }
                     else
                     {
-
+                        //existe produtis iguais
 
                     }
                 }
@@ -462,7 +462,7 @@ namespace RickyShop_Site.Controllers
             //WebMail.Password = "Pitolni08";
             //WebMail.From = "cruzcoimbra08@yahoo.com";
 
-            Entities.db.SaveChanges(); 
+            Entities.db.SaveChanges();
 
 
             TempData["MensagemAviso"] = "true";
@@ -719,7 +719,7 @@ namespace RickyShop_Site.Controllers
             var p = Entities.db.Reporte.Where(s => s.ID_Reporte == id).FirstOrDefault();
             return PartialView("ReporteDetails", p);
         }
-        public ActionResult FecharReporte (int id)
+        public ActionResult FecharReporte(int id)
         {
             var r = Entities.db.Reporte.FirstOrDefault(s => s.ID_Reporte == id);
 
@@ -758,11 +758,157 @@ namespace RickyShop_Site.Controllers
             }
 
         }
-
-        [HttpPost]
-        public ActionResult Home(Produto produto)
+        public ActionResult CriarPromo(int? categoria, int? marca, string descricao, DateTime dataFim, HttpPostedFileBase file, string nome, int desconto, string opcao)
         {
-            return View();
+            //1 == categoria : 2 == marca
+
+            //Validar erros, categoria null etc
+            string caminhoCompleto = Path.Combine(Server.MapPath("~/ImgPromo/"), file.FileName);
+            FileInfo f = new FileInfo(caminhoCompleto);
+
+            if (f.Exists == true)
+            {
+                if (opcao == "1")
+                {
+                    Promo p = new Promo();
+
+                    p.Nome = nome;
+                    p.Descrição = descricao;
+                    p.Path_Logo = "/ImgPromo/" + file.FileName;
+                    p.InicioData_Promo = DateTime.Now;
+                    p.FimData_Promo = dataFim;
+                    p.Desconto = desconto;
+                    p.ID_Categoria = categoria;
+
+                    foreach (var item in Entities.db.Produto.Where(s => s.ID_Categoria == categoria))
+                    {
+                        item.Desconto = desconto;
+                    }
+
+                    Entities.db.Promo.Add(p);
+                    Entities.db.SaveChanges();
+                }
+                else
+                {
+                    Promo p = new Promo();
+
+                    p.Nome = nome;
+                    p.Descrição = descricao;
+                    p.Path_Logo = "/ImgPromo/" + file.FileName;
+                    p.InicioData_Promo = DateTime.Now;
+                    p.FimData_Promo = dataFim;
+                    p.Desconto = desconto;
+                    p.ID_Marca = marca;
+
+                    foreach (var item in Entities.db.Produto.Where(s => s.ID_Marca == marca))
+                    {
+                        item.Desconto = desconto;
+                    }
+
+                    Entities.db.Promo.Add(p);
+                    Entities.db.SaveChanges();
+                }
+            }
+            //return RedirectToAction("TemplateNovaPromo");
+            return RedirectToAction("Home");
+        }
+        public ActionResult TemplateNovaPromo() 
+        {
+            foreach (var item in Entities.db.Utilizadores)
+            {
+                var p = Entities.db.Promo.FirstOrDefault(s => s.InicioData_Promo == DateTime.Today);
+
+                string subject = "Promoções? Só na RickyShop!";
+
+                //string body = "Olá, a seu token de recuperação é: " + tokenAleatorio +
+                //    "\r De seguida altere a sua password no site. \n Cumprimentos, ";
+
+                string path = Server.MapPath(@"~\Views\Admin\TemplateNovaPromo.cshtml");
+
+                var conteudo = System.IO.File.ReadAllText(path);
+
+                conteudo = conteudo.Replace("[NomeCliente]", item.PrimeiroNome + " " + item.SegundoNome);
+                conteudo = conteudo.Replace("[Descricao]", p.Descrição);
+                conteudo = conteudo.Replace("[DataDeInicio]", p.InicioData_Promo.ToString("dd/MM/yyyy"));
+                conteudo = conteudo.Replace("[DataFim]", p.FimData_Promo.ToString("dd/MM/yyyy"));
+
+                string body = conteudo;
+
+                //string body = "Olá, a seu token de recuperação é: " + tokenAleatorio +
+                //   "\r De seguida altere a sua password no site. \n Cumprimentos, ";
+
+                MailMessage objEmail = new MailMessage();
+
+                AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, new ContentType("text/html"));
+
+                objEmail.AlternateViews.Add(htmlView);
+
+                //rementente do email
+                //objEmail.From = new MailAddress("i200059@inete.net");
+                objEmail.From = new MailAddress("suporterickyshop@hotmail.com");
+
+                //email para resposta(quando o destinatário receber e clicar em responder, vai para:)
+                //objEmail.ReplyTo = new MailAddress("email@seusite.com.br");
+
+                //destinatário(s) do email(s). Obs. pode ser mais de um, pra isso basta repetir a linha
+                //abaixo com outro endereço
+                objEmail.To.Add(item.Email);
+
+                //se quiser enviar uma cópia oculta pra alguém, utilize a linha abaixo:
+                // objEmail.Bcc.Add("oculto@provedor.com.br");
+
+                //prioridade do email
+                objEmail.Priority = MailPriority.High;
+
+                //utilize true pra ativar html no conteúdo do email, ou false, para somente texto
+                objEmail.IsBodyHtml = true;
+
+                //Assunto do email
+                objEmail.Subject = subject;
+
+                //corpo do email a ser enviado
+                //objEmail.Body = "Conteúdo do email. Se ativar html, pode utilizar cores, fontes, etc.";
+                objEmail.Body = subject + "\r\r\r" + htmlView;
+                //codificação do assunto do email para que os caracteres acentuados serem reconhecidos.
+                objEmail.SubjectEncoding = Encoding.GetEncoding("ISO-8859-1");
+
+                //codificação do corpo do emailpara que os caracteres acentuados serem reconhecidos.
+                objEmail.BodyEncoding = Encoding.GetEncoding("ISO-8859-1");
+
+                //cria o objeto responsável pelo envio do email
+                SmtpClient objSmtp = new SmtpClient();
+
+                //endereço do servidor SMTP(para mais detalhes leia abaixo do código)
+                objSmtp.Host = "SMTP.office365.com";
+                objSmtp.Port = 587;
+
+                //para envio de email autenticado, coloque login e senha de seu servidor de email
+                //para detalhes leia abaixo do código
+                objSmtp.Credentials = new NetworkCredential("suporterickyshop@hotmail.com", "papRickyShop");
+                //objSmtp.Credentials = new NetworkCredential("i200059@inete.net", "Pitolini2005");
+
+                objSmtp.EnableSsl = true;
+
+                //envia o email
+                objSmtp.Send(objEmail);
+
+                //WebMail.EnableSsl = true;
+                //WebMail.SmtpServer = "smtp.mail.yahoo.com";
+                //WebMail.SmtpPort = 465;
+                //WebMail.UserName = "Ricardo Coimbra";
+                //WebMail.Password = "Pitolni08";
+                //WebMail.From = "cruzcoimbra08@yahoo.com";
+
+            }
+
+
+            TempData["MensagemAviso"] = "true";
+            return RedirectToAction("Home");
+        }
+        public ActionResult ViewPromo(int id)
+        {
+
+            return PartialView("PromoDetails", Entities.db.Promo.FirstOrDefault(s => s.ID_Promo == id));
         }
     }
 }
