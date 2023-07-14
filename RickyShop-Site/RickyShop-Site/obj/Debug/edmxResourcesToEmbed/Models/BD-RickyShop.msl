@@ -18,7 +18,6 @@
           <ScalarProperty Name="PrecoProduto" ColumnName="PrecoProduto" />
           <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
           <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
-          <ScalarProperty Name="Tamanho" ColumnName="Tamanho" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -45,8 +44,6 @@
           <ScalarProperty Name="ID_Log" ColumnName="ID_Log" />
           <ScalarProperty Name="ID_Utilizador" ColumnName="ID_Utilizador" />
           <ScalarProperty Name="Erro_Login" ColumnName="Erro_Login" />
-          <ScalarProperty Name="Login" ColumnName="Login" />
-          <ScalarProperty Name="LogOff" ColumnName="LogOff" />
           <ScalarProperty Name="IP_TentativaLogin" ColumnName="IP_TentativaLogin" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -112,7 +109,6 @@
           <ScalarProperty Name="Descrição" ColumnName="Descrição" />
           <ScalarProperty Name="Desconto" ColumnName="Desconto" />
           <ScalarProperty Name="ID_Marca" ColumnName="ID_Marca" />
-          <ScalarProperty Name="Genero" ColumnName="Genero" />
           <ScalarProperty Name="Descontinuado" ColumnName="Descontinuado" />
           <ScalarProperty Name="Destaque" ColumnName="Destaque" />
         </MappingFragment>
@@ -130,12 +126,12 @@
     <EntitySetMapping Name="Promo">
       <EntityTypeMapping TypeName="GestãoRickyShopModel.Promo">
         <MappingFragment StoreEntitySet="Promo">
-          <ScalarProperty Name="Nome" ColumnName="Nome" />
           <ScalarProperty Name="ID_Promo" ColumnName="ID_Promo" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
+          <ScalarProperty Name="Path_Logo" ColumnName="Path_Logo" />
           <ScalarProperty Name="InicioData_Promo" ColumnName="InicioData_Promo" />
           <ScalarProperty Name="FimData_Promo" ColumnName="FimData_Promo" />
-          <ScalarProperty Name="Path_Logo" ColumnName="Path_Logo" />
-          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
           <ScalarProperty Name="Desconto" ColumnName="Desconto" />
           <ScalarProperty Name="ID_Categoria" ColumnName="ID_Categoria" />
           <ScalarProperty Name="ID_Marca" ColumnName="ID_Marca" />
@@ -149,8 +145,8 @@
           <ScalarProperty Name="Nome_Utilizador" ColumnName="Nome_Utilizador" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Titulo_Reporte" ColumnName="Titulo_Reporte" />
-          <ScalarProperty Name="Descrição" ColumnName="Descrição" />
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Descrição_Reporte" ColumnName="Descrição_Reporte" />
+          <ScalarProperty Name="Estado_Reporte" ColumnName="Estado_Reporte" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -195,6 +191,7 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="CountPromoAtiva" FunctionName="GestãoRickyShopModel.Store.CountPromoAtiva" />
     <FunctionImportMapping FunctionImportName="DadosCarrinhoProduto" FunctionName="GestãoRickyShopModel.Store.DadosCarrinhoProduto">
       <ResultMapping>
         <ComplexTypeMapping TypeName="GestãoRickyShopModel.DadosCarrinhoProduto_Result">
@@ -203,7 +200,6 @@
           <ScalarProperty Name="PreçoPorQuantidade" ColumnName="PreçoPorQuantidade" />
           <ScalarProperty Name="Descrição" ColumnName="Descrição" />
           <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
-          <ScalarProperty Name="Tamanho" ColumnName="Tamanho" />
           <ScalarProperty Name="ID_Produto" ColumnName="ID_Produto" />
           <ScalarProperty Name="Desconto" ColumnName="Desconto" />
         </ComplexTypeMapping>
@@ -273,7 +269,6 @@
           <ScalarProperty Name="Descrição" ColumnName="Descrição" />
           <ScalarProperty Name="Desconto" ColumnName="Desconto" />
           <ScalarProperty Name="ID_Marca" ColumnName="ID_Marca" />
-          <ScalarProperty Name="Genero" ColumnName="Genero" />
           <ScalarProperty Name="Descontinuado" ColumnName="Descontinuado" />
           <ScalarProperty Name="Destaque" ColumnName="Destaque" />
         </ComplexTypeMapping>

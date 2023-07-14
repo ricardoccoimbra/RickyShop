@@ -88,7 +88,7 @@
             <figure>
                 <img class="row center-block" src="@RickyShop_Site.Models.Entities.db.Promo.FirstOrDefault().Path_Logo" />
                 <figcaption class="text-center">
-                  <label>@t.InicioData_Promo.ToString("dd/MM/yyyy") </label> - <label> @t.FimData_Promo.ToString("dd/MM/yyyy") </label>
+                    <label>@t.InicioData_Promo.ToString("dd/MM/yyyy") </label> - <label> @t.FimData_Promo.ToString("dd/MM/yyyy") </label>
                 </figcaption>
             </figure>
 
@@ -112,7 +112,7 @@
 
             if (cnt != qtdDestaque)
             {
-                if (item.Destaque == 1)
+                if (item.Destaque == 1 && item.QuantidadeStock != 0)
                 {
                     <div class="col-sm-6 col-md-4">
                         <div class="thumbnail">
@@ -120,7 +120,26 @@
 
 
                             <div class="caption">
-                                <div style="font-size:20px">@item.Nome<div style="color:#195712"> @item.PreçoPorQuantidade.ToString("N2")€ </div> </div>
+                                <div style="font-size:20px">
+                                    @item.Nome<div style="color:#195712">
+                                        @if (item.Desconto == null)
+                                        {
+                                            <p class="price" style="color:#195712"> @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)€</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="price" style="color:#195712; ">
+                                                @{
+                                                    double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * item.Desconto) / 100;
+                                                    string preco = (Convert.ToDouble(item.PreçoPorQuantidade) - valDesconto).ToString("N2") + "€";
+
+                                                    @Html.DisplayFor(model => preco)
+                                                    <small  style="color:red; font-size:55%">Em desconto!</small>
+                                                }
+                                            </p>
+                                        }
+                                    </div>
+                                </div>
                                 <p>@item.Descrição.Substring(0, 30)...</p>
                                 <div style="display:flex">
                                     <p style="margin-left:5px">

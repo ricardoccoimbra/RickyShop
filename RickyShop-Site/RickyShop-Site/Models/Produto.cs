@@ -11,17 +11,17 @@ namespace RickyShop_Site.Models
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class Produto
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Produto()
         {
             this.Carrinho = new HashSet<Carrinho>();
-            this.ProdutosFavoritos = new HashSet<ProdutosFavoritos>();
             this.PedidosDetalhes = new HashSet<PedidosDetalhes>();
+            this.ProdutosFavoritos = new HashSet<ProdutosFavoritos>();
         }
-
+    
         public int ID_Produto { get; set; }
         public string Nome { get; set; }
         public decimal PreçoPorQuantidade { get; set; }
@@ -31,7 +31,6 @@ namespace RickyShop_Site.Models
         public string Descrição { get; set; }
         public Nullable<int> Desconto { get; set; }
         public int ID_Marca { get; set; }
-        public string Genero { get; set; }
         public int Descontinuado { get; set; }
         public int Destaque { get; set; }
         public bool EstadoProm { get; set; }
@@ -41,8 +40,8 @@ namespace RickyShop_Site.Models
         public virtual Categoria Categoria { get; set; }
         public virtual MarcaProduto MarcaProduto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProdutosFavoritos> ProdutosFavoritos { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PedidosDetalhes> PedidosDetalhes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProdutosFavoritos> ProdutosFavoritos { get; set; }
     }
 }

@@ -22,7 +22,6 @@ namespace RickyShop_Site.Models
         public string Descrição { get; set; }
         public Nullable<int> Desconto { get; set; }
         public int ID_Marca { get; set; }
-        public string Genero { get; set; }
         public int Descontinuado { get; set; }
         public int Destaque { get; set; }
     }

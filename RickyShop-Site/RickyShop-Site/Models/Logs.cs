@@ -17,8 +17,6 @@ namespace RickyShop_Site.Models
         public int ID_Log { get; set; }
         public int ID_Utilizador { get; set; }
         public Nullable<System.DateTime> Erro_Login { get; set; }
-        public Nullable<System.DateTime> Login { get; set; }
-        public Nullable<System.DateTime> LogOff { get; set; }
         public string IP_TentativaLogin { get; set; }
     
         public virtual Utilizadores Utilizadores { get; set; }

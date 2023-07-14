@@ -13,6 +13,7 @@
                 <th>Morada</th>
                 <th>Preço Total</th>
                 <th>Desconto</th>
+                <th>Estado</th>
             </tr>
         </thead>
         <tbody>
@@ -26,9 +27,15 @@
                     <td>@item.MoradaEntrega</td>
                     <td>@item.PreçoTotal.ToString("N2")€</td>
                     @if (item.Desconto != null)
-                    {<td>@item.Desconto%</td>}
+                    {
+                        <td>@item.Desconto%</td>
+                    }
                     else
-                    {<td>-</td> }
+                    {
+                        <td>-</td>
+                    }
+                    <td>@RickyShop_Site.Models.Entities.db.EstadoDoPedido.FirstOrDefault(s => s.ID_Estado == item.ID_Estado).Estado</td>
+
                 </tr>
             }
         </tbody>

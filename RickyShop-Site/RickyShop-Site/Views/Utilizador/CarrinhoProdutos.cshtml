@@ -56,7 +56,7 @@
                                 <div class="col-xs-6 text-right ">
                                     <label style="font-size:20px">
                                         <strong class="cart-product-price">
-                                            @if (u.Desconto == null)
+                                            @if (item.Desconto == null)
                                             {
                                                 @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)<i>€</i>
 
@@ -65,7 +65,8 @@
                                             {
                                                 double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * item.Desconto) / 100;
                                                 string preco = (Convert.ToDouble(item.PreçoPorQuantidade) - valDesconto).ToString("N2") + "€";
-                                                @Html.DisplayFor(modelItem => preco)
+                                                <small style="text-decoration: line-through; color:red; font-size:55%">@Html.DisplayFor(modelItem => item.PreçoPorQuantidade)<i>€</i></small>
+                                                <strong style="color:darkgreen">@Html.DisplayFor(modelItem => preco)</strong>
                                             }
                                         </strong>
                                     </label>
@@ -74,7 +75,7 @@
                                     @if (item.Quantidade > RickyShop_Site.Models.Entities.db.Produto.FirstOrDefault(s => s.ID_Produto == item.ID_Produto).QuantidadeStock)
                                     {
                                         //adicionar tool tip
-                                        <input type="text" class="form-control input-sm product-qtd-input" value="@item.Quantidade" style="width: 40px; border-radius: 1px; text-align: center; color:red" readonly="readonly">
+                                        <input type="text" class="form-control input-sm product-qtd-input" value="@item.Quantidade" data-placement="top" title="Fora do Limite de Stock" style="width: 40px; border-radius: 1px; text-align: center; color:red" readonly="readonly">
                                     }
                                     else
                                     {
@@ -149,7 +150,7 @@
                     else
                     {
                         <div class="d-flex justify-content-between">
-                            <div style="font-size:20px"><b>TOTAL: @total€</b></div>
+                            <div style="font-size:20px"><b>TOTAL: @total.ToString("N2")€</b></div>
                         </div>
                     }
 
@@ -171,8 +172,8 @@
                         {
                             <button class="btn btn-primary d-flex center-block" type="button" style="background-color: grey; border-color: white;" data-toggle="modal" data-target="#squarespaceModal">
                                 <div class="d-flex justify-content-between">
-                                    <span>@total€</span>
-                                    <span>Checkout</span>
+                                    <span>@total.ToString("N2")€</span>
+                                    <span>Pagamento</span>
                                 </div>
                             </button>
                         }

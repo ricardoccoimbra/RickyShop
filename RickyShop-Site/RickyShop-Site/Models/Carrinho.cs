@@ -19,7 +19,6 @@ namespace RickyShop_Site.Models
         public decimal PrecoProduto { get; set; }
         public int ID_Produto { get; set; }
         public int Quantidade { get; set; }
-        public string Tamanho { get; set; }
     
         public virtual Produto Produto { get; set; }
         public virtual Utilizadores Utilizadores { get; set; }

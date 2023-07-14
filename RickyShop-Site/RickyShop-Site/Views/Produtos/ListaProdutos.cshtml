@@ -2,7 +2,27 @@
 @model  PagedList.PagedList<RickyShop_Site.Models.Produto>
 @{
     RickyShop_Site.Models.GestãoRickyShopEntities db = new RickyShop_Site.Models.GestãoRickyShopEntities();
-    int x = Model.FirstOrDefault().ID_Categoria;
+    int x;
+    if (Model.Count() != 0)
+    {
+        if (Session["SoProdPromo"] != null)
+        { x = 0; }
+        else
+        {
+            if (Session["TodosProd"] != null)
+            {
+                x = -1;
+            }
+            else
+            {
+                x = Model.FirstOrDefault().ID_Categoria;
+            }
+        }
+    }
+    else
+    {
+        x = -2;
+    }
 }
 
 <link href="~/Content/Shop.css" rel="stylesheet" />
@@ -10,181 +30,193 @@
 <link href="~/Content/StyleListaProdutos.css" rel="stylesheet" />
 <link href="~/Content/StyleButtonToTop.css" rel="stylesheet">
 
-<div class="col-md-3">
-    <form role="form" action="/Produtos/ListaProdutos/@x">
+@if (x != -2)
+{
+    <div class="col-md-3">
+        <form role="form" action="/Produtos/ListaProdutos/@x">
+            <section class="panel">
+                <header class="panel-heading">
+                    Pesquisar
+                </header>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <input type="search" placeholder="Pesquise por..." name="searchString" class="form-control" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div>
+            </section>
+        </form>
+
+
         <section class="panel">
             <header class="panel-heading">
-                Pesquisar
+                Marcas
             </header>
             <div class="panel-body">
-                <div class="input-group">
-                    <input type="search" placeholder="Pesquise por..." name="searchString" class="form-control" />
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                    </span>
-                </div><!-- /input-group -->
-            </div>
-        </section>
-    </form>
 
-
-    <section class="panel">
-        <header class="panel-heading">
-            Marcas
-        </header>
-        <div class="panel-body">
-
-            @using (Html.BeginForm())
-            {
-                Html.AntiForgeryToken();
-                <div class="form-group">
-                    @if (x != 0)
-                    {
-                        if (x != -1)
+                @using (Html.BeginForm())
+                {
+                    Html.AntiForgeryToken();
+                    <div class="form-group">
+                        @if (x != 0)
                         {
+                            if (x != -1)
+                            {
 
-                            @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto.Where(s => s.Produto.Count(c => c.ID_Categoria == x) != 0 && s.Estado == 1), "ID_Marca", "Marca"), "Nenhum", new { id = "cat_pedido", @class = "btn btn-default dropdown-toggle" })
+                                @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto.Where(s => s.Produto.Count(c => c.ID_Categoria == x) != 0 && s.Estado == 1), "ID_Marca", "Marca"), "Nenhum", new { id = "cat_pedido", @class = "btn btn-default dropdown-toggle" })
+                            }
                         }
-                    }
-                    else
-                    {
-                        @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto.Where(s => s.Produto.Count(z => z.Desconto != null) != 0 && s.Estado == 1), "ID_Marca", "Marca"), "Nenhum", new { id = "cat_pedido", @class = "btn btn-default dropdown-toggle" })
-                    }
+                        else
+                        {
+                            @Html.DropDownListFor(model => model.FirstOrDefault().ID_Marca, new SelectList(db.MarcaProduto.Where(s => s.Produto.Count(z => z.Desconto != null) != 0 && s.Estado == 1), "ID_Marca", "Marca"), "Nenhum", new { id = "cat_pedido", @class = "btn btn-default dropdown-toggle" })
+                        }
 
+                    </div>
+
+                    if (x != 0)
+                    {
+                        @Html.CheckBoxFor(model => model.FirstOrDefault().EstadoProm); <label style="font-size: 15px; color: #195712;"> Promoções </label>
+                    }
+                    <br />
+
+                    <input type="submit" value="Filtrar" class="btn btn-success"> @Html.ActionLink("Limpar Filtro", "LimparFiltro", "Produtos", new { id = x }, new { })
+                }
+
+
+
+            </div>
+
+        </section>
+
+
+
+        <section class="panel">
+            <header class="panel-heading">
+                Ordem
+            </header>
+            <div class="panel-body">
+                <div style="display:flex; width: 10px">
+                    <button class="btn btn-dark btn-rounded mr-1" data - toggle="tooltip" title="Mais Baixo para Mais Alto" style="background-color: gray; color: white" onclick="location.href = '@Url.Action("OrdemPrecos", "Produtos", new { tipo = "PrecoCres", id = x })'">
+                        <i class="glyphicon glyphicon-arrow-up">
+                        </i>
+                    </button>
+
+                    <button class="btn btn-dark btn-rounded mr-1" data - toggle="tooltip" title="Mais Alto para Mais Baixo" style="background-color:gray; color:white; margin-left:5px" onclick="location.href = '@Url.Action("OrdemPrecos", "Produtos", new { tipo = "PrecoDesc", id = x })'">
+                        <i class="glyphicon glyphicon-arrow-down">
+                        </i>
+                    </button>
                 </div>
 
-                if (x != 0)
-                {
-                    @Html.CheckBoxFor(model => model.FirstOrDefault().EstadoProm); <label style="font-size: 15px; color: #195712;"> Promoções </label>
-                }
                 <br />
-
-                <input type="submit" value="Filtrar" class="btn btn-success"> @Html.ActionLink("Limpar Filtro", "LimparFiltro", "Produtos", new { id = Model.FirstOrDefault().ID_Categoria }, new { })
-            }
-
-
-
-        </div>
-
-    </section>
-
-
-
-    <section class="panel">
-        <header class="panel-heading">
-            Ordem
-        </header>
-        <div class="panel-body">
-            <div style="display:flex; width: 10px">
-                <button class="btn btn-dark btn-rounded mr-1" data - toggle="tooltip" title="Mais Baixo para Mais Alto" style="background-color: gray; color: white" onclick="location.href = '@Url.Action("OrdemPrecos", "Produtos", new { tipo = "PrecoCres", id = Model.FirstOrDefault().ID_Categoria })'">
-                    <i class="glyphicon glyphicon-arrow-up">
-                    </i>
-                </button>
-
-                <button class="btn btn-dark btn-rounded mr-1" data - toggle="tooltip" title="Mais Alto para Mais Baixo" style="background-color:gray; color:white; margin-left:5px" onclick="location.href = '@Url.Action("OrdemPrecos", "Produtos", new { tipo = "PrecoDesc", id = x })'">
-                    <i class="glyphicon glyphicon-arrow-down">
-                    </i>
-                </button>
             </div>
+        </section>
+    </div>
 
-            <br />
-        </div>
-    </section>
-</div>
+    <body>
+        <div class="col-md-9">
+            <div class="row product-list">
+                @foreach (var item in Model)
+                {
 
-<body>
-    <div class="col-md-9">
-        <div class="row product-list">
-            @foreach (var item in Model)
-            {
+                    <div class="col-md-4">
+                        <section class="panel">
+                            <div class="pro-img-box">
+                                <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" style="height:280px;" />
+                            </div>
 
-                <div class="col-md-4">
-                    <section class="panel">
-                        <div class="pro-img-box">
-                            <img src="@Html.DisplayFor(modelItem => item.ImagemPath)" style="height:280px;" />
-                        </div>
-
-                        <div class="panel-body text-center" style="height: 170px; width:255px">
-                            <h4>
-                                <label class="pro-title">
-                                    @Html.DisplayFor(modelItem => item.Nome)
-                                </label>
-                            </h4>
-                            @if (item.Desconto == null)
-                            {
-                                <p class="price" style="color:#195712"> @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)€</p>
-                            }
-                            else
-                            {
-
-                                <div style="display: flex; margin-bottom: 9px;" class="text-center">
-                                    <div style="text-decoration: line-through; margin-left: 50px; margin-right: 5px;"> @Html.DisplayFor(model => item.PreçoPorQuantidade)€</div>
-                                    <p class="price" style="color:#195712; ">
-                                        @{
-                                            double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * item.Desconto) / 100;
-                                            string preco = (Convert.ToDouble(item.PreçoPorQuantidade) - valDesconto).ToString("N2") + "€";
-
-                                            @Html.DisplayFor(model => preco);
-                                            <small class="text-success"> (-@Html.DisplayFor(model => item.Desconto) %) </small>
-                                        }
-                                </div>
-                            }
-
-
-                            <p style="margin-left:5px">
-                                @if (item.QuantidadeStock != 0)
+                            <div class="panel-body text-center" style="height: 170px; width:255px">
+                                <h4>
+                                    <label class="pro-title">
+                                        @Html.DisplayFor(modelItem => item.Nome)
+                                    </label>
+                                </h4>
+                                @if (item.Desconto == null)
                                 {
-                                    <button class="btn btn-dark btn-rounded mr-1" data - toggle="tooltip" title="Ver Produto" onclick="location.href = '@Url.Action("ProdutoDetalhado", "Produtos", new { @id = item.ID_Produto })'">
-                                        <i class="glyphicon glyphicon-search">
-                                        </i>
-                                    </button>
-                                    if (Session["UserID"] != null)
-                                    {
-                                        <button class="btn btn-dark btn-rounded mr-1" data - toggle="tooltip" title="Adicionar ao Carrinho" style="background-color: #195712; color: white" onclick="location.href = '@Url.Action("ProdCarrinho", "Utilizador", new { idC = item.ID_Categoria, idP = item.ID_Produto })'">
-                                            <i class="glyphicon glyphicon-shopping-cart">
-                                            </i>
-                                        </button>
-                                        <button class="btn btn-dark btn-rounded mr-1" data - toggle="tooltip" title="Adicionar aos Favoritos" style="background-color:#ce2e2e; color:white" onclick="location.href = '@Url.Action("AddProdFavoritos", "Utilizador", new { idC = item.ID_Categoria, idP = item.ID_Produto })'">
-                                            <i class="glyphicon glyphicon-heart">
-                                            </i>
-                                        </button>
-                                    }
+                                    <p class="price" style="color:#195712"> @Html.DisplayFor(modelItem => item.PreçoPorQuantidade)€</p>
                                 }
                                 else
                                 {
-                                    <div class="row">
-                                        <p class="alert-danger text-center" style=" font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; border-radius: 15px;">
-                                           UPS! De momento sem Stock!
+
+                                    <div style="display: flex; margin-bottom: 9px;" class="text-center">
+                                        <div style="text-decoration: line-through; margin-left: 50px; margin-right: 5px;"> @Html.DisplayFor(model => item.PreçoPorQuantidade)€</div>
+                                        <p class="price" style="color:#195712; ">
+                                            @{
+                                                double valDesconto = Convert.ToDouble(item.PreçoPorQuantidade * item.Desconto) / 100;
+                                                string preco = (Convert.ToDouble(item.PreçoPorQuantidade) - valDesconto).ToString("N2") + "€";
+
+                                                <b>
+                                                    @Html.DisplayFor(model => preco)
+                                                    <small class="text-success"> (-@Html.DisplayFor(model => item.Desconto) %) </small>
+                                                </b>
+                                            }
                                         </p>
                                     </div>
                                 }
 
-                        </div>
-                    </section>
-                </div>
-            }
+
+                                <p style="margin-left:5px">
+                                    @if (item.QuantidadeStock != 0)
+                                    {
+                                        <button class="btn btn-dark btn-rounded mr-1" data - toggle="tooltip" title="Ver Produto" onclick="location.href = '@Url.Action("ProdutoDetalhado", "Produtos", new { @id = item.ID_Produto })'">
+                                            <i class="glyphicon glyphicon-search">
+                                            </i>
+                                        </button>
+                                        if (Session["UserID"] != null)
+                                        {
+                                            <button class="btn btn-dark btn-rounded mr-1" data - toggle="tooltip" title="Adicionar ao Carrinho" style="background-color: #195712; color: white" onclick="location.href = '@Url.Action("ProdCarrinho", "Utilizador", new { idC = item.ID_Categoria, idP = item.ID_Produto })'">
+                                                <i class="glyphicon glyphicon-shopping-cart">
+                                                </i>
+                                            </button>
+                                            <button class="btn btn-dark btn-rounded mr-1" data - toggle="tooltip" title="Adicionar aos Favoritos" style="background-color:#ce2e2e; color:white" onclick="location.href = '@Url.Action("AddProdFavoritos", "Utilizador", new { idC = item.ID_Categoria, idP = item.ID_Produto })'">
+                                                <i class="glyphicon glyphicon-heart">
+                                                </i>
+                                            </button>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="row">
+                                            <p class="alert-danger text-center" style=" font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; border-radius: 15px;">
+                                                UPS! De momento sem Stock!
+                                            </p>
+                                        </div>
+                                    }
+
+                            </div>
+                        </section>
+                    </div>
+                }
+            </div>
+
+
+
+
+            <a class="btn-fixed" style="display: inline; color:white" href="#top">
+                <span>
+                    <i class="glyphicon glyphicon-arrow-up"></i>
+                </span>
+            </a>
+
         </div>
 
+    </body>
 
 
-
-        <a class="btn-fixed" style="display: inline; color:white" href="#top">
-            <span>
-                <i class="glyphicon glyphicon-arrow-up"></i>
-            </span>
-        </a>
-
+    <div class="footer-section">
+        Página @Model.PageNumber de @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("ListaProdutos", new { pagina = page }))
     </div>
+}
+else
+{
 
-</body>
+    <p class="alert-danger text-center" style="font-size:40px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; border-radius:15px; margin-top:3%">
+        <b>UPS, NÃO TEM NENHUM PRODUTO</b>
+    </p>
 
-
-<div class="footer-section">
-    Página @Model.PageNumber de @Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("ListaProdutos", new { pagina = page }))
-</div>
-
-
+}
 
 <script>
     const botao = document.querySelector(".btn-fixed");

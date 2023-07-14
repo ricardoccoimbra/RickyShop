@@ -115,9 +115,18 @@
                                         <p>
                                             <strong><i class="fas fa-rupee-sign" area-hidden="true"></i>Grátis</strong>
                                         </p>
-                                        <p>
-                                            <strong><i class="fas fa-rupee-sign" area-hidden="true"></i> @u.Desconto%</strong>
-                                        </p>
+                                        @if (Model.FirstOrDefault().Desconto != null)
+                                        {
+                                            <p>
+                                                <strong><i class="fas fa-rupee-sign" area-hidden="true"></i> @u.Desconto%</strong>
+                                            </p>
+                                        }
+                                        else
+                                        { 
+                                            <p>
+                                               Nada
+                                            </p>
+                                        }
                                     </td>
                                 </tr>
                                 <tr>

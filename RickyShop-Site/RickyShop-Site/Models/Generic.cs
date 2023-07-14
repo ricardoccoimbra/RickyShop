@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 
@@ -19,15 +20,17 @@ namespace RickyShop_Site.Models
         {
             string i = "certo";
 
-            var nif = Entities.db.Utilizadores.Count(s => s.NIF == _NIF);
-            var num = Entities.db.Utilizadores.Count(s => s.Contacto == _Contacto);
-            var mail = Entities.db.Utilizadores.Count(s => s.Email == _Email);
+            Regex regex = new Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$"); 
+
+            var nif = Entities.db.Utilizadores.Count(s => s.NIF == _NIF && s.Estado == 1);
+            var num = Entities.db.Utilizadores.Count(s => s.Contacto == _Contacto && s.Estado == 1);
+            var mail = Entities.db.Utilizadores.Count(s => s.Email == _Email && s.Estado == 1);
 
             if (nif == 0)
             {
                 if (num == 0)
                 {
-                    if (mail == 0)
+                    if (mail == 0 && regex.IsMatch(_Email) == true)
                     {
                         return i;
                     }
@@ -82,6 +85,9 @@ namespace RickyShop_Site.Models
             IPagedList<Produto> prodPage;
 
             var filtro = filtros.ToString().Split('-');
+
+            
+
             if (filtro[0].ToString() != "nada")
             {
                 var filtro2 = filtro[1].ToString();
@@ -135,7 +141,6 @@ namespace RickyShop_Site.Models
                         return prodPage;
                     }
                 }
-
                 else
                 {
                     if (id != 4)
@@ -279,7 +284,6 @@ namespace RickyShop_Site.Models
                 return true;
             }
         }
-
         public static DadosSettingsSite ValSettings(string caminhoArquivo /* ~/FicheiroJson/SettingsRickyShop.json */)
         {
 
@@ -290,6 +294,31 @@ namespace RickyShop_Site.Models
             var objeto = JsonConvert.DeserializeObject<DadosSettingsSite>(json);
 
             return objeto;
+        }
+        public static void EscreverJson(string caminhoArquivo, DadosSettingsSite objeto)
+        {
+            // Serializa o objeto em JSON
+            var json = JsonConvert.SerializeObject(objeto);
+
+            // Grava o JSON no arquivo
+            System.IO.File.WriteAllText(caminhoArquivo, json);
+
+            return;
+        }
+        public static void AtualizarEstadoPedidos()
+        {
+
+            foreach (var item in Entities.db.Pedidos)
+            {
+                if(item.DataDeEntrega <= DateTime.Now)
+                {
+                    item.ID_Estado = 1;
+                }
+
+            }
+
+            Entities.db.SaveChanges();
+            return;
         }
     }
 }

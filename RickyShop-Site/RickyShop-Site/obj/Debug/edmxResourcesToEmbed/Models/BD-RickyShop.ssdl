@@ -17,7 +17,6 @@
     <Property Name="PrecoProduto" Type="money" Nullable="false" />
     <Property Name="ID_Produto" Type="int" Nullable="false" />
     <Property Name="Quantidade" Type="int" Nullable="false" />
-    <Property Name="Tamanho" Type="varchar" MaxLength="5" Nullable="false" />
   </EntityType>
   <EntityType Name="Categoria">
     <Key>
@@ -41,8 +40,6 @@
     <Property Name="ID_Log" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ID_Utilizador" Type="int" Nullable="false" />
     <Property Name="Erro_Login" Type="datetime" />
-    <Property Name="Login" Type="datetime" />
-    <Property Name="LogOff" Type="datetime" />
     <Property Name="IP_TentativaLogin" Type="varchar" MaxLength="15" />
   </EntityType>
   <EntityType Name="MarcaProduto">
@@ -103,7 +100,6 @@
     <Property Name="Descrição" Type="varchar" MaxLength="1000" Nullable="false" />
     <Property Name="Desconto" Type="int" />
     <Property Name="ID_Marca" Type="int" Nullable="false" />
-    <Property Name="Genero" Type="varchar" MaxLength="9" Nullable="false" />
     <Property Name="Descontinuado" Type="int" Nullable="false" />
     <Property Name="Destaque" Type="int" Nullable="false" />
   </EntityType>
@@ -137,8 +133,8 @@
     <Property Name="Nome_Utilizador" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="Titulo_Reporte" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="Descrição" Type="varchar" MaxLength="5000" Nullable="false" />
-    <Property Name="Estado" Type="int" Nullable="false" />
+    <Property Name="Descrição_Reporte" Type="varchar" MaxLength="5000" Nullable="false" />
+    <Property Name="Estado_Reporte" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -334,6 +330,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="CountPromoAtiva" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="DadosCarrinhoProduto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ID" Type="int" Mode="In" />
   </Function>

@@ -18,7 +18,7 @@ namespace RickyShop_Site.Models
         public string Nome_Utilizador { get; set; }
         public string Email { get; set; }
         public string Titulo_Reporte { get; set; }
-        public string Descrição { get; set; }
-        public int Estado { get; set; }
+        public string Descrição_Reporte { get; set; }
+        public int Estado_Reporte { get; set; }
     }
 }

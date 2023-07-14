@@ -44,6 +44,11 @@ namespace RickyShop_Site.Models
         public virtual DbSet<Token> Token { get; set; }
         public virtual DbSet<Utilizadores> Utilizadores { get; set; }
     
+        public virtual ObjectResult<Nullable<int>> CountPromoAtiva()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("CountPromoAtiva");
+        }
+    
         public virtual ObjectResult<DadosCarrinhoProduto_Result> DadosCarrinhoProduto(Nullable<int> iD)
         {
             var iDParameter = iD.HasValue ?

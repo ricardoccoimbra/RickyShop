@@ -15,13 +15,13 @@ namespace RickyShop_Site.Models
     public partial class Promo
     {
         public int ID_Promo { get; set; }
+        public string Nome { get; set; }
+        public string Descrição { get; set; }
+        public string Path_Logo { get; set; }
         public System.DateTime InicioData_Promo { get; set; }
         public System.DateTime FimData_Promo { get; set; }
-        public string Path_Logo { get; set; }
-        public string Descrição { get; set; }
         public int Desconto { get; set; }
         public Nullable<int> ID_Categoria { get; set; }
         public Nullable<int> ID_Marca { get; set; }
-        public string Nome { get; set; }
     }
 }

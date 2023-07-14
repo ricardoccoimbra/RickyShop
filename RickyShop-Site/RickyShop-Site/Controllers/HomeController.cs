@@ -1,6 +1,7 @@
 ﻿using RickyShop_Site.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects.DataClasses;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -15,18 +16,18 @@ namespace RickyShop_Site.Controllers
 {
     public class HomeController : Controller
     {
-        //GestãoRickyShopEntities Entities.db = new GestãoRickyShopEntities();
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            if (TempData["EnvioReporte"] != null)
+            {
+                Response.Write($"<script>alert('Reporte enviado')</script>");
+            }
 
             return View();
         }
@@ -35,7 +36,12 @@ namespace RickyShop_Site.Controllers
         {
             if (TempData["MensagemAviso"] != null)
             {
-                Response.Write($"<script>alert('Conta criada com suceso!')</script>");
+                if (TempData["MensagemAviso"].ToString() == "false")
+                    Response.Write($"<script>alert('Ups! Email inválido!')</script>");
+                else
+                    Response.Write($"<script>alert('Conta criada com suceso!')</script>");
+
+
                 TempData.Remove("MensageAviso");
             }
 
@@ -71,6 +77,7 @@ namespace RickyShop_Site.Controllers
                         u.Desconto = 10;
                         u.Saldo = 0;
                         u.PassWord = Generic.CriarPassHash(u.PassWord);
+                        u.Estado = 1;
 
                         Entities.db.Utilizadores.Add(u);
 
@@ -95,10 +102,20 @@ namespace RickyShop_Site.Controllers
 
                 }
             }
+            catch (SqlException ex)
+            {
+                Response.Write($"<script>alert('Data error: {ex.Message}');</script>");
+                return RedirectToAction("NotFound", "Error");
+            }
+            catch (FormatException ex)
+            {
+                Response.Write($"<script>alert('Wrong Format: {ex.Message}');</script>");
+                return RedirectToAction("NotFound", "Error");
+            }
             catch (Exception ex)
             {
                 Response.Write($"<script>alert({ex.Message});</script>");
-                return View();
+                return RedirectToAction("NotFound", "Error");
             }
         }
 
@@ -108,7 +125,7 @@ namespace RickyShop_Site.Controllers
         {
             try
             {
-                var user = Entities.db.Utilizadores.FirstOrDefault(us => us.Email == email);
+                var user = Entities.db.Utilizadores.FirstOrDefault(us => us.Email == email && us.Estado == 1);
 
                 if (user != null)
                 {
@@ -117,18 +134,17 @@ namespace RickyShop_Site.Controllers
                     {
 
                         Session["UserID"] = user.ID_Utilizador;
-                        Session["UserNome"] = user.PrimeiroNome;
-                        return RedirectToAction("About", "Home");
+                        return RedirectToAction("Inicio", "Home");
                     }
                     else
                     {
                         var d = Dns.GetHostAddresses(Dns.GetHostName());
                         Logs logs = new Logs();
-                        logs.IP_TentativaLogin = d[1].ToString();
+                        logs.IP_TentativaLogin = d[3].ToString();
                         logs.ID_Utilizador = Entities.db.Utilizadores.FirstOrDefault(s => s.Email == email).ID_Utilizador;
                         logs.Erro_Login = DateTime.Now;
                         Entities.db.Logs.Add(logs);
-                        Entities.db.SaveChanges();
+                        Entities.db.SaveChangesAsync();
 
                         Response.Write("<script>alert('Credicen');</script>");
                         return View();
@@ -148,25 +164,84 @@ namespace RickyShop_Site.Controllers
             catch (SqlException ex)
             {
                 Response.Write($"<script>alert('Data error: {ex.Message}');</script>");
-                return View();
+                return RedirectToAction("NotFound", "Error");
             }
             catch (FormatException ex)
             {
                 Response.Write($"<script>alert('Wrong Format: {ex.Message}');</script>");
-                return View();
+                return RedirectToAction("NotFound", "Error");
             }
             catch (Exception ex)
             {
                 Response.Write($"<script>alert({ex.Message});</script>");
-                return View();
+                return RedirectToAction("NotFound", "Error");
             }
         }
 
         public ActionResult Inicio()
         {
-            var prodProm = Entities.db.Produto.ToList();
+            //se não tiver a null é porque há promo ativa, se tiver, a promo acabou
+            try
+            {
 
-            return View(prodProm);
+                if (Entities.db.CountPromoAtiva().FirstOrDefault() == 0)
+                {
+                    //codigo para retirar os descontos depois da promo
+                    var dados = Generic.ValSettings(Server.MapPath("~/FicheiroJson/SettingsRickyShop.json"));
+                    if (dados.ValidPosPromo == 1)
+                    {
+                        //Rescrever Json
+                        DadosSettingsSite d = new DadosSettingsSite();
+                        d.ValidPosPromo = 0;
+                        d.QtdProdutosPagina = dados.QtdProdutosPagina;
+                        d.QtdProdutosDestaque = dados.QtdProdutosDestaque;
+                        Generic.EscreverJson(Server.MapPath("~/FicheiroJson/SettingsRickyShop.json"), d);
+
+
+                        //var p = Entities.db.Promo.OrderByDescending(s => s.ID_Promo).FirstOrDefault();
+                        var p = Entities.db.Promo.ToList().Last();
+
+                        if (p.ID_Categoria == null)
+                        {
+                            foreach (var item in Entities.db.Produto.Where(s => s.ID_Marca == p.ID_Marca))
+                            {
+                                item.Desconto = null;
+
+                            }
+
+                        }
+                        else
+                        {
+                            foreach (var item in Entities.db.Produto.Where(s => s.ID_Categoria == p.ID_Categoria))
+                            {
+                                item.Desconto = null;
+                            }
+
+                        }
+                    }
+                }
+
+                //Meter primeiro a lista depois salvar porque deu erro numa FK-CategoriaID, não sei pq :(
+                var prodProm = Entities.db.Produto.ToList();
+                Entities.db.SaveChanges();
+
+                return View(prodProm);
+            }
+            catch (SqlException ex)
+            {
+                Response.Write($"<script>alert('Data error: {ex.Message}');</script>");
+                return RedirectToAction("NotFound", "Error");
+            }
+            catch (FormatException ex)
+            {
+                Response.Write($"<script>alert('Wrong Format: {ex.Message}');</script>");
+                return RedirectToAction("NotFound", "Error");
+            }
+            catch (Exception ex)
+            {
+                Response.Write($"<script>alert({ex.Message});</script>");
+                return RedirectToAction("NotFound", "Error");
+            }
         }
 
         public ActionResult LogOff()
@@ -181,32 +256,44 @@ namespace RickyShop_Site.Controllers
             catch (SqlException ex)
             {
                 Response.Write($"<script>alert('Data error: {ex.Message}');</script>");
-                return View();
+                return RedirectToAction("NotFound", "Error");
             }
             catch (FormatException ex)
             {
                 Response.Write($"<script>alert('Wrong Format: {ex.Message}');</script>");
-                return View();
+                return RedirectToAction("NotFound", "Error");
             }
             catch (Exception ex)
             {
                 Response.Write($"<script>alert({ex.Message});</script>");
-                return View();
+                return RedirectToAction("NotFound", "Error");
             }
         }
 
-        public ActionResult EnviarReporte(string Nome, string Email, string Titulo, string descricao)
+        public ActionResult EnviarReporte(Reporte r)
         {
-            Reporte r = new Reporte();
-
-            r.Nome_Utilizador = Nome;
-            r.Email = Email;
-            r.Titulo_Reporte = Titulo;
-            r.Descrição = descricao;
-
-            Entities.db.Reporte.Add(r);
-            Entities.db.SaveChanges();
-            return RedirectToAction("Contact");
+            try
+            {
+                Entities.db.Reporte.Add(r);
+                Entities.db.SaveChanges();
+                TempData["EnvioReporte"] = "true";
+                return RedirectToAction("Contact");
+            }
+            catch (SqlException ex)
+            {
+                Response.Write($"<script>alert('Data error: {ex.Message}');</script>");
+                return RedirectToAction("NotFound", "Error");
+            }
+            catch (FormatException ex)
+            {
+                Response.Write($"<script>alert('Wrong Format: {ex.Message}');</script>");
+                return RedirectToAction("NotFound", "Error");
+            }
+            catch (Exception ex)
+            {
+                Response.Write($"<script>alert({ex.Message});</script>");
+                return RedirectToAction("NotFound", "Error");
+            }
         }
     }
 }

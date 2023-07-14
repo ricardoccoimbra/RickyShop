@@ -10,6 +10,7 @@ namespace RickyShop_Site.Models
         //{"QtdProdutosDestaque":3,"QtdProdutosPagina":6}
         public int QtdProdutosDestaque { get; set; }
         public int QtdProdutosPagina { get; set; }
+        public int ValidPosPromo { get; set; }
 
     }
 

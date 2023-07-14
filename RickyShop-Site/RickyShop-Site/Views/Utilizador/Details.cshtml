@@ -19,9 +19,9 @@
                     <td>@item.ID_Produto</td>
                     <td>@RickyShop_Site.Models.Entities.db.Produto.FirstOrDefault(s => s.ID_Produto == item.ID_Produto).Nome</td>
                     <td>@item.Quantidade</td>
-                    @if (item.Deconto != null)
+                    @if (item.Desconto != null)
                     {
-                        <td>@item.Deconto%</td>
+                        <td>@item.Desconto%</td>
                     }
                     else
                     {

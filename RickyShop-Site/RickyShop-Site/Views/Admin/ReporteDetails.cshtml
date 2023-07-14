@@ -36,12 +36,12 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="descricao">Descrição</label>
-                @Html.TextAreaFor(model => model.Descrição, new { @class = "form-control", rows = "10", disabled = "disabled" })
+                @Html.TextAreaFor(model => model.Descrição_Reporte, new { @class = "form-control", rows = "10", disabled = "disabled" })
             </div>
         </div>
     </div>
 
-    @if (Model.Estado == 0)
+    @if (Model.Estado_Reporte == 0)
     {
         <div class="modal-footer">
             <input type="submit" class="btn btn-primary float-right" value="Concluir Reporte" onclick="location.href = '@Url.Action("FecharReporte", "Admin", new { @id = Model.ID_Reporte})'">

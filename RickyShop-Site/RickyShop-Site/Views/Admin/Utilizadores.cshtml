@@ -72,8 +72,6 @@
                 <th>#</th>
                 <th>Utilizador</th>
                 <th>Erro Login</th>
-                <th>Login</th>
-                <th>Logoff</th>
                 <th>IP Login</th>
                 <th>Reportar</th>
             </tr>
@@ -85,8 +83,6 @@
                     <td>@item.ID_Log</td>
                     <td>@RickyShop_Site.Models.Entities.db.Utilizadores.Where(s => s.ID_Utilizador == item.ID_Utilizador).FirstOrDefault().PrimeiroNome</td>
                     <td>@item.Erro_Login</td>
-                    <td>@item.Login</td>
-                    <td>@item.LogOff</td>
                     <td>@item.IP_TentativaLogin</td>
                     <td><button class="btn btn-danger" onclick="location.href = '@Url.Action("ReportarAcesso", "Admin", new { id = item.ID_Log })'">Reportar</button></td>
                 </tr>

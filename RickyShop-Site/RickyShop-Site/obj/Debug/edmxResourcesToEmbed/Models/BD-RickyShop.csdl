@@ -17,7 +17,6 @@
     <Property Name="PrecoProduto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="ID_Produto" Type="Int32" Nullable="false" />
     <Property Name="Quantidade" Type="Int32" Nullable="false" />
-    <Property Name="Tamanho" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Produto" Relationship="Self.FK_Carrinho_Produto" FromRole="Carrinho" ToRole="Produto" />
     <NavigationProperty Name="Utilizadores" Relationship="Self.FK_Carrinho_Utilizadores" FromRole="Carrinho" ToRole="Utilizadores" />
   </EntityType>
@@ -45,8 +44,6 @@
     <Property Name="ID_Log" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ID_Utilizador" Type="Int32" Nullable="false" />
     <Property Name="Erro_Login" Type="DateTime" Precision="3" />
-    <Property Name="Login" Type="DateTime" Precision="3" />
-    <Property Name="LogOff" Type="DateTime" Precision="3" />
     <Property Name="IP_TentativaLogin" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Utilizadores" Relationship="Self.FK_Logs_Utilizadores" FromRole="Logs" ToRole="Utilizadores" />
   </EntityType>
@@ -115,7 +112,6 @@
     <Property Name="Descrição" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Desconto" Type="Int32" />
     <Property Name="ID_Marca" Type="Int32" Nullable="false" />
-    <Property Name="Genero" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Descontinuado" Type="Int32" Nullable="false" />
     <Property Name="Destaque" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Carrinho" Relationship="Self.FK_Carrinho_Produto" FromRole="Produto" ToRole="Carrinho" />
@@ -138,15 +134,15 @@
     <Key>
       <PropertyRef Name="ID_Promo" />
     </Key>
-    <Property Name="ID_Promo" Type="Int32" Nullable="false" />
+    <Property Name="ID_Promo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descrição" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Path_Logo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="InicioData_Promo" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="FimData_Promo" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="Path_Logo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Descrição" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Desconto" Type="Int32" Nullable="false" />
     <Property Name="ID_Categoria" Type="Int32" />
     <Property Name="ID_Marca" Type="Int32" />
-    <Property Name="Nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Reporte">
     <Key>
@@ -156,8 +152,8 @@
     <Property Name="Nome_Utilizador" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Titulo_Reporte" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Descrição" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Estado" Type="Int32" Nullable="false" />
+    <Property Name="Descrição_Reporte" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado_Reporte" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -429,6 +425,7 @@
       <End Role="Utilizadores" EntitySet="Utilizadores" />
       <End Role="Token" EntitySet="Token" />
     </AssociationSet>
+    <FunctionImport Name="CountPromoAtiva" ReturnType="Collection(Int32)" />
     <FunctionImport Name="DadosCarrinhoProduto" ReturnType="Collection(GestãoRickyShopModel.DadosCarrinhoProduto_Result)">
       <Parameter Name="ID" Mode="In" Type="Int32" />
     </FunctionImport>
@@ -477,7 +474,6 @@
     <Property Type="Decimal" Name="PreçoPorQuantidade" Nullable="false" Precision="19" />
     <Property Type="String" Name="Descrição" Nullable="false" MaxLength="1000" />
     <Property Type="Int32" Name="Quantidade" Nullable="false" />
-    <Property Type="String" Name="Tamanho" Nullable="false" MaxLength="5" />
     <Property Type="Int32" Name="ID_Produto" Nullable="false" />
     <Property Type="Int32" Name="Desconto" Nullable="true" />
   </ComplexType>
@@ -518,7 +514,6 @@
     <Property Type="String" Name="Descrição" Nullable="false" MaxLength="1000" />
     <Property Type="Int32" Name="Desconto" Nullable="true" />
     <Property Type="Int32" Name="ID_Marca" Nullable="false" />
-    <Property Type="String" Name="Genero" Nullable="false" MaxLength="9" />
     <Property Type="Int32" Name="Descontinuado" Nullable="false" />
     <Property Type="Int32" Name="Destaque" Nullable="false" />
   </ComplexType>

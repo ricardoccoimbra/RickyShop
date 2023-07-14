@@ -122,10 +122,17 @@
         </tbody>
     </table>
 
-    <div style="display:flex">
+    @{
+        var t = RickyShop_Site.Models.Entities.db.Promo.Where(s => s.InicioData_Promo <= DateTime.Today && s.FimData_Promo >= DateTime.Now).FirstOrDefault();
+    }
+
+<div style="display:flex">
+    @if (t == null)
+    {
         <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#AddPromo" style="margin-left:5px" data-placement="top" title="Criar Promoção"><i class="glyphicon glyphicon-plus"></i></button>
-        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#AddImagem" style="margin-left:5px" data-placement="top" title="Adicionar Imagem"><i class="glyphicon glyphicon-picture"></i></button>
-    </div>
+    }
+    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#AddImagem" style="margin-left:5px" data-placement="top" title="Adicionar Imagem"><i class="glyphicon glyphicon-picture"></i></button>
+</div>
 
 
 </body>
@@ -197,7 +204,7 @@
 
 <div class="modal" id="AddPromo" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content center-block" style="width:150%">
+        <div class="modal-content center-block" style="width: 150%; margin-left: -24%;">
             <form action="~/Admin/CriarPromo/" enctype="multipart/form-data" method="post">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
@@ -225,7 +232,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="dataFim">Data de Fim:</label>
-                            <input type="date" id="dataFim" name="dataFim" value="" required>
+                            <input type="date" id="dataFim" name="dataFim" value="" min="@DateTime.Now" required>
                         </div>
                     </div>
 
@@ -273,7 +280,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit">Teste</button>
+                    <button type="submit" class="btn">Criar</button>
                 </div>
             </form>
         </div>
@@ -318,7 +325,7 @@
             <!-- Conteúdo do modal -->
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                <h3 class="modal-title" id="lineModalLabel">Adicionar Desconto</h3>
+                <h3 class="modal-title" id="lineModalLabel">Detalhes Desconto</h3>
             </div>
             <div class="modal-body">
                 <div id="conteudoModalViewPromo">

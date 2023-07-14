@@ -28,7 +28,7 @@
 
 
                 <div class="center-block" style=" margin-left: 5%">
-                    <h3>Quantidade Produtos Produtos por Pagina</h3>
+                    <h3>Quantidade de Produtos por Pagina</h3>
                     <div class="thumbnail inline-block" style="max-width: 700px; max-height: 700px; background: green;">
                         <img src="~/Imagens/ProdPorPagina.png" class="img-responsive center-block" alt="Imagem">
                     </div>
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <input type="submit" value="Save" class="btn btn-success center-block" />
+            <input type="submit" value="Guardar" class="btn btn-success center-block" />
 
         </div>
     }
@@ -69,9 +69,9 @@
                     <td>@item.Nome_Utilizador</td>
                     <td>@item.Email</td>
                     <td>@item.Titulo_Reporte</td>
-                    <td>@item.Descrição.Substring(0, 30)...</td>
+                    <td>@item.Descrição_Reporte.Substring(0, 15)...</td>
                     <td>
-                        @if (item.Estado == 0)
+                        @if (item.Estado_Reporte == 0)
                         {
                             <div class="reporte-estado-circulo reporte-estado-circulo--pendente"></div>
                         }
@@ -87,6 +87,7 @@
 
 </body>
 </html>
+
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>

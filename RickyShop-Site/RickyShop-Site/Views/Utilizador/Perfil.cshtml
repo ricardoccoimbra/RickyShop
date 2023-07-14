@@ -57,17 +57,17 @@
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label for="fullName">Contacto</label>
-                                    <input type="text" class="form-control" name="contacto" placeholder="123456789" value="@Model.Contacto">
+                                    <input type="text" class="form-control" name="contacto" placeholder="123456789" value="@Model.Contacto" required />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label for="fullName">Morada</label>
-                                    <input type="text" class="form-control" name="morada" placeholder="Rua xxx, nºx, Porta x" value="@Model.Morada">
+                                    <input type="text" class="form-control" name="morada" placeholder="Rua xxx, nºx, Porta x" value="@Model.Morada" required>
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label for="fullName">Código-Postal</label>
-                                    <input type="text" class="form-control" name="codPostal" placeholder="xxxx-xxx" value="@Model.CodigoPostal">
+                                    <input type="text" class="form-control" name="codPostal" placeholder="xxxx-xxx" value="@Model.CodigoPostal" required>
                                 </div>
                             </div>
 
@@ -78,18 +78,18 @@
                     <div class="tab-pane" id="account">
                         <h6>CONFIGURAÇÕES DE CONTA</h6>
                         <hr>
-                        <form>
+                        <form action="~/Utilizador/ApagarConta/">
                             <div class="form-group">
                                 <label for="username">Password</label>
-                                <input type="password" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Enter password" value="kennethvaldez">
+                                <input type="password" class="form-control" name="password" aria-describedby="usernameHelp" placeholder="Enter password" required>
                                 <small id="usernameHelp" class="form-text text-muted">Insere a sua password para confirmar.</small>
                             </div>
                             <hr>
                             <div class="form-group">
                                 <label class="d-block text-danger">Apagar Conta</label>
-                                <p class="text-muted font-size-sm">Uma vez que você apagar sua conta, não há como voltar. Faça-o com certeza.</p>
+                                <p class="text-muted font-size-sm">Uma vez que você apagar sua conta, não há como voltar atrás. Faça-o com certeza.</p>
                             </div>
-                            <button class="btn btn-danger" type="button">Apagar Conta</button>
+                            <button class="btn btn-danger" type="submit">Apagar Conta</button>
                         </form>
                     </div>
                     <div class="tab-pane" id="security">
@@ -98,9 +98,9 @@
                         <form action="~/Utilizador/AlterarPassword/">
                             <div class="form-group">
                                 <label class="d-block">Alterar Password</label>
-                                <input type="password" class="form-control" placeholder="Enter password Atual" name="password"> <br />
-                                <input type="password" class="form-control" placeholder="Nova password" name="NovaPassword"><br />
-                                <input type="password" class="form-control" placeholder="Confirmar nova password" name="ConfNovaPassword"><br />
+                                <input type="password" class="form-control" placeholder="Enter password Atual" name="password" required> <br />
+                                <input type="password" class="form-control" placeholder="Nova password" name="NovaPassword" required><br />
+                                <input type="password" class="form-control" placeholder="Confirmar nova password" name="ConfNovaPassword" required><br />
                             </div>
                             <button class="btn btn-info" type="submit">Alterar Password</button>
                         </form>
@@ -143,7 +143,7 @@
                             <input class="form-control" type="text" placeholder="Maria Odete" name="nomeTitular">
                         </div>
                         <div class="col-sm-6 form-group">
-                            <label class="control-label">Número do Cartão</label>
+                            <label class="control-label">Número do Cartão</label><i style="margin-left:2%" class="glyphicon glyphicon-info-sign" data-placement="top" title="Só é pertmitido Mastercard ou Visa."></i>
                             <input class="form-control" type="text" placeholder="1234 5678 0000 1234" name="numCartao" maxlength="16">
                         </div>
                     </div>
